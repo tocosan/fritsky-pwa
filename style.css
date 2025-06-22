@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #FFC107; /* Un amarillo Fritsky! */
+    color: #333;
+    padding: 1rem 0;
+    text-align: center;
+    border-bottom: 3px solid #E0A800;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header p {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+section h2 {
+    color: #E0A800; /* Amarillo oscuro para títulos de sección */
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.promo-item, .premio-item {
+    background-color: #fff9e6; /* Un amarillo muy pálido */
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 5px solid #FFC107;
+    border-radius: 3px;
+}
+
+.promo-item h3 {
+    margin-top: 0;
+    color: #c79100;
+}
+
+#contador-puntos {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #28a745; /* Verde para los puntos */
+}
+
+button {
+    background-color: #007bff; /* Azul para botones */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    margin-top: 30px;
+}

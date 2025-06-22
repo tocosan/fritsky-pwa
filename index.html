@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FFC107"> <!-- Color de la barra de herramientas en Android -->
+    <title>Fritsky Fidelidad</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- iOS meta tags para PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Fritsky">
+    <link rel="apple-touch-icon" href="images/icon-192x192.png"> <!-- Lo crearemos más tarde -->
+
+</head>
+<body>
+    <header>
+        <h1>Fritsky Patateria</h1>
+        <p>¡Tu App de Fidelidad!</p>
+    </header>
+
+    <main>
+        <section id="promociones">
+            <h2>Promociones Especiales</h2>
+            <div class="promo-item">
+                <h3>🍟 Martes de Fritsky Dobles 🍟</h3>
+                <p>¡Compra unas Fritsky Clásicas y llévate otras gratis! Solo los martes.</p>
+            </div>
+            <div class="promo-item">
+                <h3>🎉 Combo Cumpleañero 🎉</h3>
+                <p>¡Es tu cumpleaños? Presenta tu app y recibe unas Fritsky pequeñas de regalo con tu pedido.</p>
+            </div>
+        </section>
+
+        <section id="puntos">
+            <h2>Mis Fritsky-Puntos</h2>
+            <p>Puntos Acumulados: <span id="contador-puntos">0</span></p>
+            <p>¡Cada 10 puntos, una ración de salsa especial GRATIS!</p>
+            <!-- Más adelante añadiremos un botón para "simular" ganar puntos -->
+        </section>
+
+        <section id="premios">
+            <h2>Canjear Premios</h2>
+            <div class="premio-item">
+                <p><strong>Salsa Especial Gratis</strong> (Requiere 10 puntos)</p>
+                <button disabled>Canjear</button> <!-- Deshabilitado hasta tener puntos -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2023 Fritsky Patateria - App de Fidelidad</p>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        // Registrar el Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registrado con éxito:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Fallo al registrar el ServiceWorker:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
