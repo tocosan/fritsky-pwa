@@ -1,0 +1,209 @@
+[
+  {
+    "id_categoria": "conos-patatas",
+    "nombre_categoria": "Conos de Patatas",
+    "imagen_cabecera_categoria": "images/menu/encabezado_conos.png", 
+    "descripcion_categoria": "¡La estrella de Fritsky! Elige tu tamaño, combínalo con tus toppings favoritos y una de nuestras deliciosas salsas.",
+    "secciones_informativas": [ 
+      {
+        "id_seccion": "info_tamano_cono",
+        "titulo_seccion": "Elige el tamaño de tu cono",
+        "items": [
+          { "nombre": "Cono chico", "detalle": "250 gr.", "precio": "3.00€", "imagen": "images/menu/cono_chico.png" },
+          { "nombre": "Cono mediano", "detalle": "520 gr.", "precio": "4.50€", "imagen": "images/menu/cono_medio.png" },
+          { "nombre": "Cono grande", "detalle": "750 gr.", "precio": "5.50€", "imagen": "images/menu/cono_grande.png" }
+        ]
+      },
+      {
+        "id_seccion": "info_toppings_cono",
+        "titulo_seccion": "Añade Toppings",
+        "subtitulo_seccion": "(Desde 1.70€ cada uno)",
+        "lista_items": [ 
+          "Bacon", "Salchichas", "Kebab", "Salsa Crispy", "Chistorra",
+          "Pinchos de Nuggets", "Jamón Serrano", "Salsa Fritsky",
+          "Pincho de Quesos", "CheetoCheese"
+        ]
+      },
+      {
+        "id_seccion": "info_salsas_cono",
+        "titulo_seccion": "Salsas Gratis ",
+        "descripcion_salsas_gratis": "¡Elige una de estas salsas GRATIS con tu cono!",
+        "lista_salsas_gratis": [
+            "Mayonesa", "Ketchup", "Pimienta", "Mostaza"
+        ],
+        "enlace_a_salsas_premium": { 
+            "texto_enlace": "Descubre Nuestras Salsas Premium",
+            "target_categoria_id": "salsas-premium" 
+        }
+      }
+    ]
+  },
+  {
+    "id_categoria": "cups-combinados",
+    "nombre_categoria": "Cups Combinados",
+    "imagen_cabecera_categoria": "images/menu/encabezado_cups.png",
+    "descripcion_categoria": "Nuestras deliciosas combinaciones listas para disfrutar.",
+    "items_directos": [ 
+        { "id_item": "cup_fritsky", "nombre": "Cup Fritsky", "descripcion": "Cheddar, bacon y cebollino y patatas", "precio": "5.20€", "imagen": "images/menu/cup_fritsky.png" },
+        { "id_item": "cup_salchipapa", "nombre": "Cup Salchipapa", "descripcion": "Salchichas y patatas", "precio": "4.40€", "imagen": "images/menu/cup_salchipapa.png" },
+        { "id_item": "cup_kebab", "nombre": "Cup Kebab", "descripcion": "Kebab y patatas", "precio": "5.00€", "imagen": "images/menu/cup_kebab.png" },
+        { "id_item": "cup_serrano", "nombre": "Cup Serrano", "descripcion": "Jamón Serrano y patatas", "precio": "5.00€", "imagen": "images/menu/cup_serrano.png" },
+        { "id_item": "cup_nuggets", "nombre": "Cup Nuggets", "descripcion": "Lluvia de Nuggets y patatas", "precio": "5.00€", "imagen": "images/menu/cup_nuggets.png" }
+    ],
+    "pie_categoria": { 
+        "titulo_seccion": "Pide tu salsa gratis o premium",
+        "descripcion_salsas": "Mayonesa, Ketchup, Pimienta o Mostaza ¡Gratis! (elige una).",
+        "enlace_a_salsas_premium": {
+            "texto_enlace": "Ver Salsas Premium",
+            "target_categoria_id": "salsas-premium"
+        }
+    }
+  },
+  {
+    "id_categoria": "salsas-premium",
+    "nombre_categoria": "Nuestras Salsas Premium",
+    "imagen_cabecera_categoria": "images/menu/encabezado_salsas_premium.png", 
+    "descripcion_categoria": "Dale un toque extra de sabor a tus Fritsky con nuestra selección especial de salsas. ¡Encuentra tu favorita!",
+    "informacion_precios_salsas": { 
+        "titulo": "Precio Salsas Premium",
+        "items_precio": [
+            { "concepto": "Para Cono Chico / Cup", "precio": "0.75€" },
+            { "concepto": "Para Cono Mediano / Grande", "precio": "0.90€" }
+        ]
+      },
+    "items_directos": [  
+      {
+        "id_item": "salsa_barbacoa_dulce", 
+        "nombre": "Barbacoa Dulce",
+        "descripcion": "Barbacoa ahumada dulce.", 
+        "imagen": "images/menu/salsas/barbacoa_dulce.png" 
+      },
+      {
+        "id_item": "salsa_honey_mustard",
+        "nombre": "Honey Mustard",
+        "descripcion": "Mostaza y Miel, un clásico agridulce.",
+        "imagen": "images/menu/salsas/honey_mustard.png"
+      },
+      {
+        "id_item": "salsa_curry_mango",
+        "nombre": "Curry Mango",
+        "descripcion": "Exótico mango sazonado con Curry.",
+        "imagen": "images/menu/salsas/curry_mango.png"
+      },
+      
+      {
+        "id_item": "salsa_mayo_trufada",
+        "nombre": "Mayo Trufada",
+        "descripcion": "Base de mayo con auténticas trufas negras.",
+        "imagen": "images/menu/salsas/mayo_trufada.png"
+      },
+
+      {
+        "id_item": "salsa_curry_ketchup", 
+        "nombre": "Curry Ketchup",
+        "descripcion": "Ketchup con especias de Curry", 
+        "imagen": "images/menu/salsas/curry_ketchup.png" 
+      },
+
+      {
+        "id_item": "salsa_joppie", 
+        "nombre": "Joppie",
+        "descripcion": "Mostaza, curry y apio", 
+        "imagen": "images/menu/salsas/joppie.png" 
+      },
+
+      {
+        "id_item": "salsa_algerina", 
+        "nombre": "Algerina",
+        "descripcion": "Picante con sabores orientales y frescos", 
+        "imagen": "images/menu/salsas/algerina.png" 
+      },
+
+      {
+        "id_item": "salsa_fritsauce", 
+        "nombre": "Fritsauce",
+        "descripcion": "Mayonesa dulce holandesa", 
+        "imagen": "images/menu/salsas/fritsauce.png" 
+      },
+
+      {
+        "id_item": "salsa_satay", 
+        "nombre": "Satay",
+        "descripcion": "Salsa de cacahuete", 
+        "imagen": "images/menu/salsas/satay.png" 
+      },
+
+      {
+        "id_item": "salsa_marroquina", 
+        "nombre": "Marroquina",
+        "descripcion": "Salsa picante con sabor dulce a hierbas", 
+        "imagen": "images/menu/salsas/marroquina.png" 
+      },
+
+      {
+        "id_item": "salsa_remolaude", 
+        "nombre": "Remolaude",
+        "descripcion": "Salsa de mayonesa con pepinillos", 
+        "imagen": "images/menu/salsas/remolaude.png" 
+      },
+
+      {
+        "id_item": "salsa_tartara", 
+        "nombre": "Tartara",
+        "descripcion": "Mayonesa con peregil y cebolla", 
+        "imagen": "images/menu/salsas/tartara.png" 
+      },
+
+      {
+        "id_item": "salsa_crazy_cheddar", 
+        "nombre": "Crazy Cheddar",
+        "descripcion": "Queso cheddar emulsionado", 
+        "imagen": "images/menu/salsas/crazy_cheddar.png" 
+      },
+
+      {
+        "id_item": "salsa_hot_shot", 
+        "nombre": "Hot Shot",
+        "descripcion": "Salsa picante y dulce sutil", 
+        "imagen": "images/menu/salsas/hot_shot.png" 
+      },
+
+      {
+        "id_item": "salsa_barbacoa_hot", 
+        "nombre": "Barbacoa Picante",
+        "descripcion": "Unica, dulce y ligermente picante", 
+        "imagen": "images/menu/salsas/barbacoa_hot.png" 
+      },
+
+      {
+        "id_item": "salsa_curry", 
+        "nombre": "Curry",
+        "descripcion": "Tipica salsa de curry oriental", 
+        "imagen": "images/menu/salsas/curry.png" 
+      },
+
+      {
+        "id_item": "salsa_samurai", 
+        "nombre": "Samurai",
+        "descripcion": "Picante con chiles rojos y especias orientales", 
+        "imagen": "images/menu/salsas/samurai.png" 
+      },
+
+      {
+        "id_item": "salsa_pita", 
+        "nombre": "Pitta",
+        "descripcion": "Salsa de ajo con base de mayonesa", 
+        "imagen": "images/menu/salsas/pita.png" 
+      },
+
+      {
+        "id_item": "salsa_andaluza", 
+        "nombre": "Andaluza",
+        "descripcion": "Base de mayonesa, pasta de tomate y pimientos", 
+        "imagen": "images/menu/salsas/andaluza.png" 
+      }     
+          
+    ]
+  }
+  
+]

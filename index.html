@@ -3,71 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#FFC107"> <!-- Color de la barra de herramientas en Android -->
+    <meta name="theme-color" content="#FFD600">
     <title>Fritsky Fidelidad</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-
-    <!-- iOS meta tags para PWA -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <!-- Favicon y Meta tags PWA -->
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Fritsky">
-    <link rel="apple-touch-icon" href="images/icon-192x192.png"> <!-- Lo crearemos más tarde -->
+    <link rel="apple-touch-icon" href="images/icon-192x192.png"> 
+    <link rel="icon" href="images/icon-192x192.png" type="image/png"> 
 
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
+        <img src="images/logo.png" alt="Logo Fritsky Patateria" id="logo-header">
         <h1>Fritsky Patateria</h1>
-        <p>¡Tu App de Fidelidad!</p>
+        <div id="user-status-container">
+            <span id="userInfo"></span>
+            <button id="btnLogout" class="button-secondary" style="display:none;">Cerrar Sesión</button>
+        </div>
     </header>
 
+    <nav>
+        <button data-target="pagina-promociones" class="nav-button active">Promociones</button>
+        <button id="btnMisPuntosNav" data-target="pagina-puntos" class="nav-button">Mis Puntos</button> <!-- ID añadido -->
+        <button data-target="pagina-menu" class="nav-button">Nuestra Carta</button>
+        <button id="btnGoToAuth" data-target="pagina-auth" class="nav-button">Acceder/Registro</button>
+    </nav>
+
     <main>
-        <section id="promociones">
-            <h2>Promociones Especiales</h2>
-            <div class="promo-item">
-                <h3>🍟 Martes de Fritsky Dobles 🍟</h3>
-                <p>¡Compra unas Fritsky Clásicas y llévate otras gratis! Solo los martes.</p>
-            </div>
-            <div class="promo-item">
-                <h3>🎉 Combo Cumpleañero 🎉</h3>
-                <p>¡Es tu cumpleaños? Presenta tu app y recibe unas Fritsky pequeñas de regalo con tu pedido.</p>
-            </div>
-        </section>
+        <!-- PÁGINA DE PROMOCIONES -->
+        <div id="pagina-promociones" class="pagina">
+            <section id="promociones">
+                <h2>Promociones Especiales</h2>
+                <div class="card">
+                    <h3>🍟 Martes de Fritsky Dobles 🍟</h3>
+                    <p>¡Compra unas Fritsky Clásicas y llévate otras gratis! Solo los martes.</p>
+                </div>
+                <div class="card">
+                    <h3>🎉 Combo Cumpleañero 🎉</h3>
+                    <p>¡Es tu cumpleaños? Presenta tu app y recibe unas Fritsky pequeñas de regalo con tu pedido.</p>
+                </div>
+            </section>
+        </div>
 
-        <section id="puntos">
-            <h2>Mis Fritsky-Puntos</h2>
-            <p>Puntos Acumulados: <span id="contador-puntos">0</span></p>
-            <p>¡Cada 10 puntos, una ración de salsa especial GRATIS!</p>
-            <!-- Más adelante añadiremos un botón para "simular" ganar puntos -->
-        </section>
+        <!-- PÁGINA DE PUNTOS Y PREMIOS -->
+        <div id="pagina-puntos" class="pagina">
+            <section id="puntos">
+                <h2>Mis Fritsky-Puntos</h2>
+                <div class="card">
+                    <p>Puntos Acumulados: <span id="contador-puntos">0</span></p>
+                    <p>¡Cada 10 puntos, una ración de salsa especial GRATIS!</p>
+                    <button id="btnSimularPunto" class="button-primary">Simular Ganar 1 Fritsky-Punto</button>
+                </div>
+            </section>
 
-        <section id="premios">
-            <h2>Canjear Premios</h2>
-            <div class="premio-item">
-                <p><strong>Salsa Especial Gratis</strong> (Requiere 10 puntos)</p>
-                <button disabled>Canjear</button> <!-- Deshabilitado hasta tener puntos -->
+            <section id="premios">
+                <h2>Canjear Premios</h2>
+                <div class="card premio-item">
+                    <p><strong>Salsa Especial Gratis</strong> (Requiere 10 puntos)</p>
+                    <button id="btnCanjearSalsa" class="button-secondary" disabled>Canjear (10 puntos)</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- PÁGINA DEL MENÚ/CARTA -->
+        <div id="pagina-menu" class="pagina">
+            <section id="carta">
+                <div id="menu-container">
+                    <p>Cargando menú...</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- PÁGINA DE AUTENTICACIÓN (MODIFICADA para mejor flujo) -->
+        <div id="pagina-auth" class="pagina">
+            <section id="auth-section">
+                <h2>Acceso / Registro de Clientes Fritsky</h2>
+
+                <!-- Formulario de Inicio de Sesión -->
+                <div class="auth-form-container card auth-form-login">
+                    <h3><i class="fas fa-sign-in-alt auth-icon"></i> Iniciar Sesión</h3>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Correo Electrónico</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
+                                <input type="email" id="loginEmail" required placeholder="tuemail@ejemplo.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-lock"></i></span>
+                                <input type="password" id="loginPassword" required placeholder="********">
+                            </div>
+                        </div>
+                        <!-- Enlace al modal de recuperación de contraseña -->
+                        <a href="#" id="forgotPasswordLink" class="forgot-password-link">¿Olvidaste tu contraseña?</a>
+                        <button type="submit" class="button-primary">Iniciar Sesión</button>
+                    </form>
+                    <p id="loginError" class="error-message"></p>
+
+                    <!-- Botón para ir al registro -->
+                    <div class="auth-switch-prompt">
+                        <p>¿No tienes cuenta?</p>
+                        <button id="goToRegisterLink" class="button-secondary">Regístrate Aquí</button>
+                    </div>
+                </div>
+
+                <!-- Formulario de Registro (Oculto inicialmente, se muestra con JS) -->
+                <div id="registerFormContainer" class="auth-form-container card auth-form-register" style="display: none;">
+                    <h3><i class="fas fa-user-plus auth-icon"></i> Únete a Fritsky</h3>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="registerEmail">Correo Electrónico</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
+                                <input type="email" id="registerEmail" required placeholder="tuemail@ejemplo.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-lock"></i></span>
+                                <input type="password" id="registerPassword" required minlength="6" placeholder="Mínimo 6 caracteres">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerBirthday">Fecha de Nacimiento</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-calendar-alt"></i></span>
+                                <input type="date" id="registerBirthday" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="button-primary">Registrarme</button>
+                    </form>
+                    <p id="registerError" class="error-message"></p>
+                    <p id="registerSuccessMessage" class="success-message"></p>
+                    <div class="auth-switch-prompt">
+                        <p>¿Ya tienes cuenta?</p>
+                        <button id="goToLoginLink" class="button-secondary">Inicia Sesión</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- MODAL DE RECUPERACIÓN DE CONTRASEÑA (Solo se muestra cuando se necesita) -->
+        <div id="passwordResetModal" class="modal">
+            <div class="modal-content card">
+                <span class="close-button">×</span>
+                <h3><i class="fas fa-key auth-icon"></i> Recuperar Contraseña</h3>
+                <p>Introduce tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.</p>
+                <form id="passwordResetForm">
+                    <div class="form-group">
+                        <label for="resetEmail">Correo Electrónico</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
+                            <input type="email" id="resetEmail" required placeholder="tuemail@ejemplo.com">
+                        </div>
+                    </div>
+                    <button type="submit" class="button-primary">Enviar Instrucciones</button>
+                </form>
+                <p id="passwordResetError" class="error-message"></p>
+                <p id="passwordResetSuccess" class="success-message"></p>
             </div>
-        </section>
+        </div>
     </main>
 
     <footer>
-        <p>© 2023 Fritsky Patateria - App de Fidelidad</p>
+        <p>© <span id="currentYear"></span> Fritsky Patateria - App de Fidelidad</p>
     </footer>
 
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
     <script>
-        // Registrar el Service Worker
+        // Registro del Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registrado con éxito:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('Fallo al registrar el ServiceWorker:', error);
-                    });
+                    .then(registration => { console.log('ServiceWorker registrado con éxito:', registration.scope); })
+                    .catch(error => { console.log('Fallo al registrar el ServiceWorker:', error); });
             });
         }
+        // Establecer año actual en el footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>

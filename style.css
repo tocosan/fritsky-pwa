@@ -1,94 +1,957 @@
+/* ==========================================================================
+   Definición de Fuentes Personalizadas (@font-face)
+   ========================================================================== */
+
+@font-face {
+    font-family: 'CodecPro'; /* Nombre para usar en CSS */
+    src: url('font/CodecPro-Regular.ttf') format('truetype');
+    font-weight: normal; /* o 400 */
+    font-style: normal;
+    font-display: swap; /* Muestra texto con fuente de sistema mientras carga */
+}
+
+@font-face {
+    font-family: 'Pusia'; /* Nombre para usar en CSS */
+    src: url('font/Pusia-Bold.ttf') format('truetype');
+    font-weight: bold; /* o 700 */
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ==========================================================================
+   Variables y Estilos Globales
+   ========================================================================== */
+:root {
+    --color-primario: #FFD600; /* Amarillo Fritsky */
+    --color-secundario: #000000; /* Negro */
+    --color-texto: #333333;
+    --color-texto-claro: #FFFFFF;
+    --color-fondo: #f4f4f4;
+    --color-tarjeta-clara: #FFFFFF;
+    --color-tarjeta-oscura-fondo1: #2c2c2c; 
+    --color-borde: #dddddd;
+    --color-deshabilitado: #cccccc;
+    --color-error: #dc3545; /* Rojo para errores */
+    --color-success: #28a745; /* Verde para éxitos */
+
+    /* Variables de Fuente */
+    --fuente-titulos: 'Pusia', Arial, sans-serif;       /* Pusia para títulos */
+    --fuente-principal: 'CodecPro', Arial, sans-serif; /* CodecPro para cuerpo */
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: var(--fuente-principal); /* Aplica CodecPro por defecto */
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
     line-height: 1.6;
-}
-
-header {
-    background-color: #FFC107; /* Un amarillo Fritsky! */
-    color: #333;
-    padding: 1rem 0;
-    text-align: center;
-    border-bottom: 3px solid #E0A800;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2.5rem;
-}
-
-header p {
-    margin: 0;
-    font-size: 1.2rem;
+    scroll-behavior: smooth; /* Suavidad al hacer scroll */
 }
 
 main {
-    padding: 20px;
-    max-width: 800px;
+    padding: 15px;
+    max-width: 900px;
     margin: 20px auto;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-section {
-    margin-bottom: 30px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+/* Aplicar fuente de títulos a todos los encabezados */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--fuente-titulos);
 }
 
-section h2 {
-    color: #E0A800; /* Amarillo oscuro para títulos de sección */
-    border-bottom: 2px solid #f0f0f0;
+/* ==========================================================================
+   Header y Navegación Principal
+   ========================================================================== */
+header {
+    background-color: var(--color-primario);
+    color: var(--color-secundario);
+    padding: 1rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 3px solid #E0A800;
+    position: relative; /* Para posicionar el estado del usuario */
+}
+#logo-header { height: 50px; margin-right: 15px; }
+header h1 { margin: 0; font-size: 1.8rem; } /* Hereda Pusia */
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--color-secundario);
+    padding: 0.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.nav-button {
+    font-family: var(--fuente-principal); /* CodecPro para botones de navegación */
+    font-weight: bold; /* Letra bold para botones */
+    background-color: transparent;
+    color: var(--color-texto-claro);
+    border: none;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    border-bottom: 3px solid transparent;
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
+}
+.nav-button:hover { color: var(--color-primario); }
+.nav-button.active { color: var(--color-primario); border-bottom-color: var(--color-primario); }
+
+/* Estilo para botón de navegación deshabilitado */
+.nav-button.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    color: var(--color-deshabilitado);
+}
+.nav-button.disabled:hover {
+    color: var(--color-deshabilitado);
+    border-bottom-color: transparent; /* No mostrar la línea activa al pasar el ratón */
+}
+
+/* --- Estado del Usuario en Header --- */
+#user-status-container {
+    position: absolute;
+    top: 50%; /* Centra verticalmente */
+    right: 15px;
+    transform: translateY(-50%); /* Ajuste de centrado */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+}
+#user-status-container #userInfo {
+    color: var(--color-secundario); /* Color del texto en el header */
+    font-weight: bold;
+}
+#user-status-container #btnLogout {
+    padding: 5px 10px; /* Botón de logout más pequeño */
+    font-size: 0.8rem;
+    margin-top: 0; /* Quitar margen superior por defecto de botones */
+    background-color: var(--color-error); /* Un color rojo para logout */
+    border: none;
+    color: var(--color-texto-claro);
+    border-radius: 4px;
+}
+#user-status-container #btnLogout:hover {
+    background-color: #c82333; /* Un rojo más oscuro al pasar el ratón */
+}
+
+
+/* ==========================================================================
+   Páginas y Secciones Generales
+   ========================================================================== */
+.pagina { display: none; }
+.pagina.active { display: block; }
+section { margin-bottom: 30px; }
+section h2 { /* Ya hereda Pusia */
+    color: var(--color-secundario);
+    border-bottom: 2px solid var(--color-primario);
     padding-bottom: 10px;
     margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.6rem;
+    text-align: center;
 }
 
-.promo-item, .premio-item {
-    background-color: #fff9e6; /* Un amarillo muy pálido */
-    padding: 15px;
-    margin-bottom: 15px;
-    border-left: 5px solid #FFC107;
-    border-radius: 3px;
+/* ==========================================================================
+   Tarjetas (Estilo General - Fondo Claro)
+   ========================================================================== */
+.card {
+    background-color: var(--color-tarjeta-clara);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-left: 5px solid var(--color-primario);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease; /* Suavidad al hacer hover */
 }
-
-.promo-item h3 {
+.card:hover { box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
+.card h3 { /* Ya hereda Pusia */
     margin-top: 0;
-    color: #c79100;
+    color: var(--color-texto);
+    font-size: 1.2rem;
+    margin-bottom: 10px;
 }
+.card p { font-family: var(--fuente-principal); /* Asegurar CodecPro para párrafos en tarjetas */ }
 
-#contador-puntos {
-    font-weight: bold;
-    font-size: 1.5em;
-    color: #28a745; /* Verde para los puntos */
-}
 
-button {
-    background-color: #007bff; /* Azul para botones */
-    color: white;
-    padding: 10px 15px;
+/* ==========================================================================
+   Sección Puntos y Premios (Usa .card general)
+   ========================================================================== */
+#contador-puntos { font-weight: bold; font-size: 1.8em; color: var(--color-success); display: block; margin-bottom: 10px; text-align: center; }
+#puntos .card p, #premios .card p { font-family: var(--fuente-principal); } /* Párrafos en Puntos y Premios */
+
+
+/* ==========================================================================
+   Botones
+   ========================================================================== */
+.button-primary, .button-secondary, .btn-volver-menu, .btn-link-salsas {
+    font-family: var(--fuente-principal); /* CodecPro para botones por defecto */
+    font-weight: bold; /* Letra bold para botones */
+    color: var(--color-texto-claro);
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1em;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+}
+.button-primary:hover:not(:disabled), 
+.button-secondary:hover:not(:disabled), 
+.btn-volver-menu:hover:not(:disabled), 
+.btn-link-salsas:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+.button-primary { background-color: var(--color-primario); color: var(--color-secundario); }
+.button-primary:hover:not(:disabled) { background-color: #E0A800; } /* Amarillo más oscuro al pasar el ratón */
+.button-secondary { background-color: var(--color-secundario); color: var(--color-texto-claro); }
+.button-secondary:hover:not(:disabled) { background-color: #333333; } /* Gris oscuro más oscuro */
+.btn-volver-menu { background-color: #6c757d; margin-bottom: 25px; }
+.btn-volver-menu:hover:not(:disabled) { background-color: #5a6268; }
+.btn-link-salsas { display: block; width: fit-content; margin: 20px auto 10px auto; }
+button:disabled, .button-primary:disabled, .button-secondary:disabled { 
+    background-color: var(--color-deshabilitado); 
+    color: #666; 
+    cursor: not-allowed; 
+    border-color: var(--color-deshabilitado); 
+    transform: none; 
 }
 
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+
+/* ==========================================================================
+   Estilos Específicos del Menú (Página Carta)
+   ========================================================================== */
+
+/* --- Estilos Generales para el Menú --- */
+.categorias-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 25px; 
+    margin-top: 20px; 
+}
+.categoria-card { 
+    cursor: pointer; 
+    text-align: center; 
+    margin-bottom: 0; /* QUITAR ESTE MARGEN SI YA ESTÁ EN EL GRID GAP */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Suavidad al pasar el ratón */
+}
+.categoria-card:hover {
+    transform: translateY(-5px); /* Levantar ligeramente al pasar el ratón */
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15); /* Sombra más pronunciada */
+}
+.categoria-card-imagen { 
+    width: 100%; 
+    max-height: 150px; 
+    object-fit: cover; 
+    border-radius: 5px 5px 0 0; 
+    margin-bottom: 10px; 
+}
+.categoria-card h3 { /* Ya hereda Pusia */ 
+    margin-bottom: 5px; 
+    font-size: 1.25rem; 
+}
+.categoria-card p { 
+    font-family: var(--fuente-principal); 
+    font-size: 0.9rem; 
+    color: #555; 
+    padding: 0 10px 10px 10px; 
 }
 
-button:hover:not(:disabled) {
-    background-color: #0056b3;
+/* --- Vista de Detalle de Categoría --- */
+.titulo-pagina-categoria { /* Ya hereda Pusia de h2 */ 
+    text-align: center; 
+    font-size: 1.8rem; 
+    color: var(--color-secundario); 
+    margin-bottom: 10px; 
+}
+.descripcion-pagina-categoria { 
+    font-family: var(--fuente-principal); 
+    text-align: center; 
+    font-size: 1rem; 
+    color: #444; 
+    margin: 0 auto 30px auto; 
+    max-width: 600px; 
+    line-height: 1.5; 
 }
 
-footer {
+.menu-seccion-info { margin-bottom: 25px; } /* Espacio entre secciones */
+.menu-seccion-info h4 { /* Ya hereda Pusia de h4 */ 
+    font-size: 1.3rem; 
+    color: var(--color-secundario); 
+    padding-bottom: 10px; 
+    margin-top: 0; 
+    margin-bottom: 15px; 
+    text-align: left; 
+    border-bottom: 1px solid var(--color-borde); 
+}
+.menu-seccion-info .subtitulo-seccion { 
+    font-family: var(--fuente-principal); 
+    text-align: left; 
+    font-size: 0.9em; 
+    color: #777; 
+    margin-top: -10px; 
+    margin-bottom: 15px; 
+}
+
+/* --- Estilos para Ítems dentro de Secciones Informativas (ej: Conos, Toppings) --- */
+.info-items-container { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap: 20px; 
+    margin-top: 10px; 
+}
+.info-item-card { 
+    background-color: var(--color-tarjeta-clara); 
+    border: 1px solid #e9e9e9; 
+    border-radius: 8px; 
+    padding: 15px; 
+    text-align: center; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; /* Para empujar el precio al final */
+}
+.info-item-imagen { 
+    max-width: 120px; 
+    max-height: 100px; 
+    object-fit: contain; 
+    margin-bottom: 10px; 
+    border-radius: 4px; 
+    align-self: center; 
+}
+.info-item-nombre { 
+    font-family: var(--fuente-titulos); /* Pusia para nombres de producto */ 
+    font-weight: bold; 
+    font-size: 1.05rem; 
+    margin-bottom: 5px; 
+}
+.info-item-detalle { 
+    font-family: var(--fuente-principal); 
+    font-size: 0.85rem; 
+    color: #666; 
+    margin-bottom: 8px; 
+    flex-grow: 1; /* Permite que el detalle crezca para empujar el precio */
+}
+.info-item-precio { 
+    font-family: var(--fuente-principal); /* CodecPro para precios */ 
+    font-weight: bold; 
+    font-size: 1.1rem; 
+    color: var(--color-primario); 
+    margin-top: auto; /* Empuja el precio al final de la tarjeta */
+}
+
+/* Contenedor para varias secciones informativas (ej: Toppings) */
+.secciones-inferiores-flex-container { 
+    display: flex; 
+    flex-wrap: wrap; /* Permite que las secciones pasen a la siguiente línea */
+    justify-content: center; /* Centra las secciones si hay espacio */
+    gap: 25px; 
+    margin-top: 30px; 
+}
+.secciones-inferiores-flex-container > .menu-seccion-info { 
+    flex: 1 1 300px; /* Flex-grow, flex-shrink, flex-basis */
+    max-width: 420px; /* Límite de ancho para cada sección */
+    margin-bottom: 0; 
+}
+
+/* Listas simples y listas de salsas */
+.info-lista-simple, .info-lista-salsas-gratis { 
+    list-style: none; 
+    padding-left: 0; 
+    margin-top: 10px; 
+    display: grid; /* Usa grid para alineación en columnas */
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+    gap: 8px 12px; 
+}
+.info-lista-simple li, .info-lista-salsas-gratis li { 
+    font-family: var(--fuente-principal); 
+    background-color: #f8f8f8; 
+    padding: 8px 12px; 
+    border-radius: 4px; 
+    font-size: 0.9rem; 
+    border-left: 3px solid var(--color-primario); /* Barra lateral indicadora */
+}
+.descripcion-salsas-gratis { 
+    font-family: var(--fuente-principal); 
+    font-style: italic; 
+    color: #555; 
+    margin-top: 15px; 
+    margin-bottom: 5px; 
+    font-size: 0.95rem; 
+    text-align: left; 
+}
+
+/* --- Estilos para la Información de Precios de Salsas Premium --- */
+.info-precios-categoria { 
+    margin-bottom: 25px; 
+    padding: 15px 20px; 
+    background-color: #fefefe; /* Fondo ligeramente diferente */
+    border-left-color: var(--color-primario); /* Borde primario */
+    border-radius: 8px; /* Bordes redondeados */
+}
+.info-precios-categoria h4 { /* Estilo para el título de precios */
+    font-size: 1.2rem; 
+    color: var(--color-secundario); 
+    text-align: center; 
+    margin-top: 0; 
+    margin-bottom: 10px; 
+    padding-bottom: 8px; 
+    border-bottom: 1px solid var(--color-primario); 
+}
+.lista-precios-salsas { 
+    list-style: none; 
+    padding-left: 0; 
+    margin: 0; 
+}
+.lista-precios-salsas li { 
+    font-family: var(--fuente-principal); 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 5px; 
+    font-size: 0.95rem; 
+}
+.lista-precios-salsas li:not(:last-child) { 
+    border-bottom: 1px solid #efefef; 
+}
+.lista-precios-salsas li span { 
+    color: var(--color-texto); 
+    flex-grow: 1; 
+}
+.lista-precios-salsas li strong { 
+    font-family: var(--fuente-principal); /* CodecPro para el precio en sí */ 
+    color: var(--color-primario); 
+    font-weight: bold; 
+    font-size: 1rem; 
+    margin-left: 10px; 
+    white-space: nowrap; 
+}
+
+/* --- Estilos para Items Directos (ej: Cups Combinados, Hexagonales) --- */
+.menu-items-directos-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Columnas responsivas */
+    gap: 20px; 
+}
+.menu-items-directos-grid > .menu-item.card { /* Estilo específico para items directos */
+    background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-tarjeta-oscura-fondo1) 100%); /* Degradado */
+    color: var(--color-texto-claro); /* Texto blanco */
+    border: 1px solid #444; /* Borde más oscuro */
+    border-left: 5px solid var(--color-primario); /* Borde primario */
+    border-radius: 12px; /* Bordes más redondeados */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25); /* Sombra más pronunciada */
+    padding: 15px;
     text-align: center;
-    padding: 20px;
-    background-color: #333;
-    color: #fff;
-    margin-top: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 0; /* Ya es parte del grid */
+    justify-content: flex-start; /* Alinea el contenido arriba */
+    display: flex; /* Para permitir el uso de align-items */
+    align-items: center; /* Centra verticalmente el contenido de la tarjeta */
+}
+.menu-items-directos-grid > .menu-item.card:hover { 
+    transform: translateY(-5px) scale(1.02); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
+}
+.menu-items-directos-grid > .menu-item.card .info-item-imagen { /* Reutilizamos el estilo de imagen de info-item-card */
+    max-width: 90px; 
+    height: 90px; 
+    object-fit: cover; 
+    border-radius: 50%; /* Imágenes circulares para productos */
+    margin: 0 auto 15px auto; 
+    border: 3px solid var(--color-texto-claro); 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.menu-items-directos-grid > .menu-item.card .menu-item-nombre { 
+    font-family: var(--fuente-titulos); /* Pusia para nombres de producto */ 
+    font-weight: bold; 
+    font-size: 1rem; 
+    margin-bottom: 8px; 
+    color: var(--color-texto-claro); 
+    line-height: 1.3; 
+    min-height: 2.6em; /* Para que los nombres de 2 líneas se vean bien */
+}
+.menu-items-directos-grid > .menu-item.card .menu-item-descripcion { 
+    font-family: var(--fuente-principal); 
+    font-size: 0.85rem; 
+    color: #e0e0e0; 
+    margin-bottom: 12px; 
+    flex-grow: 1; 
+    min-height: 3.9em; /* Asegura espacio para descripciones */
+    line-height: 1.4; 
+}
+
+/* Pie de categoría (si aplica, ej: salsas en combos) */
+.pie-categoria { 
+    margin-top: 25px; 
+    border-top: 2px dashed var(--color-primario); /* Línea discontinua */
+    padding-top: 20px; 
+    background-color: var(--color-tarjeta-clara); /* Fondo de tarjeta */
+    color: var(--color-texto); 
+}
+.pie-categoria h4 { font-family: var(--fuente-titulos); color: var(--color-texto); }
+.pie-categoria p { font-family: var(--fuente-principal); color: var(--color-texto); }
+.pie-categoria .button-primary { 
+    background-color: var(--color-primario); 
+    color: var(--color-secundario); 
+    font-size: 0.9rem; /* Botón más pequeño aquí */
+    padding: 8px 15px;
+}
+.pie-categoria .button-primary:hover { background-color: #E0A800; } /* Hover para botón de salsa premium */
+
+
+/* ==========================================================================
+   Estilos para la Página de Autenticación (Mejorados y Responsivos)
+   ========================================================================== */
+#auth-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el contenido principal */
+}
+
+#auth-section h2 { /* Título "Acceso / Registro de Clientes Fritsky" */
+    margin-bottom: 30px;
+    text-align: center; /* Asegura el centrado */
+}
+
+.auth-form-container {
+    width: 100%; /* Ocupa todo el ancho disponible dentro de su contenedor */
+    max-width: 450px; /* Límite de ancho en pantallas grandes */
+    margin-bottom: 30px; /* Espacio entre el form de login y el de registro */
+    padding: 30px; /* Más padding para los formularios */
+    background-color: var(--color-tarjeta-clara);
+    border: 1px solid var(--color-borde);
+    border-left: 5px solid var(--color-primario); /* Mantenemos el borde primario */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Añadir sombra como una card */
+}
+.auth-form-container h3 { /* Títulos "Iniciar Sesión", "Únete a Fritsky" */
+    font-size: 1.4rem;
+    margin-bottom: 25px;
+    color: var(--color-secundario);
+    display: flex; /* Para alinear ícono y texto */
+    align-items: center;
+    justify-content: center; /* Centra el título y el icono */
+}
+
+.form-group {
+    margin-bottom: 20px; /* Aumenta el espacio entre grupos */
+}
+.form-group label {
+    display: block;
+    margin-bottom: 8px; /* Más espacio entre label e input */
+    font-weight: bold;
+    font-family: var(--fuente-principal); /* CodecPro para labels */
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* --- Input Group con Icono --- */
+.input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+    padding: 8px 12px;
+    background-color: white;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.input-group:focus-within { /* Aplica estilo al grupo cuando el input dentro tiene foco */
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 3px rgba(255, 214, 0, 0.3); /* Sombra amarilla sutil */
+}
+.input-group-addon {
+    padding-right: 10px;
+    color: #777;
+    font-size: 1.1em;
+    display: flex; /* Para asegurar alineación del icono */
+    align-items: center;
+}
+.input-group input[type="email"],
+.input-group input[type="password"],
+.input-group input[type="date"] {
+    flex-grow: 1; /* Hace que el input ocupe el espacio restante */
+    border: none;
+    outline: none; /* Quita el borde por defecto de focus */
+    padding: 0; /* Remueve padding interno del input para que sea manejado por input-group */
+    background: transparent; /* Fondo transparente */
+    font-family: var(--fuente-principal);
+    font-size: 1rem;
+    color: var(--color-texto);
+}
+.input-group input[type="date"] {
+    padding: 0 5px; /* Para que el calendario se vea bien */
+}
+
+/* --- Placeholders --- */
+::placeholder {
+    color: #aaa;
+    font-family: var(--fuente-principal);
+    font-size: 0.95rem;
+}
+
+/* --- Enlace Olvidé mi contraseña --- */
+.forgot-password-link {
+    display: block; /* Asegura que ocupe su propia línea */
+    width: 100%; /* Ocupar todo el ancho del contenedor */
+    text-align: right; /* Alinear el texto a la derecha */
+    font-size: 0.85rem;
+    color: var(--color-primario);
+    text-decoration: none;
+    margin-top: -10px; /* Acercarlo al input anterior si es necesario */
+    margin-bottom: 10px;
+}
+.forgot-password-link:hover {
+    text-decoration: underline;
+}
+
+/* --- Botones para alternar entre Login y Registro --- */
+.auth-switch-prompt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+.auth-switch-prompt p {
+    margin: 0;
+    font-family: var(--fuente-principal);
+    font-size: 0.9rem;
+}
+.auth-switch-prompt .button-secondary { /* Estilo para los botones de switch */
+    padding: 8px 15px;
+    font-size: 0.85rem;
+    background-color: var(--color-primario); /* Amarillo */
+    color: var(--color-secundario);
+    border: none;
+}
+.auth-switch-prompt .button-secondary:hover {
+    background-color: #E0A800; /* Amarillo oscuro */
+}
+
+/* --- Estilos Específicos para el Modal de Recuperación --- */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Permanece en su lugar */
+    z-index: 10000; /* Muy alto para estar sobre todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Permite scroll si el contenido es largo */
+    background-color: rgba(0,0,0,0.5); /* Fondo semitransparente */
+    backdrop-filter: blur(5px); /* Efecto blur detrás del modal */
+    -webkit-backdrop-filter: blur(5px); /* Para Safari */
+    /* Centrado del modal */
+    display: flex; 
+    justify-content: center;
+    align-items: flex-start; /* Empieza desde arriba */
+}
+.modal-content {
+    position: relative;
+    background-color: var(--color-tarjeta-clara);
+    margin-top: 5%; /* Un poco de espacio desde el top */
+    padding: 40px; /* Más padding para el contenido */
+    border-radius: 15px; /* Bordes más redondeados */
+    width: 90%;
+    max-width: 500px; /* Ancho máximo del modal */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: fadeIn 0.5s; /* Animación de entrada */
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-content .close-button {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.modal-content .close-button:hover,
+.modal-content .close-button:focus {
+    color: var(--color-primario);
+    text-decoration: none;
+}
+.modal-content h3 { /* Título del modal */
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Ajustes para el layout de las formas de autenticación --- */
+.auth-form-login { margin-bottom: 30px; }
+.auth-form-register { margin-bottom: 0; } /* Si es el último, no necesita margen inferior */
+
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+footer { text-align: center; padding: 20px; background-color: var(--color-secundario); color: var(--color-texto-claro); margin-top: 30px; }
+footer p { font-family: var(--fuente-principal); }
+
+
+/* ==========================================================================
+   Media Queries para Responsividad del Menú y Autenticación
+   ========================================================================== */
+
+/* Generalmente para pantallas más grandes (escritorio, tablets grandes) */
+@media (min-width: 768px) {
+    main {
+        padding: 20px 40px; /* Más padding en general en pantallas grandes */
+    }
+
+    header h1 {
+        font-size: 2.2rem; /* Título del header más grande */
+    }
+
+    nav .nav-button {
+        font-size: 1rem; /* Botones de nav un poco más grandes */
+    }
+
+    section h2 {
+        font-size: 1.8rem; /* Títulos de sección más grandes */
+    }
+
+    .auth-form-container {
+        padding: 40px; /* Más padding en formularios */
+    }
+    .auth-form-container h3 {
+        font-size: 1.5rem; /* Títulos de formulario más grandes */
+    }
+
+    .modal-content {
+        padding: 50px; /* Más padding en el modal */
+    }
+    .modal-content h3 {
+        font-size: 1.8rem; /* Título del modal más grande */
+    }
+
+    /* Estilos para el menú en pantallas más grandes */
+    .categorias-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas responsivas para categorías */
+        gap: 25px; 
+        margin-top: 20px; 
+    }
+    .menu-items-directos-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Ítems un poco más anchos */
+        gap: 20px;
+    }
+    .menu-items-directos-grid > .menu-item.card .info-item-imagen {
+        max-width: 100px;
+        height: 100px;
+    }
+    .menu-items-directos-grid > .menu-item.card .menu-item-nombre {
+        font-size: 1.1rem;
+    }
+    .menu-items-directos-grid > .menu-item.card .menu-item-precio {
+        font-size: 1.2rem;
+    }
+}
+
+/* Teléfonos y tablets pequeñas */
+@media (max-width: 767px) {
+    header {
+        flex-direction: column; /* Apilar elementos en el header en móvil */
+        padding: 0.8rem;
+    }
+    #logo-header {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    header h1 {
+        font-size: 1.6rem;
+    }
+    #user-status-container {
+        position: static; /* Posición normal en móvil */
+        transform: none;
+        margin-top: 10px;
+        justify-content: center;
+    }
+
+    nav {
+        flex-wrap: wrap; /* Permite que los botones pasen a la siguiente línea si no caben */
+        justify-content: center;
+        padding: 0.5rem 0.5rem;
+    }
+    .nav-button {
+        font-size: 0.85rem;
+        padding: 0.6rem 0.8rem;
+    }
+
+    main {
+        padding: 15px 10px; /* Menos padding lateral en móviles */
+    }
+
+    section h2 {
+        font-size: 1.5rem; /* Títulos de sección más pequeños */
+    }
+
+    .card {
+        padding: 15px;
+    }
+    .card h3 {
+        font-size: 1.1rem;
+    }
+
+    .auth-form-container {
+        padding: 20px; /* Menos padding en formularios móviles */
+    }
+    .auth-form-container h3 {
+        font-size: 1.3rem; /* Títulos de formulario más pequeños */
+    }
+    .form-group label {
+        font-size: 0.9rem;
+    }
+    .input-group input[type="email"],
+    .input-group input[type="password"],
+    .input-group input[type="date"] {
+        font-size: 0.95rem;
+    }
+
+    .forgot-password-link, .auth-switch-prompt p {
+        font-size: 0.8rem;
+    }
+    .auth-switch-prompt .button-secondary {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+
+    .modal-content {
+        margin-top: 10%; /* Ajuste de margen superior para modal */
+        padding: 20px; /* Menos padding en modal */
+    }
+    .modal-content h3 {
+        font-size: 1.4rem;
+    }
+    .modal-content .close-button {
+        font-size: 24px;
+        top: 10px;
+        right: 15px;
+    }
+
+    /* Estilos del menú en pantallas pequeñas */
+    .categorias-grid {
+        grid-template-columns: 1fr; /* Una columna en móvil */
+        gap: 20px; /* Espacio entre categorías */
+    }
+    .categoria-card {
+        margin-bottom: 0; /* El gap del grid ya genera el espacio */
+    }
+    .menu-items-directos-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Ítems más pequeños */
+        gap: 15px;
+    }
+    .menu-items-directos-grid > .menu-item.card .info-item-imagen {
+        max-width: 70px;
+        height: 70px;
+    }
+    .menu-items-directos-grid > .menu-item.card .menu-item-nombre {
+        font-size: 0.9rem;
+    }
+    .menu-items-directos-grid > .menu-item.card .menu-item-precio {
+        font-size: 1rem;
+    }
+
+    /* Ajustes específicos para que los botones de acción queden bien en móvil */
+    .auth-form-container button[type="submit"],
+    .auth-switch-prompt .button-secondary {
+        padding: 10px 15px; /* Un poco más de padding */
+        font-size: 1rem;
+    }
+    .forgot-password-link {
+        white-space: nowrap; /* Evitar que se rompa en dos líneas */
+        display: block; /* Hacerlo bloque para que ocupe su línea */
+        width: 100%; /* Ocupar todo el ancho del contenedor */
+        text-align: right; /* Alinear el texto a la derecha */
+        margin-top: -10px; /* Acercarlo un poco al botón de iniciar sesión si es necesario */
+        margin-bottom: 10px;
+    }
+    /* Para que el enlace de contraseña no quede separado si el texto se ajusta mal */
+    .auth-form-login .form-group:nth-last-child(3) { /* El enlace está antes del submit */
+        margin-bottom: 5px; /* Reducir margen inferior si está antes de otro elemento */
+    }
+}
+
+/* Pantallas muy pequeñas / Teléfonos muy estrechos */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.4rem;
+    }
+    nav .nav-button {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.6rem;
+    }
+    .auth-switch-prompt {
+        flex-direction: column; /* Apilar prompt si hay poco espacio */
+    }
+    .auth-form-container {
+        padding: 15px; /* Menos padding aún */
+    }
+    .modal-content {
+        padding: 15px; /* Menos padding aún */
+        margin-top: 5%;
+    }
+    .modal-content h3 {
+        font-size: 1.3rem;
+    }
+    /* Ajustes adicionales para el menú en pantallas muy pequeñas */
+    .categorias-grid {
+        grid-template-columns: 1fr; /* Una columna en móvil */
+        gap: 20px; /* Espacio entre categorías */
+    }
+    .categoria-card {
+        margin-bottom: 0; /* El gap del grid ya genera el espacio */
+    }
+    .menu-items-directos-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Ítems aún más pequeños */
+        gap: 10px;
+    }
+    .menu-items-directos-grid > .menu-item.card .info-item-imagen {
+        max-width: 60px;
+        height: 60px;
+    }
+    .menu-items-directos-grid > .menu-item.card .menu-item-nombre {
+        font-size: 0.85rem;
+    }
+    .menu-items-directos-grid > .menu-item.card .menu-item-precio {
+        font-size: 0.95rem;
+    }
+    /* Asegurar espacio entre secciones en móviles muy pequeños */
+    .menu-seccion-info {
+        margin-bottom: 25px; 
+    }
+    .secciones-inferiores-flex-container {
+        gap: 20px; 
+    }
+}
+
+/* Asegurarnos de que el pie de categoría también tenga espacio */
+.pie-categoria {
+    margin-top: 30px; /* Un poco más de margen superior */
+}
+
+/* Asegurar que las tarjetas individuales tengan un margen inferior si no están en un grid con gap */
+/* Si usamos grid para categorias, el gap ya se encarga del espacio.
+   Si el contenido principal no está en un grid, aseguramos el margen inferior. */
+#carta > section {
+    margin-bottom: 40px; /* Mayor margen entre secciones principales del menú */
 }
