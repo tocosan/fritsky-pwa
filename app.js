@@ -35,7 +35,7 @@ console.log("Firebase (v10 modular) inicializado!");
 let currentUser = null;
 let menuCompletoGlobal = [];
 const PUNTOS_PARA_PREMIO = 10;
-let puntosActuales = 0;
+let puntosActuales = 0; // Esta variable se mantendrá como cache en memoria, sincronizada con Firestore
 
 // --- REFERENCIAS GLOBALES AL DOM ---
 let contadorPuntosSpanRef = null;
@@ -74,11 +74,21 @@ onAuthStateChanged(auth, (user) => {
         if (document.getElementById('pagina-auth')?.classList.contains('active')) {
             mostrarPagina('pagina-puntos');
         }
-        cargarPuntosFirebase();
+        cargarPuntosFirebase(); // Cargar puntos desde Firestore al conectarse
+        generarMiQRCode(); // Asegurar que el QR se muestre al iniciar sesión
     } else {
         currentUser = null;
         console.log("Firebase Auth: Usuario desconectado.");
         actualizarUIAcceso(false, null);
+        if (contadorPuntosSpanRef) contadorPuntosSpanRef.textContent = '0'; // Resetear UI de puntos si se desconecta
+        puntosActuales = 0; // Resetear variable en memoria
+        actualizarEstadoBotonCanjearFirebase(); // Deshabilitar botón de canje
+        
+        // Limpiar el QR code si el usuario se desconecta
+        const qrContainer = document.getElementById('qrcode-container');
+        if (qrContainer) qrContainer.innerHTML = '';
+        const qrMessage = document.getElementById('qrMessage');
+        if (qrMessage) qrMessage.textContent = '';
     }
 });
 
@@ -102,12 +112,6 @@ function actualizarUIAcceso(isLoggedIn, userEmail = null) {
         if (btnLogout) btnLogout.style.display = 'none';
         const userInfoSpan = document.getElementById('userInfo');
         if (userInfoSpan) userInfoSpan.textContent = '';
-        
-        if (contadorPuntosSpanRef) contadorPuntosSpanRef.textContent = '0';
-        if (btnCanjearSalsaRef) {
-            btnCanjearSalsaRef.disabled = true;
-            btnCanjearSalsaRef.textContent = `Canjear (${PUNTOS_PARA_PREMIO} puntos)`;
-        }
     }
 
     // Actualizar el estado del botón "Mis Puntos"
@@ -134,17 +138,28 @@ function mostrarPagina(idPaginaTarget) {
     
     todasLasPaginas.forEach(pagina => pagina.classList.remove('active'));
     const paginaSeleccionada = document.getElementById(idPaginaTarget);
+    
+    // 1. Mostrar la página y aplicar la clase 'active'
     if (paginaSeleccionada) {
         paginaSeleccionada.classList.add('active');
         console.log("[NAV_DEBUG] Página", idPaginaTarget, "activada.");
     } else {
         console.error("[NAV_DEBUG] No se encontró la página con ID:", idPaginaTarget);
+        // Si la página no existe, no intentamos nada más
+        return; 
     }
-    
+
+    // 2. Si la página es 'pagina-mi-qr', generar el QR
+    if (idPaginaTarget === 'pagina-mi-qr') {
+        generarMiQRCode(); 
+    }
+
+    // Actualizar la clase 'active' en los botones de navegación
     todosLosNavButtons.forEach(button => button.classList.remove('active'));
     const botonActivo = document.querySelector(`.nav-button[data-target="${idPaginaTarget}"]`);
     if (botonActivo) botonActivo.classList.add('active');
 
+    // Lógica específica para la página de autenticación
     if (idPaginaTarget === 'pagina-auth') {
         if (loginFormRef && registerFormContainerRef) {
             registerFormContainerRef.style.display = 'none'; // Ocultar registro por defecto
@@ -152,6 +167,7 @@ function mostrarPagina(idPaginaTarget) {
         }
     }
 
+    // Lógica específica para la página del menú
     if (idPaginaTarget === 'pagina-menu' && menuCompletoGlobal.length > 0) {
         console.log("[NAV_DEBUG] Es página de menú y hay datos, renderizando categorías.");
         renderizarVistaCategoriasPrincipales(menuCompletoGlobal);
@@ -478,16 +494,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Listeners de Navegación ---
     const todosLosNavButtons = document.querySelectorAll('.nav-button');
     todosLosNavButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            console.log("[NAV_DEBUG] Clic en botón NAV:", button.dataset.target);
-            // Si el botón es "Mis Puntos" y el usuario no está logueado, redirigir a auth
-            if (button.dataset.target === 'pagina-puntos' && !currentUser) {
-                console.log("[NAV_DEBUG] Usuario no conectado, redirigiendo a auth para 'Mis Puntos'.");
+        button.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevenir el comportamiento por defecto del botón
+            const targetPage = button.dataset.target;
+            console.log("[NAV_DEBUG] Clic en botón NAV:", targetPage);
+
+            // Redirección si la página objetivo no está disponible para el usuario actual
+            if ((targetPage === 'pagina-puntos' || targetPage === 'pagina-mi-qr') && !currentUser) {
+                console.log(`[NAV_DEBUG] Usuario no conectado, redirigiendo a auth para '${targetPage}'.`);
                 mostrarPagina('pagina-auth');
-                return; 
+                return; // Detiene la ejecución aquí si hay redirección
             }
-            // Para todos los demás botones, ejecutar la lógica normal
-            mostrarPagina(button.dataset.target);
+            
+            // Para todos los demás botones, o si el usuario está conectado
+            mostrarPagina(targetPage);
         });
     });
     
@@ -605,7 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const userDocRef = doc(db, "usuarios", userCredential.user.uid);
                 await setDoc(userDocRef, {
                     email: userCredential.user.email,
-                    puntosFidelidad: 0,
+                    puntosFidelidad: 0, // Inicializar puntos en 0
                     fechaNacimiento: birthday, 
                     fechaRegistro: new Date()
                 });
@@ -660,7 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 await signOut(auth);
                 console.log("[AUTH_DEBUG] Usuario cerró sesión exitosamente.");
-                mostrarPagina('pagina-promociones'); 
+                mostrarPagina('pagina-promociones'); // Redirigir a promociones al cerrar sesión
             } catch (error) {
                 console.error("[AUTH_DEBUG] Error al cerrar sesión:", error);
             }
@@ -680,23 +700,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    // --- Listener para el botón de Canjear ---
+    
+    // --- Listener para el botón de Canjear (AHORA USA LA FUNCIÓN DE FIREBASE) ---
     if (btnCanjearSalsaRef) {
-        btnCanjearSalsaRef.addEventListener('click', canjearPremioSalsaLocal);
+        btnCanjearSalsaRef.addEventListener('click', canjearPremioSalsaFirebase); // Usamos la función de Firebase
     }
 
     // --- Inicializaciones y Estado Inicial ---
-    cargarPuntosLocal(); 
-    inicializarMenu();
+    inicializarMenu(); // Cargar el menú
     
+    // Actualizar UI de autenticación (muestra/oculta botones de login/logout)
     actualizarUIAcceso(auth.currentUser ? true : false, auth.currentUser ? auth.currentUser.email : null);
 
+    // Si no hay página activa y no hay usuario, mostrar promociones. Si hay usuario, mostrar puntos.
     const algunaPaginaActiva = document.querySelector('.pagina.active');
-    if (!algunaPaginaActiva && !auth.currentUser) {
-        mostrarPagina('pagina-promociones');
-    } else if (!algunaPaginaActiva && auth.currentUser) {
-         mostrarPagina('pagina-puntos');
+    if (!algunaPaginaActiva) {
+        if (!currentUser) {
+            mostrarPagina('pagina-promociones');
+        } else {
+            mostrarPagina('pagina-puntos');
+        }
     }
+    // Nota: La carga de puntos de Firebase se hace en onAuthStateChanged para asegurar que el usuario ya está autenticado.
 
     console.log("App de Fidelidad Fritsky (con Auth mejorado y Firebase) completamente iniciada desde DOMContentLoaded!");
 });
@@ -734,35 +759,19 @@ function obtenerMensajeErrorFirebase(error) {
     }
 }
 
-// --- FUNCIONES DE PUNTOS ---
-function actualizarVistaPuntosLocal() {
-    if (contadorPuntosSpanRef) contadorPuntosSpanRef.textContent = puntosActuales;
-    actualizarEstadoBotonCanjearLocal();
-}
-function guardarPuntosLocal() { localStorage.setItem('fritskyPuntos_vLocal', puntosActuales.toString()); }
-function cargarPuntosLocal() {
-    if (!contadorPuntosSpanRef) contadorPuntosSpanRef = document.getElementById('contador-puntos'); 
-    const p = localStorage.getItem('fritskyPuntos_vLocal');
-    if (p !== null) puntosActuales = parseInt(p, 10);
-    else puntosActuales = 0;
-    actualizarVistaPuntosLocal();
-}
-function sumarPuntosLocal(c) { puntosActuales += c; guardarPuntosLocal(); actualizarVistaPuntosLocal(); }
-function actualizarEstadoBotonCanjearLocal() {
-    if (!btnCanjearSalsaRef) btnCanjearSalsaRef = document.getElementById('btnCanjearSalsa'); 
+// --- FUNCIONES DE PUNTOS Y PREMIOS (AHORA 100% FIREBASE) ---
+
+// Esta función ahora se llama desde cargarPuntosFirebase y sumarPuntosFirebase
+// para asegurar que el botón siempre refleje el estado correcto basado en Firestore.
+function actualizarEstadoBotonCanjearFirebase() {
+    if (!btnCanjearSalsaRef) btnCanjearSalsaRef = document.getElementById('btnCanjearSalsa');
     if (btnCanjearSalsaRef) {
         btnCanjearSalsaRef.disabled = !currentUser || puntosActuales < PUNTOS_PARA_PREMIO;
         btnCanjearSalsaRef.textContent = `Canjear (${PUNTOS_PARA_PREMIO} puntos)`;
     }
 }
-function canjearPremioSalsaLocal() {
-    if (!currentUser) { alert('Debes iniciar sesión para canjear premios.'); return; }
-    if (puntosActuales >= PUNTOS_PARA_PREMIO) {
-        puntosActuales -= PUNTOS_PARA_PREMIO; guardarPuntosLocal(); actualizarVistaPuntosLocal();
-        alert('¡Felicidades! Has canjeado tu Salsa Especial Gratis.');
-    } else { alert('No tienes suficientes puntos.'); }
-}
 
+// Carga los puntos del usuario desde Firestore y actualiza la UI
 async function cargarPuntosFirebase() {
     if (!contadorPuntosSpanRef) contadorPuntosSpanRef = document.getElementById('contador-puntos');
     if (currentUser && contadorPuntosSpanRef) {
@@ -772,27 +781,29 @@ async function cargarPuntosFirebase() {
             const docSnap = await getDoc(userDocRef);
             if (docSnap.exists()) {
                 const userData = docSnap.data();
-                puntosActuales = userData.puntosFidelidad || 0;
+                puntosActuales = userData.puntosFidelidad || 0; // Actualiza la variable global en memoria
                 contadorPuntosSpanRef.textContent = puntosActuales;
                 console.log("[PUNTOS_DEBUG] Puntos cargados desde Firestore:", puntosActuales);
             } else {
                 console.log("[PUNTOS_DEBUG] No se encontró documento de usuario, estableciendo puntos a 0 y creando documento.");
                 contadorPuntosSpanRef.textContent = '0';
-                puntosActuales = 0;
+                puntosActuales = 0; // Resetear variable en memoria
                 await setDoc(userDocRef, { email: currentUser.email, puntosFidelidad: 0, fechaRegistro: new Date() });
             }
         } catch (error) {
             console.error("[PUNTOS_DEBUG] Error al cargar puntos desde Firestore:", error);
             if(contadorPuntosSpanRef) contadorPuntosSpanRef.textContent = 'Error';
+            puntosActuales = 0; // En caso de error, reseteamos
         }
     } else if (contadorPuntosSpanRef) {
         console.log("[PUNTOS_DEBUG] No hay usuario conectado, puntos a 0 en UI.");
         contadorPuntosSpanRef.textContent = '0';
         puntosActuales = 0;
     }
-    actualizarEstadoBotonCanjearLocal();
+    actualizarEstadoBotonCanjearFirebase(); // Actualiza el estado del botón después de cargar/resetear puntos
 }
 
+// Suma puntos al usuario en Firestore y actualiza la UI
 async function sumarPuntosFirebase(cantidadASumar) {
     if (!currentUser) {
         console.warn("[PUNTOS_DEBUG] Intento de sumar puntos sin usuario conectado.");
@@ -822,11 +833,105 @@ async function sumarPuntosFirebase(cantidadASumar) {
 
         console.log(`[PUNTOS_DEBUG] Puntos actualizados en Firestore a: ${nuevosPuntos}`);
         
-        puntosActuales = nuevosPuntos;
-        actualizarVistaPuntosLocal();
+        puntosActuales = nuevosPuntos; // Actualiza la variable global en memoria
+        
+        // Actualizar UI y botón
+        if (contadorPuntosSpanRef) contadorPuntosSpanRef.textContent = puntosActuales;
+        actualizarEstadoBotonCanjearFirebase();
 
     } catch (error) {
         console.error("[PUNTOS_DEBUG] Error al sumar puntos en Firestore:", error);
         alert("Hubo un error al actualizar tus puntos. Inténtalo de nuevo.");
     }
+}
+
+// Canjea un premio restando puntos en Firestore y actualizando la UI
+async function canjearPremioSalsaFirebase() {
+    if (!currentUser) {
+        alert('Debes iniciar sesión para canjear premios.');
+        return;
+    }
+
+    if (puntosActuales < PUNTOS_PARA_PREMIO) {
+        alert(`No tienes suficientes puntos. Necesitas ${PUNTOS_PARA_PREMIO} puntos y tienes ${puntosActuales}.`);
+        return;
+    }
+
+    const userDocRef = doc(db, "usuarios", currentUser.uid);
+
+    try {
+        const nuevosPuntos = puntosActuales - PUNTOS_PARA_PREMIO;
+
+        await updateDoc(userDocRef, {
+            puntosFidelidad: nuevosPuntos
+        });
+
+        console.log(`[PREMIO_DEBUG] Canjeado premio. Puntos actualizados en Firestore a: ${nuevosPuntos}`);
+
+        puntosActuales = nuevosPuntos; // Actualiza la variable global en memoria
+        
+        // Actualizar UI y botón
+        if (contadorPuntosSpanRef) contadorPuntosSpanRef.textContent = puntosActuales;
+        actualizarEstadoBotonCanjearFirebase();
+
+        alert('¡Felicidades! Has canjeado tu Salsa Especial Gratis.');
+
+    } catch (error) {
+        console.error("[PREMIO_DEBUG] Error al canjear premio en Firestore:", error);
+        alert("Hubo un error al canjear tu premio. Por favor, inténtalo de nuevo.");
+    }
+}
+
+// --- FUNCIÓN PARA GENERAR EL QR CODE DEL CLIENTE ---
+function generarMiQRCode() {
+    const qrcodeContainer = document.getElementById('qrcode-container');
+    const qrMessage = document.getElementById('qrMessage');
+
+    if (!qrcodeContainer) {
+        console.error("Error: qrcode-container no encontrado.");
+        return;
+    }
+
+    if (!currentUser) {
+        if (qrMessage) qrMessage.textContent = "Por favor, inicia sesión para ver tu código QR.";
+        qrcodeContainer.innerHTML = ''; // Limpiar si el usuario se desconecta
+        return;
+    }
+
+    // El dato que codificaremos en el QR: una clave y el UID del usuario
+    const qrData = `fritsky_user:${currentUser.uid}`; 
+
+    // Limpiar contenedor anterior
+    qrcodeContainer.innerHTML = ''; 
+
+    // Función interna que intenta generar el QR y se reintenta si QRCode no está definido
+    const attemptQRCodeGeneration = () => {
+        // Verificamos si QRCode está definido globalmente
+        if (typeof QRCode !== 'undefined') {
+            try {
+                const qrCode = new QRCode(qrcodeContainer, {
+                    text: qrData,
+                    width: 200,
+                    height: 200,
+                    colorDark : "#000000", // Color negro para el QR
+                    colorLight : "#ffffff", // Fondo blanco
+                    correctLevel : QRCode.CorrectLevel.H // Nivel de corrección de errores (H es el más alto)
+                });
+    
+                if (qrMessage) qrMessage.textContent = "Escanea este código en el punto de venta.";
+                console.log(`QR Code generado para el usuario ${currentUser.uid} con datos: ${qrData}`);
+    
+            } catch (error) {
+                console.error("Error al generar el QR Code:", error);
+                if (qrMessage) qrMessage.textContent = "No se pudo generar el código QR. Inténtalo de nuevo.";
+            }
+        } else {
+            // Si QRCode aún no está definido, volvemos a intentar después de 100ms
+            console.warn("[QR_GENERATION_WAIT] QRCode no definido, reintentando en 100ms...");
+            setTimeout(attemptQRCodeGeneration, 100); 
+        }
+    };
+
+    // Iniciamos el proceso de generación
+    attemptQRCodeGeneration();
 }

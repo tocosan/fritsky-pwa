@@ -17,6 +17,7 @@
 
     <!-- Font Awesome para íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
 </head>
 <body>
     <header>
@@ -29,9 +30,10 @@
     </header>
 
     <nav>
-        <button data-target="pagina-promociones" class="nav-button active">Promociones</button>
+        <button data-target="pagina-promociones" class="nav-button">Promociones</button>
         <button id="btnMisPuntosNav" data-target="pagina-puntos" class="nav-button">Mis Puntos</button> <!-- ID añadido -->
         <button data-target="pagina-menu" class="nav-button">Nuestra Carta</button>
+        <button data-target="pagina-mi-qr" class="nav-button">Mi QR</button> <!-- Nuevo botón -->
         <button id="btnGoToAuth" data-target="pagina-auth" class="nav-button">Acceder/Registro</button>
     </nav>
 
@@ -173,12 +175,26 @@
                 <p id="passwordResetSuccess" class="success-message"></p>
             </div>
         </div>
+        <!-- PÁGINA PARA MOSTRAR EL QR DEL CLIENTE -->
+        <div id="pagina-mi-qr" class="pagina">
+            <section id="mi-qr-section">
+                <h2>Tu Código QR Fritsky</h2>
+                <div class="card qr-card">
+                    <p>Presenta este código a nuestro personal para sumar puntos o canjear tus recompensas.</p>
+                    <div id="qrcode-container" style="width:200px; height:200px; margin: 20px auto;">
+                        <!-- Aquí se generará el QR Code -->
+                    </div>
+                    <p id="qrMessage"></p>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer>
         <p>© <span id="currentYear"></span> Fritsky Patateria - App de Fidelidad</p>
     </footer>
 
+    <script src="/js/qrcode.js"></script>
     <script type="module" src="app.js"></script>
     <script>
         // Registro del Service Worker

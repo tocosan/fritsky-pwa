@@ -43,7 +43,8 @@ body {
     font-family: var(--fuente-principal); /* Aplica CodecPro por defecto */
     margin: 0;
     padding: 0;
-    background-color: var(--color-fondo);
+    background: linear-gradient(to bottom, #ffffff, #fff7cc);
+    background-image: url('https://www.transparenttextures.com/patterns/food.png'); /* Marca de agua de fondo */
     color: var(--color-texto);
     line-height: 1.6;
     scroll-behavior: smooth; /* Suavidad al hacer scroll */
