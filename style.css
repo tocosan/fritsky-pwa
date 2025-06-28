@@ -169,8 +169,8 @@ section h2 { /* Ya hereda Pusia */
     border-left: 5px solid var(--color-primario);
     display: flex;
     flex-direction: column;
-    height: 100%;
-    margin-bottom: 20px;
+    height: 100%; /* Asegura que las tarjetas intenten ocupar el mismo alto en filas */
+    margin-bottom: 20px; /* Margen inferior por defecto para tarjetas */
     transition: box-shadow 0.3s ease; /* Suavidad al hacer hover */
 }
 .card:hover { box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
@@ -238,13 +238,12 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 .categorias-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-    gap: 25px; 
+    gap: 25px; /* Espacio entre categorías */
     margin-top: 20px; 
 }
 .categoria-card { 
     cursor: pointer; 
     text-align: center; 
-    margin-bottom: 0; /* QUITAR ESTE MARGEN SI YA ESTÁ EN EL GRID GAP */
     transition: transform 0.2s ease, box-shadow 0.2s ease; /* Suavidad al pasar el ratón */
 }
 .categoria-card:hover {
@@ -308,10 +307,17 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 /* --- Estilos para Ítems dentro de Secciones Informativas (ej: Conos, Toppings) --- */
 .info-items-container { 
     display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-    gap: 20px; 
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Por defecto 2 columnas en mayoría de vistas */
+    gap: 15px; 
     margin-top: 10px; 
 }
+/* Caso específico: Conos de Patatas en una sola columna */
+/* NOTA: Este selector depende de que el HTML generado tenga esta estructura exacta */
+.menu-seccion-info:has(#info_tamano_cono) .info-items-container {
+    grid-template-columns: 1fr; /* Una sola columna para el tamaño del cono */
+}
+/* Si el :has no funciona, se podría usar una clase añadida por JS */
+
 .info-item-card { 
     background-color: var(--color-tarjeta-clara); 
     border: 1px solid #e9e9e9; 
@@ -324,8 +330,9 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
     justify-content: space-between; /* Para empujar el precio al final */
 }
 .info-item-imagen { 
+    width: 100%; /* Ajustar ancho de imagen */
     max-width: 120px; 
-    max-height: 100px; 
+    height: 100px; 
     object-fit: contain; 
     margin-bottom: 10px; 
     border-radius: 4px; 
@@ -363,7 +370,7 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 .secciones-inferiores-flex-container > .menu-seccion-info { 
     flex: 1 1 300px; /* Flex-grow, flex-shrink, flex-basis */
     max-width: 420px; /* Límite de ancho para cada sección */
-    margin-bottom: 0; 
+    margin-bottom: 0; /* El gap del flex ya maneja el espacio entre elementos */
 }
 
 /* Listas simples y listas de salsas */
@@ -395,7 +402,7 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 
 /* --- Estilos para la Información de Precios de Salsas Premium --- */
 .info-precios-categoria { 
-    margin-bottom: 25px; 
+    margin-bottom: 25px; /* Margen debajo de esta sección */
     padding: 15px 20px; 
     background-color: #fefefe; /* Fondo ligeramente diferente */
     border-left-color: var(--color-primario); /* Borde primario */
@@ -443,7 +450,7 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 .menu-items-directos-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Columnas responsivas */
-    gap: 20px; 
+    gap: 20px; /* Espacio entre ítems en la cuadrícula */
 }
 .menu-items-directos-grid > .menu-item.card { /* Estilo específico para items directos */
     background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-tarjeta-oscura-fondo1) 100%); /* Degradado */
@@ -455,9 +462,9 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
     padding: 15px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 0; /* Ya es parte del grid */
-    justify-content: flex-start; /* Alinea el contenido arriba */
     display: flex; /* Para permitir el uso de align-items */
+    flex-direction: column; /* Asegurar el orden de los elementos */
+    justify-content: space-between; /* Empuja el precio al final */
     align-items: center; /* Centra verticalmente el contenido de la tarjeta */
 }
 .menu-items-directos-grid > .menu-item.card:hover { 
@@ -465,11 +472,12 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
 }
 .menu-items-directos-grid > .menu-item.card .info-item-imagen { /* Reutilizamos el estilo de imagen de info-item-card */
+    width: 100%; /* Ajustar ancho de imagen */
     max-width: 90px; 
     height: 90px; 
     object-fit: cover; 
     border-radius: 50%; /* Imágenes circulares para productos */
-    margin: 0 auto 15px auto; 
+    margin-bottom: 15px; 
     border: 3px solid var(--color-texto-claro); 
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
@@ -708,12 +716,32 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 footer { text-align: center; padding: 20px; background-color: var(--color-secundario); color: var(--color-texto-claro); margin-top: 30px; }
 footer p { font-family: var(--fuente-principal); }
 
-
 /* ==========================================================================
-   Media Queries para Responsividad del Menú y Autenticación
+   Media Queries para Responsividad y Layout de Menú
    ========================================================================== */
 
-/* Generalmente para pantallas más grandes (escritorio, tablets grandes) */
+/* --- Estilos Base (móviles primero) --- */
+/* Para el menú: Ítems en 2 columnas por defecto, menos en conos */
+.info-items-container { 
+    display: grid; /* Aseguramos que sea grid */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Por defecto 2 columnas con auto-ajuste */
+    gap: 15px; 
+    margin-top: 10px; 
+}
+/* Caso específico: Conos de Patatas en una sola columna */
+/* Selector para la sección de tamaños de cono */
+.menu-seccion-info:has(#info_tamano_cono) .info-items-container {
+    grid-template-columns: 1fr; /* Una sola columna para el tamaño del cono */
+}
+
+/* Para Ítems Directos (ej: Cups Combinados, Salsas Premium) */
+.menu-items-directos-grid { 
+    display: grid; /* Aseguramos que sea grid */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Por defecto 2 columnas en móviles */
+    gap: 20px; 
+}
+
+/* --- Pantallas Medianas y Grandes (Monitores, Tablets) --- */
 @media (min-width: 768px) {
     main {
         padding: 20px 40px; /* Más padding en general en pantallas grandes */
@@ -745,29 +773,24 @@ footer p { font-family: var(--fuente-principal); }
         font-size: 1.8rem; /* Título del modal más grande */
     }
 
-    /* Estilos para el menú en pantallas más grandes */
+    /* Ajustes de Grid para el Menú en pantallas medianas/grandes */
     .categorias-grid {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas responsivas para categorías */
         gap: 25px; 
-        margin-top: 20px; 
     }
+    /* Ítems de Menú (Cups, Hexagonales, Salsas) en 3 columnas si caben */
     .menu-items-directos-grid {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Ítems un poco más anchos */
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+        gap: 20px; 
+    }
+    /* Ítems dentro de secciones informativas (ej: Toppings) */
+    .info-items-container {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Mantenemos 2-3 columnas */
         gap: 20px;
-    }
-    .menu-items-directos-grid > .menu-item.card .info-item-imagen {
-        max-width: 100px;
-        height: 100px;
-    }
-    .menu-items-directos-grid > .menu-item.card .menu-item-nombre {
-        font-size: 1.1rem;
-    }
-    .menu-items-directos-grid > .menu-item.card .menu-item-precio {
-        font-size: 1.2rem;
     }
 }
 
-/* Teléfonos y tablets pequeñas */
+/* --- Estilos Específicos para Teléfonos (Pantallas Pequeñas) --- */
 @media (max-width: 767px) {
     header {
         flex-direction: column; /* Apilar elementos en el header en móvil */
@@ -848,30 +871,23 @@ footer p { font-family: var(--fuente-principal); }
         right: 15px;
     }
 
-    /* Estilos del menú en pantallas pequeñas */
-    .categorias-grid {
-        grid-template-columns: 1fr; /* Una columna en móvil */
-        gap: 20px; /* Espacio entre categorías */
-    }
-    .categoria-card {
-        margin-bottom: 0; /* El gap del grid ya genera el espacio */
-    }
+    /* --- Layout del Menú en Móviles --- */
+    /* Ítems de Menú (Cups, Hexagonales, Salsas) en 2 columnas en móvil */
     .menu-items-directos-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Ítems más pequeños */
+        grid-template-columns: repeat(2, 1fr); 
         gap: 15px;
     }
-    .menu-items-directos-grid > .menu-item.card .info-item-imagen {
-        max-width: 70px;
-        height: 70px;
+    /* Ítems dentro de secciones informativas (ej: Toppings) */
+    .info-items-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas para Toppings en móvil */
+        gap: 15px;
     }
-    .menu-items-directos-grid > .menu-item.card .menu-item-nombre {
-        font-size: 0.9rem;
-    }
-    .menu-items-directos-grid > .menu-item.card .menu-item-precio {
-        font-size: 1rem;
+    /* Caso específico: Conos de Patatas en una sola columna */
+    .menu-seccion-info:has(#info_tamano_cono) .info-items-container {
+        grid-template-columns: 1fr; /* Una sola columna para el tamaño del cono */
     }
 
-    /* Ajustes específicos para que los botones de acción queden bien en móvil */
+    /* Ajustes adicionales para que los botones de acción queden bien en móvil */
     .auth-form-container button[type="submit"],
     .auth-switch-prompt .button-secondary {
         padding: 10px 15px; /* Un poco más de padding */
@@ -883,15 +899,13 @@ footer p { font-family: var(--fuente-principal); }
         width: 100%; /* Ocupar todo el ancho del contenedor */
         text-align: right; /* Alinear el texto a la derecha */
         margin-top: -10px; /* Acercarlo un poco al botón de iniciar sesión si es necesario */
-        margin-bottom: 10px;
     }
-    /* Para que el enlace de contraseña no quede separado si el texto se ajusta mal */
     .auth-form-login .form-group:nth-last-child(3) { /* El enlace está antes del submit */
         margin-bottom: 5px; /* Reducir margen inferior si está antes de otro elemento */
     }
 }
 
-/* Pantallas muy pequeñas / Teléfonos muy estrechos */
+/* --- Pantallas muy pequeñas / Teléfonos muy estrechos --- */
 @media (max-width: 480px) {
     header h1 {
         font-size: 1.4rem;
@@ -913,45 +927,33 @@ footer p { font-family: var(--fuente-principal); }
     .modal-content h3 {
         font-size: 1.3rem;
     }
-    /* Ajustes adicionales para el menú en pantallas muy pequeñas */
-    .categorias-grid {
-        grid-template-columns: 1fr; /* Una columna en móvil */
-        gap: 20px; /* Espacio entre categorías */
-    }
-    .categoria-card {
-        margin-bottom: 0; /* El gap del grid ya genera el espacio */
-    }
+
+    /* Layout del Menú en Teléfonos muy pequeños */
+    /* Ítems de Menú (Cups, Hexagonales, Salsas) en 1 columna en teléfonos muy estrechos */
     .menu-items-directos-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Ítems aún más pequeños */
-        gap: 10px;
+        grid-template-columns: 1fr; /* Una columna */
+        gap: 15px;
     }
-    .menu-items-directos-grid > .menu-item.card .info-item-imagen {
-        max-width: 60px;
-        height: 60px;
+    /* Ítems dentro de secciones informativas (ej: Toppings) */
+    .info-items-container {
+        grid-template-columns: 1fr; /* Una columna */
     }
-    .menu-items-directos-grid > .menu-item.card .menu-item-nombre {
-        font-size: 0.85rem;
-    }
-    .menu-items-directos-grid > .menu-item.card .menu-item-precio {
-        font-size: 0.95rem;
-    }
-    /* Asegurar espacio entre secciones en móviles muy pequeños */
-    .menu-seccion-info {
-        margin-bottom: 25px; 
-    }
-    .secciones-inferiores-flex-container {
-        gap: 20px; 
+    /* Caso específico: Conos de Patatas en una sola columna */
+    .menu-seccion-info:has(#info_tamano_cono) .info-items-container {
+        grid-template-columns: 1fr; /* Una sola columna para el tamaño del cono */
     }
 }
 
-/* Asegurarnos de que el pie de categoría también tenga espacio */
-.pie-categoria {
-    margin-top: 30px; /* Un poco más de margen superior */
+/* --- Ajustes de Espaciado y Margen --- */
+/* Asegurar que las tarjetas de las salsas premium tengan espaciado vertical adecuado */
+.menu-items-directos-grid > .menu-item.card {
+    margin-bottom: 25px; /* Margen entre las tarjetas de salsa */
 }
-
-/* Asegurar que las tarjetas individuales tengan un margen inferior si no están en un grid con gap */
-/* Si usamos grid para categorias, el gap ya se encarga del espacio.
-   Si el contenido principal no está en un grid, aseguramos el margen inferior. */
+/* Si alguna tarjeta de categoría no usa grid y se muestra linealmente */
+.categoria-card {
+    margin-bottom: 25px; /* Margen entre tarjetas de categoría en la vista principal */
+}
+/* Espacio entre secciones principales del menú */
 #carta > section {
-    margin-bottom: 40px; /* Mayor margen entre secciones principales del menú */
+    margin-bottom: 40px; 
 }

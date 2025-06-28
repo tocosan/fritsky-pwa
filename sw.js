@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fritsky-fidelidad-cache-v20'; // ¡INCREMENTA LA VERSIÓN!
+const CACHE_NAME = 'fritsky-fidelidad-cache-v21'; // ¡INCREMENTA LA VERSIÓN!
 const urlsToCache = [
   '/', // O '/index.html' si es tu página principal explícita
   '/index.html',
