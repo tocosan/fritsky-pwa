@@ -246,7 +246,7 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 .categorias-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-    margin-top: 0px; 
+    margin-top: 10px; 
 }
 .categoria-card {
     cursor: pointer; 
@@ -909,7 +909,17 @@ footer p { font-family: var(--fuente-principal); }
         font-size: 1.3rem;
     }
 
-    
+    .categorias-grid { 
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .categoria-card {
+        width: 90%;
+        
+    }
+
     .menu-items-directos-grid {
         display: flex;
         flex-direction: column;
@@ -919,6 +929,7 @@ footer p { font-family: var(--fuente-principal); }
     .menu-items-directos-grid > .menu-item.card { /* Estilo específico para items directos */
         width: 80%;
     }
+
     /* Ítems dentro de secciones informativas (ej: Toppings) */
     .info-items-container {
         grid-template-columns: 1fr; /* Una columna */
