@@ -37,26 +37,29 @@
       }
     ]
   },
+
   {
     "id_categoria": "cups-combinados",
     "nombre_categoria": "Cups Combinados",
     "descripcion_categoria": "Nuestras deliciosas combinaciones listas para disfrutar.",
+    
     "items_directos": [ 
-        { "id_item": "cup_fritsky", "nombre": "Cup Fritsky", "descripcion": "Cheddar, bacon y cebollino y patatas", "precio": "5.20€", "imagen": "images/menu/cup_fritsky.png" },
-        { "id_item": "cup_salchipapa", "nombre": "Cup Salchipapa", "descripcion": "Salchichas y patatas", "precio": "4.40€", "imagen": "images/menu/cup_salchipapa.png" },
+        { "id_item": "cup_fritsky", "nombre": "Cup Fritsky", "descripcion": "Cheddar, bacon, cebollino y patatas", "precio": "5.20€", "imagen": "images/menu/cup_fritsky.png" },
+        { "id_item": "cup_salchipapa", "nombre": "Cup Salchipapa", "descripcion": "Salchichas y patatas", "precio": "4.40€", "imagen": "images/menu/cup_fritsky.png" },
         { "id_item": "cup_kebab", "nombre": "Cup Kebab", "descripcion": "Kebab y patatas", "precio": "5.00€", "imagen": "images/menu/cup_kebab.png" },
         { "id_item": "cup_serrano", "nombre": "Cup Serrano", "descripcion": "Jamón Serrano y patatas", "precio": "5.00€", "imagen": "images/menu/cup_serrano.png" },
         { "id_item": "cup_nuggets", "nombre": "Cup Nuggets", "descripcion": "Lluvia de Nuggets y patatas", "precio": "5.00€", "imagen": "images/menu/cup_nuggets.png" }
-    ]
+      ] 
   },
+    
 
   {
     "id_categoria": "hexagonales",
     "nombre_categoria": "Snacks Combinados",
     "descripcion_categoria": "Nuestras deliciosas combinaciones listas para disfrutar.",
     "items_directos": [ 
-        { "id_item": "cup_fritsky", "nombre": "Cup Fritsky", "descripcion": "Cheddar, bacon y cebollino y patatas", "precio": "5.20€", "imagen": "images/menu/cup_fritsky.png" },
-        { "id_item": "cup_salchipapa", "nombre": "Cup Salchipapa", "descripcion": "Salchichas y patatas", "precio": "4.40€", "imagen": "images/menu/cup_salchipapa.png" },
+        { "id_item": "cup_fritsky", "nombre": "Cup Fritsky", "descripcion": "Cheddar, bacon, cebollino y patatas", "precio": "5.20€", "imagen": "images/menu/cup_fritsky.png" },
+        { "id_item": "cup_salchipapa", "nombre": "Cup Salchipapa", "descripcion": "Salchichas y patatas", "precio": "4.40€", "imagen": "images/menu/cup_fritsky.png" },
         { "id_item": "cup_kebab", "nombre": "Cup Kebab", "descripcion": "Kebab y patatas", "precio": "5.00€", "imagen": "images/menu/cup_kebab.png" },
         { "id_item": "cup_serrano", "nombre": "Cup Serrano", "descripcion": "Jamón Serrano y patatas", "precio": "5.00€", "imagen": "images/menu/cup_serrano.png" },
         { "id_item": "cup_nuggets", "nombre": "Cup Nuggets", "descripcion": "Lluvia de Nuggets y patatas", "precio": "5.00€", "imagen": "images/menu/cup_nuggets.png" }
