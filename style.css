@@ -910,9 +910,6 @@ footer p { font-family: var(--fuente-principal); }
         font-size: 1.3rem;
     }
 
-    
-   
-
     .menu-items-directos-grid {
         display: flex;
         flex-direction: column;
@@ -922,11 +919,11 @@ footer p { font-family: var(--fuente-principal); }
     .menu-items-directos-grid > .menu-item.card { /* Estilo específico para items directos */
         width: 80%;
     }
-   
-    /* Caso específico: Conos de Patatas en una sola columna */
-    .menu-seccion-info:has(#info_tamano_cono) .info-items-container {
-        grid-template-columns: 1fr; /* Una sola columna para el tamaño del cono */
+    /* Ítems dentro de secciones informativas (ej: Toppings) */
+    .info-items-container {
+        grid-template-columns: 1fr; /* Una columna */
     }
+  
 }
 
 
