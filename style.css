@@ -910,6 +910,9 @@ footer p { font-family: var(--fuente-principal); }
         font-size: 1.3rem;
     }
 
+    
+   
+
     .menu-items-directos-grid {
         display: flex;
         flex-direction: column;
@@ -923,7 +926,10 @@ footer p { font-family: var(--fuente-principal); }
     .info-items-container {
         grid-template-columns: 1fr; /* Una columna */
     }
-  
+    /* Caso específico: Conos de Patatas en una sola columna */
+    .menu-seccion-info:has(#info_tamano_cono) .info-items-container {
+        grid-template-columns: 1fr; /* Una sola columna para el tamaño del cono */
+    }
 }
 
 
