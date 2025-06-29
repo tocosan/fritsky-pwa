@@ -904,7 +904,7 @@ async function canjearPremioSalsaFirebase() {
 }
 
 // --- FUNCIÓN PARA GENERAR EL QR CODE DEL CLIENTE ---
-// --- FUNCIÓN PARA GENERAR EL QR CODE DEL CLIENTE ---
+// --- FUNCIÓN PARA GENERAR EL QR CODE DEL CLIENTE (con carga dinámica) ---
 function generarMiQRCode() {
     console.log("[QR_DEBUG] Entrando en generarMiQRCode()");
     const qrcodeContainer = document.getElementById('qrcode-container');
@@ -915,24 +915,42 @@ function generarMiQRCode() {
         return;
     }
 
-    console.log("[QR_DEBUG] Estado de currentUser:", currentUser); // <-- Añade este log
+    console.log("[QR_DEBUG] Estado de currentUser:", currentUser);
     if (!currentUser) {
         if (qrMessage) qrMessage.textContent = "Por favor, inicia sesión para ver tu código QR.";
         qrcodeContainer.innerHTML = ''; // Limpiar si el usuario se desconecta
-        console.log("[QR_DEBUG] currentUser es null, no se genera QR."); // <-- Añade este log
+        console.log("[QR_DEBUG] currentUser es null, no se genera QR.");
         return;
     }
 
-    // El dato que codificaremos en el QR: una clave y el UID del usuario
     const qrData = `fritsky_user:${currentUser.uid}`; 
+    qrcodeContainer.innerHTML = ''; // Limpiar contenedor anterior
 
-    // Limpiar contenedor anterior
-    qrcodeContainer.innerHTML = ''; 
+    // Función para cargar dinámicamente la librería qrcode.js
+    const loadQRCodeLib = (callback) => {
+        // Si ya está definida, la usamos inmediatamente
+        if (typeof QRCode !== 'undefined') {
+            console.log("[QR_LOAD] qrcode.js ya cargado.");
+            callback();
+            return;
+        }
 
-    // Función interna que intenta generar el QR y se reintenta si QRCode no está definido
+        console.log("[QR_LOAD] Cargando qrcode.js dinámicamente...");
+        const script = document.createElement('script');
+        script.src = '/js/qrcode.min.js'; // ¡ASEGÚRATE DE QUE ESTA RUTA SEA CORRECTA!
+        script.onload = () => {
+            console.log("[QR_LOAD] qrcode.js cargado exitosamente.");
+            callback();
+        };
+        script.onerror = (err) => {
+            console.error("[QR_LOAD] Error al cargar qrcode.js:", err);
+            if (qrMessage) qrMessage.textContent = "Error al cargar la librería QR. Inténtalo de nuevo.";
+        };
+        document.head.appendChild(script);
+    };
+
+    // Función que intenta generar el QR una vez que la librería está lista
     const attemptQRCodeGeneration = () => {
-        console.log("[QR_DEBUG] Intentando attemptQRCodeGeneration...");
-        // Verificamos si QRCode está definido globalmente
         if (typeof QRCode !== 'undefined') {
             try {
                 console.log("[QR_DEBUG] QRCode definido. Generando para:", qrData);
@@ -953,12 +971,12 @@ function generarMiQRCode() {
                 if (qrMessage) qrMessage.textContent = "No se pudo generar el código QR. Inténtalo de nuevo.";
             }
         } else {
-            // Si QRCode aún no está definido, volvemos a intentar después de 100ms
+            // SiQRCode aún no está definido, volvemos a intentar después de 100ms
             console.warn("[QR_GENERATION_WAIT] QRCode no definido, reintentando en 100ms...");
             setTimeout(attemptQRCodeGeneration, 100); 
         }
     };
 
-    // Iniciamos el proceso de generación
-    attemptQRCodeGeneration();
+    // Primero cargamos la librería y luego intentamos generar el QR
+    loadQRCodeLib(attemptQRCodeGeneration);
 }
