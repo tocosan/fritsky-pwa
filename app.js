@@ -904,7 +904,6 @@ async function canjearPremioSalsaFirebase() {
 }
 
 // --- FUNCIÓN PARA GENERAR EL QR CODE DEL CLIENTE ---
-// --- FUNCIÓN PARA GENERAR EL QR CODE DEL CLIENTE (con carga dinámica) ---
 function generarMiQRCode() {
     console.log("[QR_DEBUG] Entrando en generarMiQRCode()");
     const qrcodeContainer = document.getElementById('qrcode-container');
@@ -926,34 +925,41 @@ function generarMiQRCode() {
     const qrData = `fritsky_user:${currentUser.uid}`; 
     qrcodeContainer.innerHTML = ''; // Limpiar contenedor anterior
 
-    // Función para cargar dinámicamente la librería qrcode.js
-    const loadQRCodeLib = (callback) => {
-        // Si ya está definida, la usamos inmediatamente
+    // --- LÓGICA PARA CARGAR DINÁMICAMENTE LA LIBRERÍA QR ---
+    const loadQRCodeLibAndGenerate = () => {
+        // 1. Verificar si la librería ya está disponible
         if (typeof QRCode !== 'undefined') {
-            console.log("[QR_LOAD] qrcode.js ya cargado.");
-            callback();
+            console.log("[QR_LOAD] qrcode.js ya estaba disponible.");
+            generateQRCodeNow(); // Si ya está, genera directamente
             return;
         }
 
+        // 2. Si no, crear un script para cargarla
         console.log("[QR_LOAD] Cargando qrcode.js dinámicamente...");
         const script = document.createElement('script');
-        script.src = '/js/qrcode.min.js'; // ¡ASEGÚRATE DE QUE ESTA RUTA SEA CORRECTA!
+        // ¡¡¡IMPORTANTE!!! Verifica esta ruta. Debe ser la ruta correcta a tu qrcode.min.js
+        // Si está en la raíz, sería '/qrcode.min.js'. Si está en /js/, sería '/js/qrcode.min.js'.
+        // Basado en tu estructura, `/js/qrcode.min.js` es lo más probable.
+        script.src = '/js/qrcode.min.js'; 
+        
         script.onload = () => {
             console.log("[QR_LOAD] qrcode.js cargado exitosamente.");
-            callback();
+            generateQRCodeNow(); // Genera el QR una vez cargado
         };
+        
         script.onerror = (err) => {
             console.error("[QR_LOAD] Error al cargar qrcode.js:", err);
             if (qrMessage) qrMessage.textContent = "Error al cargar la librería QR. Inténtalo de nuevo.";
         };
+        
         document.head.appendChild(script);
     };
 
-    // Función que intenta generar el QR una vez que la librería está lista
-    const attemptQRCodeGeneration = () => {
+    // Función que realmente genera el QR (asume que QRCode está disponible)
+    const generateQRCodeNow = () => {
         if (typeof QRCode !== 'undefined') {
             try {
-                console.log("[QR_DEBUG] QRCode definido. Generando para:", qrData);
+                console.log("[QR_DEBUG] QRCode está definido. Generando para:", qrData);
                 const qrCode = new QRCode(qrcodeContainer, {
                     text: qrData,
                     width: 200,
@@ -971,12 +977,12 @@ function generarMiQRCode() {
                 if (qrMessage) qrMessage.textContent = "No se pudo generar el código QR. Inténtalo de nuevo.";
             }
         } else {
-            // SiQRCode aún no está definido, volvemos a intentar después de 100ms
-            console.warn("[QR_GENERATION_WAIT] QRCode no definido, reintentando en 100ms...");
-            setTimeout(attemptQRCodeGeneration, 100); 
+            // Si por alguna razón aún no está definido DESPUÉS de onload/onerror, es un problema grave.
+            console.error("[QR_LOAD_ERROR] QRCode todavía no está definido después de intentar cargarlo.");
+            if (qrMessage) qrMessage.textContent = "Error crítico: no se pudo cargar la librería QR.";
         }
     };
 
-    // Primero cargamos la librería y luego intentamos generar el QR
-    loadQRCodeLib(attemptQRCodeGeneration);
+    // Iniciar el proceso: primero cargamos la librería (si no está), luego generamos el QR
+    loadQRCodeLibAndGenerate();
 }
