@@ -11,7 +11,7 @@ const urlsToCache = [
   '/font/CodecPro-Regular.ttf',
   '/font/Pusia-Bold.ttf',
 
-  // Iconos PWA (asegúrate que estos existan y que los nombres coincidan)
+  
   '/images/logo.png', // Tu logo del header
   '/images/icon-72x72.png',
   '/images/icon-96x96.png',
