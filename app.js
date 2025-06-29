@@ -940,7 +940,7 @@ function generarMiQRCode() {
         // ¡¡¡IMPORTANTE!!! Verifica esta ruta. Debe ser la ruta correcta a tu qrcode.min.js
         // Si está en la raíz, sería '/qrcode.min.js'. Si está en /js/, sería '/js/qrcode.min.js'.
         // Basado en tu estructura, `/js/qrcode.min.js` es lo más probable.
-        script.src = '/fritsky-pwa/js/qrcode.min.js'; 
+        script.src = BASE_PATH + 'js/qrcode.min.js'; 
         
         script.onload = () => {
             console.log("[QR_LOAD] qrcode.js cargado exitosamente.");
