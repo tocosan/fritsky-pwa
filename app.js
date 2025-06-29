@@ -742,20 +742,41 @@ function limpiarModalRecuperacion() {
 function obtenerMensajeErrorFirebase(error) {
     console.error("Código de error Firebase:", error.code, "Mensaje:", error.message); 
     switch (error.code) {
-        case 'auth/email-already-in-use': return 'Este correo electrónico ya está en uso. Intenta iniciar sesión o usa uno diferente.';
-        case 'auth/invalid-email': return 'El formato del correo electrónico no es válido.';
-        case 'auth/operation-not-allowed': return 'Esta operación no está permitida.';
-        case 'auth/weak-password': return 'La contraseña es demasiado débil. Usa una más segura.';
-        case 'auth/user-not-found': return 'No se encontró ningún usuario con este correo electrónico.';
-        case 'auth/wrong-password': return 'La contraseña ingresada es incorrecta.';
-        case 'auth/too-many-requests': return 'Demasiados intentos. Espera un momento o inténtalo más tarde.';
-        case 'auth/network-request-failed': return 'Fallo en la conexión. Revisa tu conexión a internet.';
-        case 'auth/user-disabled': return 'Esta cuenta de usuario ha sido deshabilitada.';
-        case 'auth/popup-blocked': return 'La ventana emergente se bloqueó. Permite las ventanas emergentes para este sitio.';
-        case 'auth/cancelled-popup-request': return 'La acción de inicio de sesión fue cancelada.';
-        case 'auth/user-mismatch': return 'No se pudo restablecer la contraseña. El usuario no coincide con el correo proporcionado.';
-        case 'auth/session-cookie-expired': return 'Tu sesión ha expirado. Por favor, inicia sesión de nuevo.';
-        default: return `Ocurrió un error desconocido: ${error.message || error.code}`;
+        case 'auth/email-already-in-use': 
+            return 'Este correo electrónico ya está en uso. Intenta iniciar sesión o usa uno diferente.';
+        case 'auth/invalid-email': 
+            return 'El formato del correo electrónico no es válido.';
+        case 'auth/operation-not-allowed': 
+            return 'Esta operación no está permitida.';
+        case 'auth/weak-password': 
+            return 'La contraseña es demasiado débil. Usa una más segura.';
+        case 'auth/user-not-found': 
+            return 'No se encontró ningún usuario con este correo electrónico.';
+        case 'auth/wrong-password': 
+            return 'La contraseña ingresada es incorrecta.';
+        case 'auth/invalid-credential': // Este es el que estaba dando el error genérico
+            return 'Correo electrónico o contraseña incorrectos. Por favor, verifica tus datos.';
+        case 'auth/too-many-requests': 
+            return 'Demasiados intentos de inicio de sesión. Espera un momento o inténtalo más tarde.';
+        case 'auth/network-request-failed': 
+            return 'Fallo en la conexión. Revisa tu conexión a internet.';
+        case 'auth/user-disabled': 
+            return 'Esta cuenta de usuario ha sido deshabilitada.';
+        case 'auth/popup-blocked': 
+            return 'La ventana emergente se bloqueó. Permite las ventanas emergentes para este sitio.';
+        case 'auth/cancelled-popup-request': 
+            return 'La acción de inicio de sesión fue cancelada.';
+        case 'auth/user-mismatch': 
+            return 'No se pudo restablecer la contraseña. El usuario no coincide con el correo proporcionado.';
+        case 'auth/session-cookie-expired': 
+            return 'Tu sesión ha expirado. Por favor, inicia sesión de nuevo.';
+        default: 
+            // Si el error es desconocido, usamos el mensaje más específico que tengamos
+            // o un mensaje genérico si el error.message no es útil.
+            if (error.message && error.message.toLowerCase().includes('invalid-credential')) {
+                return 'Correo electrónico o contraseña incorrectos. Por favor, verifica tus datos.';
+            }
+            return `Ocurrió un error desconocido: ${error.message || error.code}`;
     }
 }
 
@@ -883,18 +904,22 @@ async function canjearPremioSalsaFirebase() {
 }
 
 // --- FUNCIÓN PARA GENERAR EL QR CODE DEL CLIENTE ---
+// --- FUNCIÓN PARA GENERAR EL QR CODE DEL CLIENTE ---
 function generarMiQRCode() {
+    console.log("[QR_DEBUG] Entrando en generarMiQRCode()");
     const qrcodeContainer = document.getElementById('qrcode-container');
     const qrMessage = document.getElementById('qrMessage');
 
     if (!qrcodeContainer) {
-        console.error("Error: qrcode-container no encontrado.");
+        console.error("[QR_DEBUG] Error: qrcode-container no encontrado.");
         return;
     }
 
+    console.log("[QR_DEBUG] Estado de currentUser:", currentUser); // <-- Añade este log
     if (!currentUser) {
         if (qrMessage) qrMessage.textContent = "Por favor, inicia sesión para ver tu código QR.";
         qrcodeContainer.innerHTML = ''; // Limpiar si el usuario se desconecta
+        console.log("[QR_DEBUG] currentUser es null, no se genera QR."); // <-- Añade este log
         return;
     }
 
@@ -906,9 +931,11 @@ function generarMiQRCode() {
 
     // Función interna que intenta generar el QR y se reintenta si QRCode no está definido
     const attemptQRCodeGeneration = () => {
+        console.log("[QR_DEBUG] Intentando attemptQRCodeGeneration...");
         // Verificamos si QRCode está definido globalmente
         if (typeof QRCode !== 'undefined') {
             try {
+                console.log("[QR_DEBUG] QRCode definido. Generando para:", qrData);
                 const qrCode = new QRCode(qrcodeContainer, {
                     text: qrData,
                     width: 200,
@@ -919,10 +946,10 @@ function generarMiQRCode() {
                 });
     
                 if (qrMessage) qrMessage.textContent = "Escanea este código en el punto de venta.";
-                console.log(`QR Code generado para el usuario ${currentUser.uid} con datos: ${qrData}`);
+                console.log(`[QR_DEBUG] QR Code generado para el usuario ${currentUser.uid} con datos: ${qrData}`);
     
             } catch (error) {
-                console.error("Error al generar el QR Code:", error);
+                console.error("[QR_DEBUG] Error al generar el QR Code:", error);
                 if (qrMessage) qrMessage.textContent = "No se pudo generar el código QR. Inténtalo de nuevo.";
             }
         } else {
