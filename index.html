@@ -17,15 +17,7 @@
 
     <!-- Font Awesome para íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script>
-    // Define la ruta base de la aplicación. Si el dominio es tocosan.github.io,
-    // y tu repo es fritsky-pwa, la ruta base es '/fritsky-pwa/'.
-    // De lo contrario (localmente), la ruta base es '/'.
-    const BASE_PATH = window.location.hostname === 'tocosan.github.io' ? '/fritsky-pwa/' : '/';
-    console.log("Aplicación corriendo en:", window.location.href);
-    console.log("BASE_PATH determinado como:", BASE_PATH);
-    </script>
-    
+        
 </head>
 <body>
     <header>
@@ -201,6 +193,15 @@
     <footer>
         <p>© <span id="currentYear"></span> Fritsky Patateria - App de Fidelidad</p>
     </footer>
+
+    <script>
+        // Define la ruta base de la aplicación. Si el dominio es tocosan.github.io,
+        // y tu repo es fritsky-pwa, la ruta base es '/fritsky-pwa/'.
+        // De lo contrario (localmente), la ruta base es '/'.
+        const BASE_PATH = window.location.hostname === 'tocosan.github.io' ? '/fritsky-pwa/' : '/';
+        console.log("Aplicación corriendo en:", window.location.href);
+        console.log("BASE_PATH determinado como:", BASE_PATH);
+    </script>
 
     <script type="module" src="/fritsky-pwa/app.js"></script>
     <script>
