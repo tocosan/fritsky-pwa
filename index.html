@@ -199,7 +199,7 @@
         // Registro del Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('/fritsky-pwa/sw.js')
                     .then(registration => { console.log('ServiceWorker registrado con éxito:', registration.scope); })
                     .catch(error => { console.log('Fallo al registrar el ServiceWorker:', error); });
             });
