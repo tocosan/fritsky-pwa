@@ -195,20 +195,33 @@
     </footer>
 
     <script>
-        // Define la ruta base de la aplicación. Si el dominio es tocosan.github.io,
-        // y tu repo es fritsky-pwa, la ruta base es '/fritsky-pwa/'.
-        // De lo contrario (localmente), la ruta base es '/'.
-        const BASE_PATH = window.location.hostname === 'tocosan.github.io' ? '/fritsky-pwa/' : '/';
+        // Determina la ruta base.
+        // Si el hostname es el de GitHub Pages, usa '/fritsky-pwa/'.
+        // Si el hostname es localhost o 127.0.0.1, usa '/' (para desarrollo local).
+        // Cualquier otro hostname también se tratará como localhost por defecto.
+        const BASE_PATH = (window.location.hostname === 'tocosan.github.io') ? '/fritsky-pwa/' : '/';
+        
+        // Guardamos BASE_PATH en localStorage para que app.js pueda acceder a ella
+        // si hay problemas de alcance global o recarga.
+        // localStorage.setItem('app_base_path', BASE_PATH); 
+        // Nota: En el caso de un Service Worker, es mejor que sea global o pasado.
+        
+        // Hacemos BASE_PATH global para que app.js pueda acceder fácilmente.
+        window.BASE_PATH = BASE_PATH; 
+
         console.log("Aplicación corriendo en:", window.location.href);
         console.log("BASE_PATH determinado como:", BASE_PATH);
     </script>
 
-    <script type="module" src="/fritsky-pwa/app.js"></script>
+    <!-- app.js se carga después de definir BASE_PATH -->
+    <script type="module" src="app.js"></script> 
+
     <script>
-        // Registro del Service Worker
+        // Registro del Service Worker (espera a que la página cargue)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register(BASE_PATH + 'sw.js')
+                // Usa la BASE_PATH definida globalmente
+                navigator.serviceWorker.register(window.BASE_PATH + 'sw.js')
                     .then(registration => { console.log('ServiceWorker registrado con éxito:', registration.scope); })
                     .catch(error => { console.log('Fallo al registrar el ServiceWorker:', error); });
             });
