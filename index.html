@@ -1,306 +1,388 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#FFD600">
-    <title>Fritsky Fidelidad</title>
-    <base href="/fritsky-pwa/">
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-    
-    <!-- Favicon y Meta tags PWA -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Fritsky">
-    <link rel="apple-touch-icon" href="images/icon-192x192.png"> 
-    <link rel="icon" type="image/x-icon" href="/favicon.ico"> 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFD600" />
+  <title>Fritsky Fidelidad</title>
 
-    <!-- Font Awesome para íconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-        
+  <script>
+    // Detecta si estás en GitHub Pages o en local y define la base para las rutas
+    const isGitHub = window.location.hostname === 'tocosan.github.io'; // Cambia si tu dominio es otro
+    window.BASE_PATH = isGitHub ? '/fritsky-pwa/' : '/';
+  </script>
+
+  <!-- Carga dinámica del CSS -->
+  <script>
+    const linkCss = document.createElement('link');
+    linkCss.rel = 'stylesheet';
+    linkCss.href = window.BASE_PATH + 'style.css';
+    document.head.appendChild(linkCss);
+  </script>
+
+  <!-- Carga dinámica del manifest -->
+  <script>
+    const linkManifest = document.createElement('link');
+    linkManifest.rel = 'manifest';
+    linkManifest.href = window.BASE_PATH + 'manifest.json';
+    document.head.appendChild(linkManifest);
+  </script>
+
+  <!-- Favicon y Meta tags PWA -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Fritsky" />
+  <link rel="apple-touch-icon" href="" id="appleIcon" />
+  <link rel="icon" type="image/x-icon" href="" id="faviconIcon" />
+
+  <!-- Font Awesome para íconos -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  />
 </head>
 <body>
-    <header>
-        <img src="images/logo.png" alt="Logo Fritsky Patateria" id="logo-header">
-        <h1>Fritsky Patateria</h1>
-        <div id="user-status-container">
-            <span id="userInfo"></span>
-            <button id="btnLogout" class="button-secondary" style="display:none;">Cerrar Sesión</button>
+  <header>
+    <img src="images/logo.png" alt="Logo Fritsky Patateria" id="logo-header" />
+    <h1>Fritsky Patateria</h1>
+    <div id="user-status-container">
+      <span id="userInfo"></span>
+      <button id="btnLogout" class="button-secondary" style="display:none;">
+        Cerrar Sesión
+      </button>
+    </div>
+  </header>
+
+  <nav>
+    <button data-target="pagina-promociones" class="nav-button">Promociones</button>
+    <button id="btnMisPuntosNav" data-target="pagina-puntos" class="nav-button">
+      Mis Puntos
+    </button>
+    <button data-target="pagina-menu" class="nav-button">Nuestra Carta</button>
+    <button data-target="pagina-mi-qr" class="nav-button">Mi QR</button>
+    <button id="btnGoToAuth" data-target="pagina-auth" class="nav-button">
+      Acceder/Registro
+    </button>
+  </nav>
+
+  <main>
+    <div id="mensajes-container" class="mensajes-container"></div>
+
+    <!-- PÁGINA DE PROMOCIONES -->
+    <div id="pagina-promociones" class="pagina">
+      <section id="promociones">
+        <h2>Promociones Especiales</h2>
+        <div class="card1">
+          <h3>🍟 Jueves de 2x1 Cono Chico 🍟</h3>
+          <p>¡Llevate 2 conos pequeños al precio de uno!.</p>
         </div>
-    </header>
-
-    <nav>
-        <button data-target="pagina-promociones" class="nav-button">Promociones</button>
-        <button id="btnMisPuntosNav" data-target="pagina-puntos" class="nav-button">Mis Puntos</button> <!-- ID añadido -->
-        <button data-target="pagina-menu" class="nav-button">Nuestra Carta</button>
-        <button data-target="pagina-mi-qr" class="nav-button">Mi QR</button> <!-- Nuevo botón -->
-        <button id="btnGoToAuth" data-target="pagina-auth" class="nav-button">Acceder/Registro</button>
-    </nav>
-
-    <main>
-        <div id="mensajes-container" class="mensajes-container"></div>
-        <!-- PÁGINA DE PROMOCIONES -->
-        <div id="pagina-promociones" class="pagina">
-            <section id="promociones">
-                <h2>Promociones Especiales</h2>
-                <div class="card1">
-                    <h3>🍟 Jueves de 2x1 Cono Chico 🍟</h3>
-                    <p>¡Llevate 2 conos pequeños al precio de uno!.</p>
-                </div>
-                <div class="card1">
-                    <h3>🎉 Combo Cumpleañero 🎉</h3>
-                    <p>¡Es tu cumpleaños? Presenta tu app y recibe unas Fritsky pequeñas de regalo!.</p>
-                </div>
-            </section>
+        <div class="card1">
+          <h3>🎉 Combo Cumpleañero 🎉</h3>
+          <p>
+            ¡Es tu cumpleaños? Presenta tu app y recibe unas Fritsky pequeñas de
+            regalo!.
+          </p>
         </div>
+      </section>
+    </div>
 
-        <!-- PÁGINA DE PUNTOS Y PREMIOS -->
-        <div id="pagina-puntos" class="pagina">
-            <section id="puntos-cliente"> 
-                <h2>Tu Club Fritsky</h2>
-                <div class="card puntos-card-container"> 
-                    <p class="puntos-label">Puntos Disponibles</p>
-                    <p id="contador-puntos" class="puntos-valor">0</p> 
+    <!-- PÁGINA DE PUNTOS Y PREMIOS -->
+    <div id="pagina-puntos" class="pagina">
+      <section id="puntos-cliente">
+        <h2>Tu Club Fritsky</h2>
+        <div class="card puntos-card-container">
+          <p class="puntos-label">Puntos Disponibles</p>
+          <p id="contador-puntos" class="puntos-valor">0</p>
 
-                    <div class="acumulacion-info">
-                        <h3 class="acumulacion-titulo">¿Cómo gano puntos?</h3>
-                        <ul class="acumulacion-lista">
-                            <li>💶 Hasta <strong>4€</strong> : 1 punto</li>
-                            <li>💶 Hasta <strong>7€</strong> : 2 puntos</li>
-                            <li>💶 Más de <strong>10€</strong> : 3 puntos</li>
-                        </ul>
-                    </div>
+          <div class="acumulacion-info">
+            <h3 class="acumulacion-titulo">¿Cómo gano puntos?</h3>
+            <ul class="acumulacion-lista">
+              <li>💶 Hasta <strong>4€</strong> : 1 punto</li>
+              <li>💶 Hasta <strong>7€</strong> : 2 puntos</li>
+              <li>💶 Más de <strong>10€</strong> : 3 puntos</li>
+            </ul>
+          </div>
 
-                    
-                    <h3 class="premio-titulo">🎁 Canjea tus puntos!! 🎁</h3>
+          <h3 class="premio-titulo">🎁 Canjea tus puntos!! 🎁</h3>
 
-                    <div class="premio-info">
-                        <p class="premio-descripcion">
-                            ¡Acumula <strong>5 puntos</strong> y obtén una Ración de Salsa Especial Gratis! 
-                            <i class="fas fa-pepper-hot fa-2x"></i>
-                        </p>
-                    </div>
-                    <div class="premio-info">
-                        <p class="premio-descripcion">
-                            ¡Acumula <strong>10 puntos</strong> y llévate un Cono Chico + Refresco Lata Gratis! 
-                            <i class="fas fa-pepper-hot fa-2x"></i>                        
-                        </p>
-                    </div>
-                    <div class="premio-info">
-                        <p class="premio-descripcion">
-                            ¡Acumula <strong>15 puntos</strong> y Llevate un Cono Medio con Toppings + Lata Refresco Gratis! 
-                            <i class="fas fa-pepper-hot fa-2x"></i>
-                        </p>
-                    </div>
-                    <div class="premio-info">
-                        <p class="premio-descripcion">
-                            ¡Acumula <strong>18 puntos</strong> y recibe una Big Box de 10 unidades Gratis! 
-                            <i class="fas fa-box-open fa-2x"></i>
-                        </p>
-                    </div>
+          <div class="premio-info">
+            <p class="premio-descripcion">
+              ¡Acumula <strong>5 puntos</strong> y obtén una Ración de Salsa Especial
+              Gratis!
+              <i class="fas fa-pepper-hot fa-2x"></i>
+            </p>
+          </div>
+          <div class="premio-info">
+            <p class="premio-descripcion">
+              ¡Acumula <strong>10 puntos</strong> y llévate un Cono Chico + Refresco
+              Lata Gratis!
+              <i class="fas fa-pepper-hot fa-2x"></i>
+            </p>
+          </div>
+          <div class="premio-info">
+            <p class="premio-descripcion">
+              ¡Acumula <strong>15 puntos</strong> y Llevate un Cono Medio con Toppings +
+              Lata Refresco Gratis!
+              <i class="fas fa-pepper-hot fa-2x"></i>
+            </p>
+          </div>
+          <div class="premio-info">
+            <p class="premio-descripcion">
+              ¡Acumula <strong>18 puntos</strong> y recibe una Big Box de 10 unidades
+              Gratis!
+              <i class="fas fa-box-open fa-2x"></i>
+            </p>
+          </div>
 
-                    <div class="boton-ruleta-container" style="text-align: center; margin-top: 20px;">
-                        <button id="btn-jugar-ruleta" class="boton-ruleta">🎰 Jugar a la Ruleta</button>
-                    </div>
+          <div class="boton-ruleta-container" style="text-align: center; margin-top: 20px;">
+            <button id="btn-jugar-ruleta" class="boton-ruleta">🎰 Jugar a la Ruleta</button>
+          </div>
 
-                    
-                    <div id="ruleta-container" class="ruleta-container" style="display: none;"></div>
-                    <div id="mensaje-ruleta-no-disponible" class="mensaje-ya-jugado" style="display: none;"></div>
+          <div id="ruleta-container" class="ruleta-container" style="display: none;"></div>
+          <div id="mensaje-ruleta-no-disponible" class="mensaje-ya-jugado" style="display: none;"></div>
 
-
-                    <div class="ranking-container">
-                        <h3>Ranking de Clientes Fritsky 🏆</h3>
-                        <ul>
-                            <!-- Aquí se insertarán dinámicamente los <li> con el ranking -->
-                        </ul>
-                    </div>
-                </div>
-            </section>
+          <div class="ranking-container">
+            <h3>Ranking de Clientes Fritsky 🏆</h3>
+            <ul>
+              <!-- Aquí se insertarán dinámicamente los <li> con el ranking -->
+            </ul>
+          </div>
         </div>
+      </section>
+    </div>
 
-        <!-- PÁGINA DEL MENÚ/CARTA -->
-        <div id="pagina-menu" class="pagina">
-            <section id="carta">
-                <h2>Menú Fritsky</h2>
-                <div id="menu-container">
-                    <p>Cargando menú...</p>
-                </div>
-            </section>
+    <!-- PÁGINA DEL MENÚ/CARTA -->
+    <div id="pagina-menu" class="pagina">
+      <section id="carta">
+        <h2>Menú Fritsky</h2>
+        <div id="menu-container">
+          <p>Cargando menú...</p>
         </div>
+      </section>
+    </div>
 
-        <!-- PÁGINA DE AUTENTICACIÓN (MODIFICADA para mejor flujo) -->
-        <div id="pagina-auth" class="pagina">
-            <section id="auth-section">
-                <h2>Acceso / Registro de Clientes Fritsky</h2>
+    <!-- PÁGINA DE AUTENTICACIÓN -->
+    <div id="pagina-auth" class="pagina">
+      <section id="auth-section">
+        <h2>Acceso / Registro de Clientes Fritsky</h2>
 
-                <!-- Formulario de Inicio de Sesión -->
-                <div class="auth-form-container card auth-form-login">
-                    <h3><i class="fas fa-sign-in-alt auth-icon"></i> Iniciar Sesión</h3>
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label for="loginEmail">Correo Electrónico</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
-                                <input type="email" id="loginEmail" required placeholder="tuemail@ejemplo.com">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="loginPassword">Contraseña</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-lock"></i></span>
-                                <input type="password" id="loginPassword" required placeholder="********">
-                            </div>
-                        </div>
-                        <!-- Enlace al modal de recuperación de contraseña -->
-                        <a href="#" id="forgotPasswordLink" class="forgot-password-link">¿Olvidaste tu contraseña?</a>
-                        <button type="submit" class="button-primary">Iniciar Sesión</button>
-                    </form>
-                    <p id="loginError" class="error-message"></p>
-
-                    <!-- Botón para ir al registro -->
-                    <div class="auth-switch-prompt">
-                        <p>¿No tienes cuenta?</p>
-                        <button id="goToRegisterLink" class="button-secondary">Regístrate Aquí</button>
-                    </div>
-                </div>
-
-                <!-- Formulario de Registro (Oculto inicialmente, se muestra con JS) -->
-                <div id="registerFormContainer" class="auth-form-container card auth-form-register" style="display: none;">
-                    <h3><i class="fas fa-user-plus auth-icon"></i> Únete a Fritsky</h3>
-                    <form id="registerForm">
-                        <div class="form-group">
-                            <label for="registerEmail">Correo Electrónico</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
-                                <input type="email" id="registerEmail" required placeholder="tuemail@ejemplo.com">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="registerName">Nombre</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-user"></i></span>
-                                <input type="text" id="registerName" required placeholder="Tu nombre">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="registerPassword">Contraseña</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-lock"></i></span>
-                                <input type="password" id="registerPassword" required minlength="6" placeholder="Mínimo 6 caracteres">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="registerBirthday">Fecha de Nacimiento</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-calendar-alt"></i></span>
-                                <input type="date" id="registerBirthday" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="button-primary">Registrarme</button>
-                    </form>
-                    <p id="registerError" class="error-message"></p>
-                    <p id="registerSuccessMessage" class="success-message"></p>
-                    <div class="auth-switch-prompt">
-                        <p>¿Ya tienes cuenta?</p>
-                        <button id="goToLoginLink" class="button-secondary">Inicia Sesión</button>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- MODAL DE RECUPERACIÓN DE CONTRASEÑA (Solo se muestra cuando se necesita) -->
-        <div id="passwordResetModal" class="modal" style="display: none">
-            <div class="modal-content card">
-                <span class="close-button">×</span>
-                <h3><i class="fas fa-key auth-icon"></i>Recuperar Contraseña</h3>
-                <p>Introduce tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.</p>
-                <form id="passwordResetForm">
-                    <div class="form-group">
-                        <label for="resetEmail">Correo Electrónico</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
-                            <input type="email" id="resetEmail" required placeholder="tuemail@ejemplo.com">
-                        </div>
-                    </div>
-                    <button type="submit" class="button-primary">Enviar Instrucciones</button>
-                </form>
-                <p id="passwordResetError" class="error-message"></p>
-                <p id="passwordResetSuccess" class="success-message"></p>
+        <div class="auth-form-container card auth-form-login">
+          <h3><i class="fas fa-sign-in-alt auth-icon"></i> Iniciar Sesión</h3>
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="loginEmail">Correo Electrónico</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
+                <input type="email" id="loginEmail" required placeholder="tuemail@ejemplo.com" />
+              </div>
             </div>
+            <div class="form-group">
+              <label for="loginPassword">Contraseña</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fas fa-lock"></i></span>
+                <input type="password" id="loginPassword" required placeholder="********" />
+              </div>
+            </div>
+            <a href="#" id="forgotPasswordLink" class="forgot-password-link"
+              >¿Olvidaste tu contraseña?</a
+            >
+            <button type="submit" class="button-primary">Iniciar Sesión</button>
+          </form>
+          <p id="loginError" class="error-message"></p>
+
+          <div class="auth-switch-prompt">
+            <p>¿No tienes cuenta?</p>
+            <button id="goToRegisterLink" class="button-secondary">Regístrate Aquí</button>
+          </div>
         </div>
-        <!-- PÁGINA PARA MOSTRAR EL QR DEL CLIENTE -->
-        <div id="pagina-mi-qr" class="pagina">
-            <section id="mi-qr-section">
-                <h2>Tu Código QR Fritsky</h2>
-                <div class="qr-card">
-                    
-                    <div id="qrcode-container" style="width:200px; height:200px; margin: 20px auto;">
-                        <!-- Aquí se generará el QR Code -->
-                    </div>
-                    <p id="qrMessage"></p>
-                </div>
-            </section>
+
+        <div
+          id="registerFormContainer"
+          class="auth-form-container card auth-form-register"
+          style="display: none"
+        >
+          <h3><i class="fas fa-user-plus auth-icon"></i> Únete a Fritsky</h3>
+          <form id="registerForm">
+            <div class="form-group">
+              <label for="registerEmail">Correo Electrónico</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
+                <input
+                  type="email"
+                  id="registerEmail"
+                  required
+                  placeholder="tuemail@ejemplo.com"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="registerName">Nombre</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fas fa-user"></i></span>
+                <input
+                  type="text"
+                  id="registerName"
+                  required
+                  placeholder="Tu nombre"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="registerPassword">Contraseña</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fas fa-lock"></i></span>
+                <input
+                  type="password"
+                  id="registerPassword"
+                  required
+                  minlength="6"
+                  placeholder="Mínimo 6 caracteres"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="registerBirthday">Fecha de Nacimiento</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fas fa-calendar-alt"></i></span>
+                <input type="date" id="registerBirthday" required />
+              </div>
+            </div>
+            <button type="submit" class="button-primary">Registrarme</button>
+          </form>
+          <p id="registerError" class="error-message"></p>
+          <p id="registerSuccessMessage" class="success-message"></p>
+          <div class="auth-switch-prompt">
+            <p>¿Ya tienes cuenta?</p>
+            <button id="goToLoginLink" class="button-secondary">Inicia Sesión</button>
+          </div>
         </div>
-    </main>
+      </section>
+    </div>
 
-<footer>
-  <div class="footer-social">
-    <a href="https://www.instagram.com/fritsky.patateria" target="_blank" aria-label="Instagram">
-      <img src="images/icons/social/instagram.png" alt="Instagram">
-    </a>
-    <a href="https://www.facebook.com/Fritsky.Patateria" target="_blank" aria-label="Facebook">
-      <img src="images/icons/social/facebook.png" alt="Facebook">
-    </a>
-    <a href="https://www.tiktok.com/@fritsky.patateria" target="_blank" aria-label="TikTok">
-      <img src="images/icons/social/tiktok.png" alt="TikTok">
-    </a>
-    <a href="https://g.page/r/CX95p7m3K_GDEBM/review" target="_blank" aria-label="Google Reseña">
-      <img src="images/icons/social/google.png" alt="Google Reseña">
-    </a>
-    <a href="https://fritsky.es" target="_blank" aria-label="Sitio Web">
-      <img src="images/icons/social/web.png" alt="Sitio Web Fritsky">
-    </a>
-  </div>
-  <p>© <span id="currentYear"></span> Fritsky Patateria - App de Fidelidad</p>
-</footer>
+    <!-- MODAL DE RECUPERACIÓN DE CONTRASEÑA -->
+    <div id="passwordResetModal" class="modal" style="display: none">
+      <div class="modal-content card">
+        <span class="close-button">×</span>
+        <h3><i class="fas fa-key auth-icon"></i>Recuperar Contraseña</h3>
+        <p>
+          Introduce tu correo electrónico y te enviaremos un enlace para
+          restablecer tu contraseña.
+        </p>
+        <form id="passwordResetForm">
+          <div class="form-group">
+            <label for="resetEmail">Correo Electrónico</label>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
+              <input
+                type="email"
+                id="resetEmail"
+                required
+                placeholder="tuemail@ejemplo.com"
+              />
+            </div>
+          </div>
+          <button type="submit" class="button-primary">Enviar Instrucciones</button>
+        </form>
+        <p id="passwordResetError" class="error-message"></p>
+        <p id="passwordResetSuccess" class="success-message"></p>
+      </div>
+    </div>
 
-    <script>
-        const BASE_PATH = (window.location.hostname === 'tocosan.github.io') ? '/fritsky-pwa/' : '/';
-        
-        window.BASE_PATH = BASE_PATH; 
+    <!-- PÁGINA PARA MOSTRAR EL QR DEL CLIENTE -->
+    <div id="pagina-mi-qr" class="pagina">
+      <section id="mi-qr-section">
+        <h2>Tu Código QR Fritsky</h2>
+        <div class="qr-card">
+          <div
+            id="qrcode-container"
+            style="width:200px; height:200px; margin: 20px auto"
+          >
+            <!-- Aquí se generará el QR Code -->
+          </div>
+          <p id="qrMessage"></p>
+        </div>
+      </section>
+    </div>
+  </main>
 
-        console.log("Aplicación corriendo en:", window.location.href);
-        console.log("BASE_PATH determinado como:", BASE_PATH);
-    </script>
+  <footer>
+    <div class="footer-social">
+      <a
+        href="https://www.instagram.com/fritsky.patateria"
+        target="_blank"
+        aria-label="Instagram"
+        ><img alt="Instagram" id="instagramIcon"
+      /></a>
+      <a
+        href="https://www.facebook.com/Fritsky.Patateria"
+        target="_blank"
+        aria-label="Facebook"
+        ><img alt="Facebook" id="facebookIcon"
+      /></a>
+      <a
+        href="https://www.tiktok.com/@fritsky.patateria"
+        target="_blank"
+        aria-label="TikTok"
+        ><img alt="TikTok" id="tiktokIcon"
+      /></a>
+      <a
+        href="https://g.page/r/CX95p7m3K_GDEBM/review"
+        target="_blank"
+        aria-label="Google Reseña"
+        ><img alt="Google Reseña" id="googleIcon"
+      /></a>
+      <a href="https://fritsky.es" target="_blank" aria-label="Sitio Web"
+        ><img alt="Sitio Web Fritsky" id="webIcon"
+      /></a>
+    </div>
+    <p>© <span id="currentYear"></span> Fritsky Patateria - App de Fidelidad</p>
+  </footer>
 
-    <!-- app.js se carga después de definir BASE_PATH -->
-    <script type="module" src="app.js"></script> 
+  <script>
+    // Carga dinámica de imágenes con BASE_PATH
+    const imagesMap = {
+      logoHeader: 'images/logo.png',
+      appleIcon: 'images/icon-192x192.png',
+      faviconIcon: 'favicon.ico',
+      instagramIcon: 'images/icons/social/instagram.png',
+      facebookIcon: 'images/icons/social/facebook.png',
+      tiktokIcon: 'images/icons/social/tiktok.png',
+      googleIcon: 'images/icons/social/google.png',
+      webIcon: 'images/icons/social/web.png',
+    };
 
-    <script>
-    if ('serviceWorker' in navigator) {
-  window.addEventListener('load', async () => {
-    try {
-      // Registra solo el Service Worker principal que creaste
-      const registration = await navigator.serviceWorker.register(window.BASE_PATH + 'main-sw.js');
-      console.log('ServiceWorker principal registrado con éxito:', registration.scope);
-
-      // Opcional: pasar el SW registrado a Firebase Messaging (solo si usas la SDK modular)
-      if (window.firebaseMessaging) {
-        window.firebaseMessaging.useServiceWorker(registration);
-        console.log('Firebase Messaging vinculado al Service Worker.');
+    for (const [id, path] of Object.entries(imagesMap)) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.src = window.BASE_PATH + path;
       }
-
-    } catch (error) {
-      console.error('Fallo al registrar el Service Worker principal:', error);
     }
-  });
-}
 
-
-    // Establecer año actual en el footer
+    // Mostrar año actual
     document.getElementById('currentYear').textContent = new Date().getFullYear();
-</script>
+  </script>
 
+  <!-- Carga de app.js -->
+  <script type="module" src="app.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async () => {
+        try {
+          const registration = await navigator.serviceWorker.register(
+            window.BASE_PATH + 'main-sw.js'
+          );
+          console.log('ServiceWorker registrado con éxito:', registration.scope);
+
+          if (window.firebaseMessaging) {
+            window.firebaseMessaging.useServiceWorker(registration);
+            console.log('Firebase Messaging vinculado al Service Worker.');
+          }
+        } catch (error) {
+          console.error('Fallo al registrar el Service Worker:', error);
+        }
+      });
+    }
+  </script>
 </body>
 </html>
