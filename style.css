@@ -39,8 +39,8 @@
     --fuente-principal: 'CodecPro', Arial, sans-serif; 
 
     /* Variables de Fuente */
-    --bg-principal: url("images/bg.jpg");
-    --bg-cards: url("images/bg_card.jpg");
+    --bg-principal: url('images/bg.jpg');
+    --bg-cards: url('images/bg_card.jpg');
 }
 
 /* Reseteo y Box-Sizing Global */
