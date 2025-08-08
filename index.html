@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Fritsky">
     <link rel="apple-touch-icon" href="images/icon-192x192.png"> 
-    <link rel="icon" href="images/icon-192x192.png" type="image/png"> 
+    <link rel="icon" type="image/x-icon" href="/favicon.ico"> 
 
     <!-- Font Awesome para íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -38,37 +38,82 @@
     </nav>
 
     <main>
+        <div id="mensajes-container" class="mensajes-container"></div>
         <!-- PÁGINA DE PROMOCIONES -->
         <div id="pagina-promociones" class="pagina">
             <section id="promociones">
                 <h2>Promociones Especiales</h2>
-                <div class="card">
-                    <h3>🍟 Martes de Fritsky Dobles 🍟</h3>
-                    <p>¡Compra unas Fritsky Clásicas y llévate otras gratis! Solo los martes.</p>
+                <div class="card1">
+                    <h3>🍟 Jueves de 2x1 Cono Chico 🍟</h3>
+                    <p>¡Llevate 2 conos pequeños al precio de uno!.</p>
                 </div>
-                <div class="card">
+                <div class="card1">
                     <h3>🎉 Combo Cumpleañero 🎉</h3>
-                    <p>¡Es tu cumpleaños? Presenta tu app y recibe unas Fritsky pequeñas de regalo con tu pedido.</p>
+                    <p>¡Es tu cumpleaños? Presenta tu app y recibe unas Fritsky pequeñas de regalo!.</p>
                 </div>
             </section>
         </div>
 
         <!-- PÁGINA DE PUNTOS Y PREMIOS -->
         <div id="pagina-puntos" class="pagina">
-            <section id="puntos">
-                <h2>Mis Fritsky-Puntos</h2>
-                <div class="card">
-                    <p>Puntos Acumulados: <span id="contador-puntos">0</span></p>
-                    <p>¡Cada 10 puntos, una ración de salsa especial GRATIS!</p>
-                    <button id="btnSimularPunto" class="button-primary">Simular Ganar 1 Fritsky-Punto</button>
-                </div>
-            </section>
+            <section id="puntos-cliente"> 
+                <h2>Tu Club Fritsky</h2>
+                <div class="card puntos-card-container"> 
+                    <p class="puntos-label">Puntos Disponibles</p>
+                    <p id="contador-puntos" class="puntos-valor">0</p> 
 
-            <section id="premios">
-                <h2>Canjear Premios</h2>
-                <div class="card premio-item">
-                    <p><strong>Salsa Especial Gratis</strong> (Requiere 10 puntos)</p>
-                    <button id="btnCanjearSalsa" class="button-secondary" disabled>Canjear (10 puntos)</button>
+                    <div class="acumulacion-info">
+                        <h3 class="acumulacion-titulo">¿Cómo gano puntos?</h3>
+                        <ul class="acumulacion-lista">
+                            <li>💶 Hasta <strong>4€</strong> : 1 punto</li>
+                            <li>💶 Hasta <strong>7€</strong> : 2 puntos</li>
+                            <li>💶 Más de <strong>10€</strong> : 3 puntos</li>
+                        </ul>
+                    </div>
+
+                    
+                    <h3 class="premio-titulo">🎁 Canjea tus puntos!! 🎁</h3>
+
+                    <div class="premio-info">
+                        <p class="premio-descripcion">
+                            ¡Acumula <strong>5 puntos</strong> y obtén una Ración de Salsa Especial Gratis! 
+                            <i class="fas fa-pepper-hot fa-2x"></i>
+                        </p>
+                    </div>
+                    <div class="premio-info">
+                        <p class="premio-descripcion">
+                            ¡Acumula <strong>10 puntos</strong> y llévate un Cono Chico + Refresco Lata Gratis! 
+                            <i class="fas fa-pepper-hot fa-2x"></i>                        
+                        </p>
+                    </div>
+                    <div class="premio-info">
+                        <p class="premio-descripcion">
+                            ¡Acumula <strong>15 puntos</strong> y Llevate un Cono Medio con Toppings + Lata Refresco Gratis! 
+                            <i class="fas fa-pepper-hot fa-2x"></i>
+                        </p>
+                    </div>
+                    <div class="premio-info">
+                        <p class="premio-descripcion">
+                            ¡Acumula <strong>18 puntos</strong> y recibe una Big Box de 10 unidades Gratis! 
+                            <i class="fas fa-box-open fa-2x"></i>
+                        </p>
+                    </div>
+
+                    <div class="boton-ruleta-container" style="text-align: center; margin-top: 20px;">
+                        <button id="btn-jugar-ruleta" class="boton-ruleta">🎰 Jugar a la Ruleta</button>
+                    </div>
+
+                    
+                    <div id="ruleta-container" class="ruleta-container" style="display: none;"></div>
+                    <div id="mensaje-ruleta-no-disponible" class="mensaje-ya-jugado" style="display: none;"></div>
+
+
+                    <div class="ranking-container">
+                        <h3>Ranking de Clientes Fritsky 🏆</h3>
+                        <ul>
+                            <!-- Aquí se insertarán dinámicamente los <li> con el ranking -->
+                        </ul>
+                    </div>
                 </div>
             </section>
         </div>
@@ -76,6 +121,7 @@
         <!-- PÁGINA DEL MENÚ/CARTA -->
         <div id="pagina-menu" class="pagina">
             <section id="carta">
+                <h2>Menú Fritsky</h2>
                 <div id="menu-container">
                     <p>Cargando menú...</p>
                 </div>
@@ -130,6 +176,13 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="registerName">Nombre</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-user"></i></span>
+                                <input type="text" id="registerName" required placeholder="Tu nombre">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="registerPassword">Contraseña</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-lock"></i></span>
@@ -159,7 +212,7 @@
         <div id="passwordResetModal" class="modal" style="display: none">
             <div class="modal-content card">
                 <span class="close-button">×</span>
-                <h3><i class="fas fa-key auth-icon"></i> Recuperar Contraseña</h3>
+                <h3><i class="fas fa-key auth-icon"></i>Recuperar Contraseña</h3>
                 <p>Introduce tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.</p>
                 <form id="passwordResetForm">
                     <div class="form-group">
@@ -179,8 +232,8 @@
         <div id="pagina-mi-qr" class="pagina">
             <section id="mi-qr-section">
                 <h2>Tu Código QR Fritsky</h2>
-                <div class="card qr-card">
-                    <p>Presenta este código a nuestro personal para sumar puntos o canjear tus recompensas.</p>
+                <div class="qr-card">
+                    
                     <div id="qrcode-container" style="width:200px; height:200px; margin: 20px auto;">
                         <!-- Aquí se generará el QR Code -->
                     </div>
@@ -190,23 +243,30 @@
         </div>
     </main>
 
-    <footer>
-        <p>© <span id="currentYear"></span> Fritsky Patateria - App de Fidelidad</p>
-    </footer>
+<footer>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/fritsky.patateria" target="_blank" aria-label="Instagram">
+      <img src="images/icons/social/instagram.png" alt="Instagram">
+    </a>
+    <a href="https://www.facebook.com/Fritsky.Patateria" target="_blank" aria-label="Facebook">
+      <img src="images/icons/social/facebook.png" alt="Facebook">
+    </a>
+    <a href="https://www.tiktok.com/@fritsky.patateria" target="_blank" aria-label="TikTok">
+      <img src="images/icons/social/tiktok.png" alt="TikTok">
+    </a>
+    <a href="https://g.page/r/CX95p7m3K_GDEBM/review" target="_blank" aria-label="Google Reseña">
+      <img src="images/icons/social/google.png" alt="Google Reseña">
+    </a>
+    <a href="https://fritsky.es" target="_blank" aria-label="Sitio Web">
+      <img src="images/icons/social/web.png" alt="Sitio Web Fritsky">
+    </a>
+  </div>
+  <p>© <span id="currentYear"></span> Fritsky Patateria - App de Fidelidad</p>
+</footer>
 
     <script>
-        // Determina la ruta base.
-        // Si el hostname es el de GitHub Pages, usa '/fritsky-pwa/'.
-        // Si el hostname es localhost o 127.0.0.1, usa '/' (para desarrollo local).
-        // Cualquier otro hostname también se tratará como localhost por defecto.
         const BASE_PATH = (window.location.hostname === 'tocosan.github.io') ? '/fritsky-pwa/' : '/';
         
-        // Guardamos BASE_PATH en localStorage para que app.js pueda acceder a ella
-        // si hay problemas de alcance global o recarga.
-        // localStorage.setItem('app_base_path', BASE_PATH); 
-        // Nota: En el caso de un Service Worker, es mejor que sea global o pasado.
-        
-        // Hacemos BASE_PATH global para que app.js pueda acceder fácilmente.
         window.BASE_PATH = BASE_PATH; 
 
         console.log("Aplicación corriendo en:", window.location.href);
@@ -217,17 +277,29 @@
     <script type="module" src="app.js"></script> 
 
     <script>
-        // Registro del Service Worker (espera a que la página cargue)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                // Usa la BASE_PATH definida globalmente
-                navigator.serviceWorker.register(window.BASE_PATH + 'sw.js')
-                    .then(registration => { console.log('ServiceWorker registrado con éxito:', registration.scope); })
-                    .catch(error => { console.log('Fallo al registrar el ServiceWorker:', error); });
-            });
-        }
-        // Establecer año actual en el footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-    </script>
+    if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      // Registra solo el Service Worker principal que creaste
+      const registration = await navigator.serviceWorker.register(window.BASE_PATH + 'main-sw.js');
+      console.log('ServiceWorker principal registrado con éxito:', registration.scope);
+
+      // Opcional: pasar el SW registrado a Firebase Messaging (solo si usas la SDK modular)
+      if (window.firebaseMessaging) {
+        window.firebaseMessaging.useServiceWorker(registration);
+        console.log('Firebase Messaging vinculado al Service Worker.');
+      }
+
+    } catch (error) {
+      console.error('Fallo al registrar el Service Worker principal:', error);
+    }
+  });
+}
+
+
+    // Establecer año actual en el footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+</script>
+
 </body>
 </html>

@@ -2,7 +2,8 @@
   {
     "id_categoria": "conos-patatas",
     "nombre_categoria": "Conos de Patatas",
-    "descripcion_categoria": "¡La estrella de Fritsky! Elige tu tamaño, combínalo con tus toppings favoritos y una de nuestras deliciosas salsas.",
+    "descripcion_categoria": "¡La estrella de Fritsky! Elige tu tamaño, combínalo con toppings y nuestras deliciosas salsas.",
+    "imagen_cabecera_categoria": "images/menu/cono_medio.png",
     "secciones_informativas": [ 
       {
         "id_seccion": "info_tamano_cono",
@@ -19,8 +20,8 @@
         "subtitulo_seccion": "(Desde 1.70€ cada uno)",
         "lista_items": [ 
           "Bacon", "Salchichas", "Kebab", "Salsa Crispy", "Chistorra",
-          "Pinchos de Nuggets", "Jamón Serrano", "Salsa Fritsky",
-          "Pincho de Quesos", "CheetoCheese"
+          "CheetoCheese", "Jamón Serrano", "Salsa Fritsky",
+          "Pincho de Quesos", "Pinchos de Nuggets"      
         ]
       },
       {
@@ -31,7 +32,7 @@
             "Mayonesa", "Ketchup", "Pimienta", "Mostaza"
         ],
         "enlace_a_salsas_premium": { 
-            "texto_enlace": "Descubre Nuestras Salsas Premium",
+            "texto_enlace": "Salsas Premium",
             "target_categoria_id": "salsas-premium" 
         }
       }
@@ -41,36 +42,90 @@
   {
     "id_categoria": "cups-combinados",
     "nombre_categoria": "Cups Combinados",
-    "descripcion_categoria": "Nuestras deliciosas combinaciones listas para disfrutar.",
-    
+    "descripcion_categoria": "Nuestras deliciosas combinaciones de patatas y topping listas para disfrutar. Elige el tuyo!!!",
+    "imagen_cabecera_categoria": "images/menu/cup_fritsky.png",  
+
     "items_directos": [ 
-        { "id_item": "cup_fritsky", "nombre": "Cup Fritsky", "descripcion": "Cheddar, bacon, cebollino y patatas", "precio": "5.20€", "imagen": "images/menu/cup_fritsky.png" },
-        { "id_item": "cup_salchipapa", "nombre": "Cup Salchipapa", "descripcion": "Salchichas y patatas", "precio": "4.40€", "imagen": "images/menu/cup_fritsky.png" },
+        { "id_item": "cup_fritsky", "nombre": "Cup Fritsky", "descripcion": "Bacon, cheddar, cebollino y patatas", "precio": "5.20€", "imagen": "images/menu/cup_fritsky.png" },
+        { "id_item": "cup_salchipapa", "nombre": "Cup Salchipapa", "descripcion": "Salchichas y patatas", "precio": "4.40€", "imagen": "images/menu/cup_salchipapa.png" },
         { "id_item": "cup_kebab", "nombre": "Cup Kebab", "descripcion": "Kebab y patatas", "precio": "5.00€", "imagen": "images/menu/cup_kebab.png" },
         { "id_item": "cup_serrano", "nombre": "Cup Serrano", "descripcion": "Jamón Serrano y patatas", "precio": "5.00€", "imagen": "images/menu/cup_serrano.png" },
-        { "id_item": "cup_nuggets", "nombre": "Cup Nuggets", "descripcion": "Lluvia de Nuggets y patatas", "precio": "5.00€", "imagen": "images/menu/cup_nuggets.png" }
+        { "id_item": "cup_nuggets", "nombre": "Cup Nuggets", "descripcion": "Pincho de Nuggets y patatas", "precio": "5.00€", "imagen": "images/menu/cup_fritsky.png" },
+        { "id_item": "cup_chistorra", "nombre": "Cup Chistorra", "descripcion": "Chistorra, Salsa Pita y patatas", "precio": "5.50€", "imagen": "images/menu/cup_chistorra.png" },
+        { "id_item": "cup_chettocheese", "nombre": "Cup ChettoCheese", "descripcion": "Salsa Cheddar con Chettos y patatas", "precio": "5.50€", "imagen": "images/menu/cup_chettos.png" }
       ] 
   },
     
-
   {
     "id_categoria": "hexagonales",
-    "nombre_categoria": "Snacks Combinados",
-    "descripcion_categoria": "Nuestras deliciosas combinaciones listas para disfrutar.",
+    "nombre_categoria": "Hexagonales",
+    "descripcion_categoria": "Combinaciones de snacks listos para disfrutar.",
+    "imagen_cabecera_categoria": "images/menu/nuggets.png",
+    
     "items_directos": [ 
-        { "id_item": "cup_fritsky", "nombre": "Cup Fritsky", "descripcion": "Cheddar, bacon, cebollino y patatas", "precio": "5.20€", "imagen": "images/menu/cup_fritsky.png" },
-        { "id_item": "cup_salchipapa", "nombre": "Cup Salchipapa", "descripcion": "Salchichas y patatas", "precio": "4.40€", "imagen": "images/menu/cup_fritsky.png" },
-        { "id_item": "cup_kebab", "nombre": "Cup Kebab", "descripcion": "Kebab y patatas", "precio": "5.00€", "imagen": "images/menu/cup_kebab.png" },
-        { "id_item": "cup_serrano", "nombre": "Cup Serrano", "descripcion": "Jamón Serrano y patatas", "precio": "5.00€", "imagen": "images/menu/cup_serrano.png" },
-        { "id_item": "cup_nuggets", "nombre": "Cup Nuggets", "descripcion": "Lluvia de Nuggets y patatas", "precio": "5.00€", "imagen": "images/menu/cup_nuggets.png" }
+        { "id_item": "aros_cebolla", "nombre": "Aros de Cebolla", "descripcion": "10 un. Aros de cebolla", "precio": "4.00€", "imagen": "images/menu/cup_fritsky.png" },
+        { "id_item": "nuggets_pollo", "nombre": "Nuggets de Pollo", "descripcion": "8 un. Nuggets de pollo", "precio": "6.00€", "imagen": "images/menu/nuggets.png" },
+        { "id_item": "finger_mozza", "nombre": "Finger Mozzarella", "descripcion": "8 un. Finger de Mozzarella", "precio": "5.70€", "imagen": "images/menu/cup_fritsky.png" },
+        { "id_item": "cheese_rings", "nombre": "Cheese Rings", "descripcion": "6 un. Cheese Rings gouda", "precio": "6.20€", "imagen": "images/menu/cup_fritsky.png" },
+        { "id_item": "tequeños", "nombre": "Tequeños", "descripcion": "4 un. Tequeños queso gouda", "precio": "6.00€", "imagen": "images/menu/cup_fritsky.png" },
+        { "id_item": "bites_queso", "nombre": "Bites de Queso", "descripcion": "10 un. Queso Gouda o Gouda y Jalapeño", "precio": "5.80€", "imagen": "images/menu/cup_fritsky.png" },
+        { "id_item": "4_3_3", "nombre": "4N-3A-3Q", "descripcion": "4 Nuggets + 3 Aros + 3 Quesos", "precio": "6.50€", "imagen": "images/menu/cup_fritsky.png" },
+        { "id_item": "5_5", "nombre": "5N + 5A", "descripcion": "5 Nuggets + 5 Aros de cebolla", "precio": "5.20€", "imagen": "images/menu/cup_fritsky.png" },
+        { "id_item": "5_4", "nombre": "5N + 4Q", "descripcion": "5 Nuggets + 4 Quesos", "precio": "5.00€", "imagen": "images/menu/5-4.png" }
     ]
    
   },
 
   {
+    "id_categoria": "Small-Box",
+    "nombre_categoria": "Small Box",
+    "descripcion_categoria": "Cajas completas de patatas mas snacks para compartir.",
+    "imagen_cabecera_categoria": "images/menu/small.png",
+    
+    "items_directos": [ 
+        { "id_item": "small_aros", "nombre": "Aros de Cebolla", "descripcion": "aros de cebolla (15 un.)", "precio": "6.50€" },
+        { "id_item": "small_cheese", "nombre": "Cheese Rings", "descripcion": "cheese rings (10 un.)", "precio": "10.00€" },
+        { "id_item": "small_fingermozza", "nombre": "Finger de Mozzarella", "descripcion": "finger de mozzarella (14 un.)", "precio": "9.75€" },
+        { "id_item": "small_tequeños", "nombre": "Tequeños", "descripcion": "tequeños (7 un.)", "precio": "10.50€" },
+        { "id_item": "small_bites", "nombre": "Bites de Queso", "descripcion": "bites de queso gouda o gouda y jalapeño (15 un.)", "precio": "9.50€" },
+        { "id_item": "small_nuggets", "nombre": "Nuggets de Pollo", "descripcion": "nuggests de pollo (12 un.", "precio": "9.00€" },
+        { "id_item": "small_tiras", "nombre": "Finger de Pollo", "descripcion": "finger de pollo (10 un.)", "precio": "10.80€" },
+        { "id_item": "small_finger", "nombre": "Tiras de Pollo", "descripcion": "tiras de pollo al curry o a la pimienta (10 un.)", "precio": "10.75€" },  
+        { "id_item": "small_combinado", "nombre": "Combinados (12 un.)", "descripcion": "combiando de snacks x 12 un. (3 items min.)", "precio": "10.75€" }    
+               
+    ]
+  },
+
+  {
+    "id_categoria": "Box",
+    "nombre_categoria": "Big Box",
+    "descripcion_categoria": "Cajas completas de patatas mas snacks para compartir.",
+    "imagen_cabecera_categoria": "images/menu/box.png",
+
+    "items_directos": [ 
+        { "id_item": "solo_patatas", "nombre": "Solo Patatas", "descripcion": "box de patatas (1100 gr.)", "precio": "9.50€" },
+        { "id_item": "patatas_aros", "nombre": "Patatas + Aros de cebolla", "descripcion": "patatas (850 gr.) + Aros de cebolla (10 un.)", "precio": "11.50€" },
+        { "id_item": "patatas_nuggets", "nombre": "Patatas + Nuggets de pollo", "descripcion": "patatas (850 gr.) + Nuggets de pollo (10 un.)", "precio": "14.50€" },
+        { "id_item": "patatas_finger", "nombre": "Patatas + Finger de pollo", "descripcion": "patatas (850 gr.) + Finger de pollo (10 un.)", "precio": "17.50€" },
+        { "id_item": "patatas_tiras", "nombre": "Patatas + Tiras de pollo", "descripcion": "patatas (850 gr.) + Tiras de pollo (10 un.)", "precio": "17.25€" },
+        { "id_item": "patatas_cheese", "nombre": "Patatas + Cheese rings", "descripcion": "patatas (850 gr.) + Cheese Rings aros de cebolla (10 un.)", "precio": "16.00€" },
+        { "id_item": "patatas_bites", "nombre": "Patatas + Bites de queso", "descripcion": "patatas (850 gr.) + Bites de queso (10 un.)", "precio": "13.50€" },
+        { "id_item": "patatas_fingermozza", "nombre": "Patatas + Finger Mozzarella", "descripcion": "patatas (850 gr.) + Finger mozzarella (10 un.)", "precio": "13.75€" },
+        { "id_item": "patatas_tequeños", "nombre": "Patatas + Tequeños", "descripcion": "patatas (850 gr.) + tequeños (7 un.)", "precio": "16.50€" },
+        { "id_item": "patatas_quierasx10", "nombre": "Como quieras x 10un.", "descripcion": "patatas (850 gr.) + 10 snacks a eleccion (3 item min.)", "precio": "16.50€" },
+        { "id_item": "patatas_15un", "nombre": "Patatas + 15un.", "descripcion": "patatas (850 gr.) + 15 un. Snacks (5A + 5Q + 5P)", "precio": "18.75€" },
+        { "id_item": "patatas_quierasx15", "nombre": "Como quieras x 15un.", "descripcion": "patatas (850 gr.) + 15 snacks a eleccion (3 item min.)", "precio": "20.75€" },
+        { "id_item": "patatas_21un", "nombre": "Patatas + 21un.", "descripcion": "patatas (850 gr.) + 21 un. Snacks (7A + 7Q + 7P)", "precio": "22.50€" },
+        { "id_item": "patatas_quierasx21", "nombre": "Como quieras x 21un.", "descripcion": "patatas (850 gr.) + 21 snacks a eleccion (3 item min.)", "precio": "24.50€" }
+               
+    ]
+  },
+
+  {
     "id_categoria": "salsas-premium",
-    "nombre_categoria": "Nuestras Salsas Premium",
-    "descripcion_categoria": "Dale un toque extra de sabor a tus Fritsky con nuestra selección especial de salsas. ¡Encuentra tu favorita!",
+    "nombre_categoria": "Salsas Premium",
+    "descripcion_categoria": "Dale un toque extra de sabor a tus patatas con nuestras salsas especiales. ¡Encuentra tu favorita!",
+    "imagen_cabecera_categoria": "images/menu/salseros.png",
     "informacion_precios_salsas": { 
         "titulo": "Precio Salsas Premium",
         "items_precio": [
@@ -83,131 +138,230 @@
         "id_item": "salsa_barbacoa_dulce", 
         "nombre": "Barbacoa Dulce",
         "descripcion": "Barbacoa ahumada dulce.", 
-        "imagen": "images/menu/salsas/barbacoa_dulce.png" 
+        "imagen": "images/menu/salsas/barbacoa_dulce.png",
+        "alergenos": [
+          { "icono": "images/alergenos/mostaza.png", "nombre": "Mostaza" },
+          { "icono": "images/alergenos/sulfito.png", "nombre": "Sulfito" }
+        ]
       },
+
       {
         "id_item": "salsa_honey_mustard",
         "nombre": "Honey Mustard",
         "descripcion": "Mostaza y Miel, un clásico agridulce.",
-        "imagen": "images/menu/salsas/honey_mustard.png"
+        "imagen": "images/menu/salsas/honey_mustard.png",
+        "alergenos": [
+          { "icono": "images/alergenos/mostaza.png", "nombre": "Mostaza" }
+        ]
       },
+
       {
         "id_item": "salsa_curry_mango",
         "nombre": "Curry Mango",
         "descripcion": "Exótico mango sazonado con Curry.",
-        "imagen": "images/menu/salsas/curry_mango.png"
+        "imagen": "images/menu/salsas/curry_mango.png",
+        "alergenos": [
+          { "icono": "images/alergenos/lacteos.png", "nombre": "Lacteos" },
+          { "icono": "images/alergenos/mostaza.png", "nombre": "Mostaza" },
+          { "icono": "images/alergenos/apio.png", "nombre": "Apio" }
+        ]
       },
       
       {
         "id_item": "salsa_mayo_trufada",
         "nombre": "Mayo Trufada",
         "descripcion": "Base de mayo con auténticas trufas negras.",
-        "imagen": "images/menu/salsas/mayo_trufada.png"
+        "imagen": "images/menu/salsas/mayo_trufada.png",
+        "alergenos": [
+          { "icono": "images/alergenos/gluten.png", "nombre": "Gluten" },
+          { "icono": "images/alergenos/huevos.png", "nombre": "Huevos" },
+          { "icono": "images/alergenos/lacteos.png", "nombre": "Lacteos" },
+          { "icono": "images/alergenos/mostaza.png", "nombre": "Mostaza" },
+          { "icono": "images/alergenos/sulfito.png", "nombre": "Sulfito" }
+        ]
       },
 
       {
         "id_item": "salsa_curry_ketchup", 
         "nombre": "Curry Ketchup",
         "descripcion": "Ketchup con especias de Curry", 
-        "imagen": "images/menu/salsas/curry_ketchup.png" 
+        "imagen": "images/menu/salsas/curry_ketchup.png",
+        "alergenos": [
+          { "icono": "images/alergenos/gluten.png", "nombre": "Gluten" },
+          { "icono": "images/alergenos/huevos.png", "nombre": "Huevos" },
+          { "icono": "images/alergenos/mostaza.png", "nombre": "Mostaza" }
+        ]
       },
 
       {
         "id_item": "salsa_joppie", 
         "nombre": "Joppie",
         "descripcion": "Mostaza, curry y apio", 
-        "imagen": "images/menu/salsas/joppie.png" 
+        "imagen": "images/menu/salsas/joppie.png",
+        "alergenos": [
+          { "icono": "images/alergenos/gluten.png", "nombre": "Gluten" },
+          { "icono": "images/alergenos/huevos.png", "nombre": "Huevos" },
+          { "icono": "images/alergenos/mostaza.png", "nombre": "Mostaza" }
+        ]
       },
 
       {
         "id_item": "salsa_algerina", 
         "nombre": "Algerina",
         "descripcion": "Picante con sabores orientales y frescos", 
-        "imagen": "images/menu/salsas/algerina.png" 
+        "imagen": "images/menu/salsas/algerina.png",
+        "alergenos": [
+          { "icono": "images/alergenos/gluten.png", "nombre": "Gluten" },
+          { "icono": "images/alergenos/apio.png", "nombre": "Apio" },
+          { "icono": "images/alergenos/huevos.png", "nombre": "Huevos" },
+          { "icono": "images/alergenos/mostaza.png", "nombre": "Mostaza" },
+          { "icono": "images/alergenos/soja.png", "nombre": "Soja" }
+        ]
       },
 
       {
         "id_item": "salsa_fritsauce", 
         "nombre": "Fritsauce",
         "descripcion": "Mayonesa dulce holandesa", 
-        "imagen": "images/menu/salsas/fritsauce.png" 
+        "imagen": "images/menu/salsas/fritsauce.png",
+        "alergenos": [
+          { "icono": "images/alergenos/gluten.png", "nombre": "Gluten" },
+          { "icono": "images/alergenos/huevos.png", "nombre": "Huevos" },
+          { "icono": "images/alergenos/mostaza.png", "nombre": "Mostaza" },
+          { "icono": "images/alergenos/sulfito.png", "nombre": "Sulfito" }
+        ] 
       },
 
       {
         "id_item": "salsa_satay", 
         "nombre": "Satay",
         "descripcion": "Salsa de cacahuete", 
-        "imagen": "images/menu/salsas/satay.png" 
+        "imagen": "images/menu/salsas/satay.png",
+        "alergenos": [
+          { "icono": "images/alergenos/cacahuetes.png", "nombre": "Cacahuetes" },
+          { "icono": "images/alergenos/soja.png", "nombre": "Soja" }
+        ]
       },
 
       {
         "id_item": "salsa_marroquina", 
         "nombre": "Marroquina",
         "descripcion": "Salsa picante con sabor dulce a hierbas", 
-        "imagen": "images/menu/salsas/marroquina.png" 
+        "imagen": "images/menu/salsas/marroquina.png",
+        "alergenos": [
+          { "icono": "images/alergenos/gluten.png", "nombre": "Gluten" },
+          { "icono": "images/alergenos/lacteos.png", "nombre": "Lacteos" },
+          { "icono": "images/alergenos/huevos.png", "nombre": "Huevos" },
+          { "icono": "images/alergenos/mostaza.png", "nombre": "Mostaza" },
+          { "icono": "images/alergenos/sulfito.png", "nombre": "Sulfito" }
+        ]
       },
 
       {
         "id_item": "salsa_remolaude", 
         "nombre": "Remolaude",
         "descripcion": "Salsa de mayonesa con pepinillos", 
-        "imagen": "images/menu/salsas/remolaude.png" 
+        "imagen": "images/menu/salsas/remolaude.png",
+        "alergenos": [
+          { "icono": "images/alergenos/apio.png", "nombre": "Apio" },
+          { "icono": "images/alergenos/mostaza.png", "nombre": "Mostaza" }
+        ] 
       },
 
       {
         "id_item": "salsa_tartara", 
         "nombre": "Tartara",
         "descripcion": "Mayonesa con peregil y cebolla", 
-        "imagen": "images/menu/salsas/tartara.png" 
+        "imagen": "images/menu/salsas/tartara.png",
+        "alergenos": [
+          { "icono": "images/alergenos/gluten.png", "nombre": "Gluten" },
+          { "icono": "images/alergenos/huevos.png", "nombre": "Huevos" },
+          { "icono": "images/alergenos/mostaza.png", "nombre": "Mostaza" }
+        ]
       },
 
       {
         "id_item": "salsa_crazy_cheddar", 
         "nombre": "Crazy Cheddar",
         "descripcion": "Queso cheddar emulsionado", 
-        "imagen": "images/menu/salsas/crazy_cheddar.png" 
+        "imagen": "images/menu/salsas/crazy_cheddar.png",
+        "alergenos": [
+          { "icono": "images/alergenos/cacahuetes.png", "nombre": "Cacahuetes" },
+          { "icono": "images/alergenos/lacteos.png", "nombre": "Lacteos" }
+        ]
       },
 
       {
         "id_item": "salsa_hot_shot", 
         "nombre": "Hot Shot",
         "descripcion": "Salsa picante y dulce sutil", 
-        "imagen": "images/menu/salsas/hot_shot.png" 
+        "imagen": "images/menu/salsas/hot_shot.png",
+        "alergenos": [
+          { "icono": "images/alergenos/gluten.png", "nombre": "Gluten" },
+          { "icono": "images/alergenos/huevos.png", "nombre": "Huevos" },
+          { "icono": "images/alergenos/mostaza.png", "nombre": "Mostaza" }
+        ] 
       },
 
       {
         "id_item": "salsa_barbacoa_hot", 
         "nombre": "Barbacoa Picante",
         "descripcion": "Unica, dulce y ligermente picante", 
-        "imagen": "images/menu/salsas/barbacoa_hot.png" 
+        "imagen": "images/menu/salsas/barbacoa_hot.png",
+        "alergenos": [
+          { "icono": "images/alergenos/gluten.png", "nombre": "Gluten" },
+          { "icono": "images/alergenos/huevos.png", "nombre": "Huevos" },
+          { "icono": "images/alergenos/apio.png", "nombre": "Apio" },
+          { "icono": "images/alergenos/cacahuetes.png", "nombre": "Cacahuetes" }
+        ]
       },
 
       {
         "id_item": "salsa_curry", 
         "nombre": "Curry",
         "descripcion": "Tipica salsa de curry oriental", 
-        "imagen": "images/menu/salsas/curry.png" 
+        "imagen": "images/menu/salsas/curry.png",
+        "alergenos": [
+          { "icono": "images/alergenos/gluten.png", "nombre": "Gluten" },
+          { "icono": "images/alergenos/huevos.png", "nombre": "Huevos" },
+          { "icono": "images/alergenos/mostaza.png", "nombre": "Mostaza" }
+        ] 
       },
 
       {
         "id_item": "salsa_samurai", 
         "nombre": "Samurai",
         "descripcion": "Picante con chiles rojos y especias orientales", 
-        "imagen": "images/menu/salsas/samurai.png" 
+        "imagen": "images/menu/salsas/samurai.png",
+        "alergenos": [
+          { "icono": "images/alergenos/gluten.png", "nombre": "Gluten" },
+          { "icono": "images/alergenos/huevos.png", "nombre": "Huevos" }
+        ]
       },
 
       {
         "id_item": "salsa_pita", 
         "nombre": "Pitta",
         "descripcion": "Salsa de ajo con base de mayonesa", 
-        "imagen": "images/menu/salsas/pita.png" 
+        "imagen": "images/menu/salsas/pita.png",
+        "alergenos": [
+          { "icono": "images/alergenos/huevos.png", "nombre": "Huevos"}
+        ]
       },
 
       {
         "id_item": "salsa_andaluza", 
         "nombre": "Andaluza",
         "descripcion": "Base de mayonesa, pasta de tomate y pimientos", 
-        "imagen": "images/menu/salsas/andaluza.png" 
+        "imagen": "images/menu/salsas/andaluza.png",
+        "alergenos": [
+          { "icono": "images/alergenos/gluten.png", "nombre": "Gluten" },
+          { "icono": "images/alergenos/lacteos.png", "nombre": "Lacteos" },
+          { "icono": "images/alergenos/huevos.png", "nombre": "Huevos" },
+          { "icono": "images/alergenos/pescado.png", "nombre": "Pescado" },
+          { "icono": "images/alergenos/cacahuetes.png", "nombre": "Cacahuetes" },
+          { "icono": "images/alergenos/apio.png", "nombre": "Apio" }
+        ]
       }     
           
     ]

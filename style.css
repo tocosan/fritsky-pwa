@@ -3,17 +3,17 @@
    ========================================================================== */
 
 @font-face {
-    font-family: 'CodecPro'; /* Nombre para usar en CSS */
+    font-family: 'CodecPro'; 
     src: url('font/CodecPro-Regular.ttf') format('truetype');
-    font-weight: normal; /* o 400 */
+    font-weight: normal;
     font-style: normal;
-    font-display: swap; /* Muestra texto con fuente de sistema mientras carga */
+    font-display: swap; 
 }
 
 @font-face {
-    font-family: 'Pusia'; /* Nombre para usar en CSS */
+    font-family: 'Pusia'; 
     src: url('font/Pusia-Bold.ttf') format('truetype');
-    font-weight: bold; /* o 700 */
+    font-weight: bold;
     font-style: normal;
     font-display: swap;
 }
@@ -22,8 +22,8 @@
    Variables y Estilos Globales
    ========================================================================== */
 :root {
-    --color-primario: #FFD600; /* Amarillo Fritsky */
-    --color-secundario: #000000; /* Negro */
+    --color-primario: #FFD600; 
+    --color-secundario: #000000; 
     --color-texto: #333333;
     --color-texto-claro: #FFFFFF;
     --color-fondo: #f4f4f4;
@@ -31,29 +31,43 @@
     --color-tarjeta-oscura-fondo1: #2c2c2c; 
     --color-borde: #dddddd;
     --color-deshabilitado: #cccccc;
-    --color-error: #dc3545; /* Rojo para errores */
-    --color-success: #28a745; /* Verde para éxitos */
+    --color-error: #dc3545; 
+    --color-success: #28a745; 
 
     /* Variables de Fuente */
-    --fuente-titulos: 'Pusia', Arial, sans-serif;       /* Pusia para títulos */
-    --fuente-principal: 'CodecPro', Arial, sans-serif; /* CodecPro para cuerpo */
+    --fuente-titulos: 'Pusia', Arial, sans-serif;       
+    --fuente-principal: 'CodecPro', Arial, sans-serif; 
+
+    /* Variables de Fuente */
+    --bg-principal : url(/images/bg.jpg);
+    --bg-cards: url(/images/bg_card.jpg);
+}
+
+/* Reseteo y Box-Sizing Global */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
 body {
-    font-family: var(--fuente-principal); /* Aplica CodecPro por defecto */
+    font-family: var(--fuente-principal); 
     margin: 0;
     padding: 0;
     background: linear-gradient(to bottom, #ffffff, #fff7cc);
-    background-image: url('https://www.transparenttextures.com/patterns/food.png'); /* Marca de agua de fondo */
+    background-image: var(--bg-principal);
+    background-size: contain;
     color: var(--color-texto);
     line-height: 1.6;
-    scroll-behavior: smooth; /* Suavidad al hacer scroll */
+    scroll-behavior: smooth;
+    
 }
 
 main {
     padding: 15px;
     max-width: 900px;
     margin: 20px auto;
+    
 }
 
 /* Aplicar fuente de títulos a todos los encabezados */
@@ -73,10 +87,15 @@ header {
     align-items: center;
     justify-content: center;
     border-bottom: 3px solid #E0A800;
-    position: relative; /* Para posicionar el estado del usuario */
+    position: relative; 
 }
-#logo-header { height: 50px; margin-right: 15px; }
-header h1 { margin: 0; font-size: 1.8rem; } /* Hereda Pusia */
+#logo-header { 
+    height: 100px; 
+    margin-right: 15px; }
+
+header h1 { 
+    margin: 0; 
+    font-size: 2.5rem; } 
 
 nav {
     display: flex;
@@ -88,8 +107,8 @@ nav {
     z-index: 1000;
 }
 .nav-button {
-    font-family: var(--fuente-principal); /* CodecPro para botones de navegación */
-    font-weight: bold; /* Letra bold para botones */
+    font-family: var(--fuente-principal); 
+    font-weight: bold; 
     background-color: transparent;
     color: var(--color-texto-claro);
     border: none;
@@ -111,7 +130,7 @@ nav {
 }
 .nav-button.disabled:hover {
     color: var(--color-deshabilitado);
-    border-bottom-color: transparent; /* No mostrar la línea activa al pasar el ratón */
+    border-bottom-color: transparent; 
 }
 
 /* --- Estado del Usuario en Header --- */
@@ -144,13 +163,25 @@ nav {
 
 
 /* ==========================================================================
-   Páginas y Secciones Generales
+   Estilos Generales para TODAS las Páginas
    ========================================================================== */
-.pagina { display: none; }
-.pagina.active { display: block; }
+.pagina {
+    display: none; 
+    width: 100%;
+    max-width: 900px; 
+    margin: 0 auto; 
+    padding: 0 15px; 
+    box-sizing: border-box; 
+    
+}
+
+.pagina.active {
+    display: block; 
+}
+
 section { margin-bottom: 30px; }
 section h2 { /* Ya hereda Pusia */
-    color: var(--color-secundario);
+    color: var(--color-texto-claro);
     border-bottom: 2px solid var(--color-primario);
     padding-bottom: 10px;
     margin-top: 0;
@@ -159,21 +190,12 @@ section h2 { /* Ya hereda Pusia */
     text-align: center;
 }
 
-
-
-/* ==========================================================================
-   Sección Puntos y Premios (Usa .card general)
-   ========================================================================== */
-#contador-puntos { font-weight: bold; font-size: 1.8em; color: var(--color-success); display: block; margin-bottom: 10px; text-align: center; }
-#puntos .card p, #premios .card p { font-family: var(--fuente-principal); } /* Párrafos en Puntos y Premios */
-
-
 /* ==========================================================================
    Botones
    ========================================================================== */
 .button-primary, .button-secondary, .btn-volver-menu, .btn-link-salsas {
-    font-family: var(--fuente-principal); /* CodecPro para botones por defecto */
-    font-weight: bold; /* Letra bold para botones */
+    font-family: var(--fuente-principal);
+    font-weight: bold; 
     color: var(--color-texto-claro);
     padding: 10px 20px;
     border: none;
@@ -194,47 +216,52 @@ section h2 { /* Ya hereda Pusia */
 }
 .button-primary { background-color: var(--color-primario); color: var(--color-secundario); }
 .button-primary:hover:not(:disabled) { background-color: #E0A800; } /* Amarillo más oscuro al pasar el ratón */
-.button-secondary { background-color: var(--color-secundario); color: var(--color-texto-claro); }
+.button-secondary { background-color: var(--color-secundario); color: var(--color-primario); box-shadow: 0 0 5px #FFD700; }
 .button-secondary:hover:not(:disabled) { background-color: #333333; } /* Gris oscuro más oscuro */
-.btn-volver-menu { background-color: #6c757d; margin-bottom: 25px; }
-.btn-volver-menu:hover:not(:disabled) { background-color: #5a6268; }
-.btn-link-salsas { display: block; width: fit-content; margin: 20px auto 10px auto; }
-button:disabled, .button-primary:disabled, .button-secondary:disabled { 
-    background-color: var(--color-deshabilitado); 
-    color: #666; 
-    cursor: not-allowed; 
-    border-color: var(--color-deshabilitado); 
-    transform: none; 
+
+/* ==========================================================================
+   Seccion Mensajes desde Firestone
+   ========================================================================== */
+.mensajes-container {
+    background-color: #fff8d1;
+    color: #333;
+    padding: 12px 20px;
+    margin: 10px auto;
+    border-left: 5px solid #ffd600;
+    border-radius: 5px;
+    font-weight: 500;
+    max-width: 90%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
 
 /* ==========================================================================
    Tarjetas (Estilo General - Fondo Claro)
    ========================================================================== */
-.card {
-    background-color: var(--color-tarjeta-clara);
+.card1 {
+    background-image: var(--bg-cards);
+    background-size: cover;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-left: 5px solid var(--color-primario);
+    border-left: 4px solid var(--color-fondo);
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
-    
-    
     transition: box-shadow 0.3s ease; /* Suavidad al hacer hover */
 }
 
-.card:hover { 
+.card1:hover { 
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
-.card h3 { /* Ya hereda Pusia */
+.card1 h3 { /* Ya hereda Pusia */
     margin-top: 0;
     color: var(--color-texto);
     font-size: 1.2rem;
     margin-bottom: 10px;
 }
-.card p {
+.card1 p {
    font-family: var(--fuente-principal); 
 }
 
@@ -249,6 +276,16 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
     margin-top: 10px; 
 }
+
+.card {
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease; /* Suavidad al hacer hover */
+}
+
 .categoria-card {
     cursor: pointer; 
     text-align: center; 
@@ -259,6 +296,19 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
     box-shadow: 0 8px 15px rgba(0,0,0,0.15); /* Sombra más pronunciada */
 }
 
+.categoria-card img {
+    background-image: var(--bg-cards);
+    background-size: cover;
+    display: block;
+    margin: 0 auto;
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    
+}
+
 .categoria-card h3 { 
     margin-bottom: 5px; 
     font-size: 1.25rem; 
@@ -266,23 +316,35 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 .categoria-card p { 
     font-family: var(--fuente-principal); 
     font-size: 0.9rem; 
-    color: #555; 
+    color: #2b2828; 
     padding: 0 10px 10px 10px; 
+}
+
+.categoria-card-titulo {
+    margin-top: 10px !important;
+}
+
+.categoria-card-vermas {
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+
 }
 
 /* --- Detalles de Items de categorias --- */
 .titulo-pagina-categoria { 
     text-align: center; 
-    font-size: 2rem; 
+    font-size: 2.5rem; 
     color: var(--color-secundario); 
     margin-bottom: 10px; 
 }
+
 .descripcion-pagina-categoria { 
     font-family: var(--fuente-principal); 
     text-align: center; 
     font-size: 1.2rem; 
     color: #444; 
-    margin: 0 auto 30px auto; 
+    margin: 0 auto 20px auto; 
     max-width: 600px; 
     line-height: 1.5; 
 }
@@ -296,64 +358,58 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 }
 
 .info-item-card { 
-    background-color: var(--color-tarjeta-clara); 
-    border: 1px solid #e9e9e9; 
+    background-image: var(--bg-principal);
+    background-size: contain; 
+    border: 1px solid var(--color-primario);
+    border-left: 5px solid var(--color-primario); 
     border-radius: 8px; 
+    box-shadow: 0 0 8px #FFD700;
     padding: 15px; 
     text-align: center; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
     display: flex; 
     flex-direction: column; 
     justify-content: space-between; /* Para empujar el precio al final */
+    margin-bottom: 10px;
 }
 
 .menu-seccion-info h4 { /* Ya hereda Pusia de h4 */ 
-    font-size: 1.3rem; 
-    color: var(--color-secundario); 
+    font-size: 1.6rem; 
+    color: var(--color-texto-claro); 
     padding-bottom: 10px; 
     margin-top: 0; 
     margin-bottom: 15px; 
     text-align: center; 
     border-bottom: 1px solid var(--color-borde); 
 }
-.menu-seccion-info .subtitulo-seccion { 
-    font-family: var(--fuente-principal); 
-    text-align: center; 
-    font-size: .85em; 
-    color: #777; 
-    margin-top: -20px; 
-    margin-bottom: 15px; 
-}
-
 
 .info-item-imagen { 
     width: 100%; 
     max-width: 200px; 
-    height: 150px; 
+    height: 180px; 
     object-fit: contain; 
-    margin-bottom: 10px; 
     border-radius: 4px; 
     align-self: center; 
 }
 .info-item-nombre { 
+    margin: 5px 0;;
+    color: #FEEA3C;
     font-family: var(--fuente-titulos); 
     font-weight: bold; 
-    font-size: 1.15rem; 
-    margin-bottom: 5px; 
+    font-size: 1.7rem; 
 }
 
 .info-item-detalle { 
     font-family: var(--fuente-principal); 
     font-size: 0.85rem; 
-    color: #666; 
-    margin-top: -10px;
+    color: var(--color-tarjeta-clara); 
+    margin-top: -8px;
     flex-grow: 1; /* Permite que el detalle crezca para empujar el precio */
 }
 .info-item-precio { 
     font-family: var(--fuente-principal); /* CodecPro para precios */ 
     font-weight: bold; 
-    font-size: 1.4rem; 
-    color: var(--color-primario); 
+    font-size: 1.3rem; 
+    color: #FEEA3C; 
     margin-top: auto; /* Empuja el precio al final de la tarjeta */
 }
 
@@ -382,23 +438,57 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 }
 .info-lista-simple li, .info-lista-salsas-gratis li { 
     font-family: var(--fuente-principal); 
-    background-color: #f8f8f8; 
+    background-image: var(--bg-cards);
+    background-size: cover; 
+    color: black;
     padding: 8px 12px; 
     border-radius: 4px; 
     font-size: 0.9rem; 
-    border-left: 3px solid var(--color-primario); /* Barra lateral indicadora */
+    border-left: 3px solid var(--color-fondo); /* Barra lateral indicadora */
 }
+
+.menu-seccion-info .subtitulo-seccion { 
+    font-family: var(--fuente-principal); 
+    text-align: center; 
+    font-style: italic; 
+    font-size: .85em; 
+    color: var(--color-primario); 
+    margin-top: -8px; 
+     
+}
+
 .descripcion-salsas-gratis { 
+    margin-top: -8px;
     font-family: var(--fuente-principal); 
     font-style: italic; 
-    color: #555; 
-    margin-top: 15px; 
-    margin-bottom: 5px; 
+    color: var(--color-primario); 
     font-size: 0.95rem; 
     text-align: center; 
 }
 
-/* --- ESTILOS SECCION  SALSAS PREMIUM --- */
+.btn-link-salsas {
+    display: block;
+    margin: 20px auto;
+    font-size: 1rem;
+    background-color: var(--color-texto-claro);
+    color: BLACK;
+    line-height: 1.2;
+    width: fit-content; 
+    
+}
+
+/* ==========================================================================
+   Estilos Salsas Premium
+   ========================================================================== */
+
+.info-precios-categoria { 
+    margin-bottom: 25px; /* Margen debajo de esta sección */
+    padding: 15px 20px; 
+    background-image: var(--bg-cards);
+    background-size: cover; 
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 0 8px #FFD700;
+}
 
 .info-precios-categoria h4 { /* Estilo para el título de precios */
     font-size: 1.2rem; 
@@ -408,14 +498,6 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
     margin-bottom: 10px; 
     padding-bottom: 8px; 
     border-bottom: 1px solid var(--color-primario); 
-}
-
-.info-precios-categoria { 
-    margin-bottom: 25px; /* Margen debajo de esta sección */
-    padding: 15px 20px; 
-    background-color: #fefefe; /* Fondo ligeramente diferente */
-    border-left-color: var(--color-primario); /* Borde primario */
-    border-radius: 8px; /* Bordes redondeados */
 }
 
 .lista-precios-salsas { 
@@ -431,77 +513,476 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
     padding: 10px 5px; 
     font-size: 0.95rem; 
 }
+
 .lista-precios-salsas li:not(:last-child) { 
     border-bottom: 1px solid #efefef; 
 }
+
 .lista-precios-salsas li span { 
     color: var(--color-texto); 
     flex-grow: 1; 
 }
+
 .lista-precios-salsas li strong { 
-    font-family: var(--fuente-principal); /* CodecPro para el precio en sí */ 
+    font-family: var(--fuente-principal);
     color: var(--color-primario); 
     font-weight: bold; 
-    font-size: 1rem; 
+    font-size: 1.4rem; 
     margin-left: 10px; 
     white-space: nowrap; 
 }
 
+/* --- Alergenos Salsas --- */
+
+.menu-item-alergenos {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.icono-alergeno {
+    width: 30px;
+    height: 30px;
+}
+
+.tarjeta-alergenos-general {
+    background-color: black; 
+    border: 1px solid var(--color-primario);
+    border-left: 5px solid var(--color-primario);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 20px;
+    box-shadow: 0 0 8px #FFD700;
+}
+
+.titulo-alergenos {
+    margin-bottom: 12px;
+    color: var(--color-primario);
+    font-weight: 700;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.grid-alergenos-dos-columnas {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    justify-items: center; 
+    align-items: center;   
+}
+
+.fila-alergeno {
+    display: flex;
+    align-items: center;  
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%; 
+    max-width: 200px; 
+}
+
+.fila-alergeno span {
+    color: var(--color-texto-claro);
+    font-style: italic;
+}
+
+.fila-alergeno img.icono-alergeno {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+
+/* ==========================================================================
+   SECCION MIS PUNTOS
+   ========================================================================== */
+
+.puntos-card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 30px 25px;
+    background-color: black; 
+    border: 1px solid var(--color-primario);
+    border-left: 5px solid var(--color-primario);
+    box-shadow: 0 0 8px #FFD700;
+    border-radius: 15px;
+    max-width: 500px;
+    margin: 30px auto;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    content-visibility: auto;
+}
+
+.puntos-card-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Etiqueta "Puntos Acumulados" */
+.puntos-label,
+.premio-titulo {
+    font-size: 1.7rem;
+    color: var(--color-texto-claro);
+    margin-bottom: 8px;
+    font-family: var(--fuente-titulos);
+    text-shadow: 0 3px 6px rgba(223, 221, 214, 0.6);
+    text-shadow: 0;
+    
+}
+
+/* Valor de los puntos */
+.puntos-valor {
+    font-size: 5em;
+    font-weight: 900;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    color: #FFD600;
+    line-height: 1;
+    text-shadow: 0 4px 8px rgba(223, 221, 214, 0.6);
+    content-visibility: auto; /* Para el número */
+}
+
+.premio-titulo {
+    margin-bottom: 25px;
+}
+
+.premio-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px 0;
+    border-top: 2px solid #e0c000;
+    width: 100%;
+    background-image: var(--bg-cards);
+    background-size: cover; 
+    border-radius: 0 0 15px 15px;
+    padding-bottom: 25px;
+    content-visibility: auto; /* Para la información del premio */
+}
+
+.premio-descripcion {
+    font-size: 1.15em;
+    color: var(--color-secundario);
+    margin: 15px;
+    line-height: 1;
+
+    /* font-family: 'Your_Primary_Font', sans-serif; */
+}
+
+.premio-descripcion strong {
+    color: #f57c00;
+    font-size: 1.2em;
+    margin: 0 5px;
+       
+}
+
+/* Ícono del premio (opcional) */
+.premio-info i {
+    color: #f57c00;
+    font-size: 1.4rem;
+}
+
+
+/* ==========================================================================
+   Acumulacion Premios
+   ========================================================================== */
+
+.acumulacion-info {
+    width: 70%;
+    padding: 16px;
+    margin-bottom: 15px;
+    background-color: #000;
+    border: 2px solid #FFD700;
+    border-radius: 15px;
+    box-shadow: 0 0 10px #FFD700;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;;
+}
+
+.acumulacion-titulo {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #FFD700;
+}
+
+.acumulacion-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.acumulacion-lista strong {
+    font-size: 1.2rem;
+    color: #FFD700;
+    text-shadow: 0 4px 8px rgba(223, 221, 214, 0.6);
+
+}
+
+.acumulacion-lista li {
+    display: flex;
+    align-items: center;      /* Centra verticalmente icono + texto */
+    gap: 8px;                 /* Espacio entre icono y texto */
+    padding: 6px 0;
+    border-bottom: 1px solid #333;
+    font-size: 1em;
+}
+
+/* ==========================================================================
+   Ranking
+   ========================================================================== */
+.ranking-container {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #000;
+  border: 2px solid #FFD700;
+  border-radius: 15px;
+  box-shadow: 0 0 10px #FFD700;
+  color: white;
+}
+
+.ranking-container h3 {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #FFD700;
+}
+
+.ranking-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ranking-container li {
+  padding: 6px 0;
+  border-bottom: 1px solid #333;
+  font-size: 1em;
+}
+
+.ranking-container li .puntos {
+  color: #FFD700;
+  font-weight: bold;
+}
+
+@keyframes puntosGanados {
+  0% {
+    transform: scale(1);
+    color: #fff;
+    text-shadow: 0 0 0px #ffc107;
+  }
+  50% {
+    transform: scale(1.2);
+    color: #ffe500;
+    text-shadow: 0 0 10px #ffe500;
+  }
+  100% {
+    transform: scale(1);
+    color: #fff;
+    text-shadow: 0 0 0px #ffc107;
+  }
+}
+
+.puntos-animados {
+    animation: rebotePuntos 1s ease;
+}
+
+@keyframes rebotePuntos {
+    0%   { transform: scale(1); }
+    30%  { transform: scale(1.3); }
+    60%  { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+
+/* ESTILOS RULETA */
+.boton-ruleta {
+    background-color: #ffcc00;
+    color: #000;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 0 8px #FFD700;
+}
+
+.boton-ruleta:hover {
+  background-color: #e6b800;
+}
+
+#ruleta-container {
+    margin-top: 20px;
+    position: relative; /* Necesario para posicionar la flecha */
+    width: 300px;
+    height: 300px;
+    display: inline-block;
+}
+
+/* Estilo para la flecha roja (el puntero) */
+#flecha-ruleta {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 30px solid red; /* Esto crea el triángulo */
+    position: absolute;
+    top: -10px; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.ruleta-canvas {
+    display: block;
+}
+
+.resultado-ruleta {
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #33cc33;
+}
+
+.resultado-ruleta strong {
+    color: #FFD633;
+}
+
+.mensaje-ya-jugado {
+    background-color: #fff3cd;      
+    color: #856404;                  
+    font-weight: 600;
+    padding: 12px 18px;
+    margin: 20px auto;
+    border: 2px solid #ffeeba;      
+    border-radius: 12px;
+    width: fit-content;
+    max-width: 90%;
+    text-align: center;
+    font-family: 'CodecPro', sans-serif; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Animación para desvanecer y escalar hacia fuera */
+.ruleta-desaparecer {
+  animation: desaparecerRuleta 0.5s ease-out forwards;
+}
+
+@keyframes desaparecerRuleta {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+
+
+
 /* --- ESTILOS PROPIOS DE ITEMS DE CATEGORIAS (CUPS y SNACKS --- */
 
+#menu-container h2 {
+    color: var(--color-primario);
+}
+
+#menu-container .descripcion-pagina-categoria {
+    color: var(--color-texto-claro);
+}
+
 .menu-items-directos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* ajusta al ancho */
-  gap: 10px; /* ¡Esto separa horizontal y verticalmente! */
-  justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 40px !important;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-.menu-items-directos-grid > .menu-item.card { /* Estilo específico para items directos */
-    height: 260px;
-    margin-bottom: 10px;
-    background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-tarjeta-oscura-fondo1) 100%); /* Degradado */
-    color: var(--color-texto-claro); /* Texto blanco */
-    border: 1px solid #444; /* Borde más oscuro */
-    border-left: 5px solid var(--color-primario); /* Borde primario */
-    border-radius: 12px; /* Bordes más redondeados */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25); /* Sombra más pronunciada */
-    padding: 15px;
+.menu-items-directos-grid > .menu-item.card {
+    position: relative;
+    z-index: 1;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 260px;
+    margin-top: 120px;
+    padding: 90px 20px 25px 20px;
+    background-image: var(--bg-principal);
+    background-size: contain; 
+    border: 1px solid var(--color-primario);
+    border-left: 5px solid var(--color-primario); /* Mantenemos el borde primario */
+    border-radius: 8px;
+    border-radius: 24px;
+    box-shadow: 0 0 8px #FFD700;
+    color: #FFFFFF;
 }
 
-.menu-items-directos-grid > .menu-item.card:hover { 
-    transform: translateY(-5px) scale(1.02); 
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
+.menu-items-directos-grid > .menu-item.card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
-.menu-items-directos-grid > .menu-item.card .info-item-imagen { /* Reutilizamos el estilo de imagen de info-item-card */
-    width: 170px; 
-    height: 170px; 
-    object-fit: cover; 
+
+.menu-items-directos-grid > .menu-item.card .info-item-imagen {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
     
 }
-.menu-items-directos-grid > .menu-item.card .menu-item-nombre { 
-    font-family: var(--fuente-titulos); /* Pusia para nombres de producto */ 
-    font-weight: bold; 
-    font-size: 1.2rem; 
-    color: var(--color-texto-claro); 
-    margin-top: -20px;
+
+.imagen-circular-envuelta {
+    position: absolute;
+    top: -110px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 180px;
+    background-color: #0A0A14;
+    border: .5px solid #FEEA3C;
+    box-shadow: 0 0 10px #FFD700;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
     
 }
-.menu-items-directos-grid > .menu-item.card .menu-item-descripcion { 
-    font-family: var(--fuente-principal); 
-    font-size: 0.85rem; 
-    color: #e0e0e0; 
-    margin-top: -15px;
-    flex-grow: 1; 
-    min-height: 3.9em; /* Asegura espacio para descripciones */
-    line-height: 1.4; 
+
+.menu-items-directos-grid > .menu-item.card .menu-item-nombre {
+    font-family: var(--fuente-titulos);
+    width: 100%;
+    color: #FEEA3C;
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+}
+
+.menu-items-directos-grid > .menu-item.card .menu-item-descripcion {
+    font-family: var(--fuente-principal);
+    font-size: 1rem;
+    font-weight: 400;
+    color: #EAEAEA;
+    margin: 0 0 20px 0;
+    min-height: 40px;
 }
 
 .menu-items-directos-grid > .menu-item.card .menu-item-precio {
-    font-size: 1.2rem;
-    margin-top: -5px;
+    color: #FEEA3C;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
 }
+
 
 /* Pie de categoría (si aplica, ej: salsas en combos) */
 .pie-categoria { 
@@ -521,50 +1002,151 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 }
 .pie-categoria .button-primary:hover { background-color: #E0A800; } /* Hover para botón de salsa premium */
 
+/* ==========================================================================
+   Estilos para Small y Big Box especiales
+   ========================================================================== */
+
+.box-section {
+  width: 100%;
+  margin-top: 25px;
+  border: 1px solid var(--color-primario);
+  border-left: 3px solid var(--color-primario);
+  background-color: var(--color-secundario);
+  box-shadow: 0 0 8px #FFD700;
+  padding: 1rem;
+  border-radius: 1.5rem;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.box-title {
+  font-size: 2.5rem;
+  color: #ffe600;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.box-subtitle {
+  font-family: var(--fuente-titulo);
+  text-align: center;
+  font-size: 1.6rem;
+  color: var(--color-texto-claro);
+  margin-bottom: 2rem;
+}
+
+.box-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.box-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px dotted #555;
+  padding-bottom: 0.8rem;
+}
+
+.check-icon {
+  color: red;
+  font-size: 1.2rem;
+  margin-right: 0.4rem;
+  margin-top: 5px;
+}
+
+.item-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-nombre {
+  font-family: var(--fuente-titulos);
+  font-size: 1.3rem;
+  line-height: 1.3;
+  color : #FEEA3C;
+  font-weight: 700;
+}
+
+.item-descripcion {
+  font-size: 0.9rem;
+  color: var(--color-fondo);
+  margin-top: 0.5rem;
+}
+
+.item-precio {
+  font-size: 1.3rem;
+  color : #FEEA3C;
+  margin-left: 1rem;
+}
+
+.box-image.top,
+.box-image.bottom {
+  width: 80%;
+  display: block;
+  margin: 0 auto;
+  opacity: 0.8;
+}
+
+.box-image.top {
+  margin-bottom: 1rem;
+}
+
+.box-image.bottom {
+  margin-top: 1.5rem;
+}
+
+
 
 /* ==========================================================================
-   Estilos para la Página de Autenticación (Mejorados y Responsivos)
+   Estilos para la Página de Autenticación
    ========================================================================== */
 #auth-section {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centra el contenido principal */
+    align-items: center; 
 }
 
-#auth-section h2 { /* Título "Acceso / Registro de Clientes Fritsky" */
+#auth-section h2 { 
     margin-bottom: 30px;
-    text-align: center; /* Asegura el centrado */
+    text-align: center; 
 }
 
 .auth-form-container {
-    width: 100%; /* Ocupa todo el ancho disponible dentro de su contenedor */
-    max-width: 450px; /* Límite de ancho en pantallas grandes */
-    margin-bottom: 30px; /* Espacio entre el form de login y el de registro */
-    padding: 30px; /* Más padding para los formularios */
-    background-color: var(--color-tarjeta-clara);
-    border: 1px solid var(--color-borde);
-    border-left: 5px solid var(--color-primario); /* Mantenemos el borde primario */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Añadir sombra como una card */
+    width: 100%; 
+    max-width: 450px; 
+    margin-bottom: 30px;
+    padding: 30px; 
+    background-color: var(--color-secundario);
+    border: 1px solid var(--color-primario);
+    border-left: 5px solid var(--color-primario); 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
 }
-.auth-form-container h3 { /* Títulos "Iniciar Sesión", "Únete a Fritsky" */
+.auth-form-container h3 { 
     font-size: 1.4rem;
     margin-bottom: 25px;
-    color: var(--color-secundario);
-    display: flex; /* Para alinear ícono y texto */
+    color: var(--color-primario);
+    display: flex; 
     align-items: center;
-    justify-content: center; /* Centra el título y el icono */
+    justify-content: center; 
 }
 
 .form-group {
-    margin-bottom: 20px; /* Aumenta el espacio entre grupos */
+    margin-bottom: 20px; 
 }
 .form-group label {
     display: block;
-    margin-bottom: 8px; /* Más espacio entre label e input */
+    margin-bottom: 8px; 
     font-weight: bold;
-    font-family: var(--fuente-principal); /* CodecPro para labels */
+    font-family: var(--fuente-principal); 
     font-size: 0.95rem;
-    color: #555;
+    color: var(--color-texto-claro);
+}
+
+.auth-form-container p {
+    color: var(--color-texto-claro);
 }
 
 /* --- Input Group con Icono --- */
@@ -639,7 +1221,7 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
     font-family: var(--fuente-principal);
     font-size: 0.9rem;
 }
-.auth-switch-prompt .button-secondary { /* Estilo para los botones de switch */
+.auth-switch-prompt .button-secondary { 
     padding: 8px 15px;
     font-size: 0.85rem;
     background-color: var(--color-primario); /* Amarillo */
@@ -647,14 +1229,14 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
     border: none;
 }
 .auth-switch-prompt .button-secondary:hover {
-    background-color: #E0A800; /* Amarillo oscuro */
+    background-color: #E0A800; 
 }
 
 /* --- Estilos Específicos para el Modal de Recuperación --- */
 .modal {
-    display: none; /* Oculto por defecto */
-    position: fixed; /* Permanece en su lugar */
-    z-index: 10000; /* Muy alto para estar sobre todo */
+    display: none;
+    position: fixed; 
+    z-index: 10000; 
     left: 0;
     top: 0;
     width: 100%;
@@ -670,11 +1252,13 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 }
 .modal-content {
     position: relative;
-    background-color: var(--color-tarjeta-clara);
+    background-color: var(--color-secundario);
+    border: 1px solid var(--color-primario);
+    border-left: 5px solid var(--color-primario);
     margin-top: 5%; /* Un poco de espacio desde el top */
+    margin-left: 35%;
     padding: 40px; /* Más padding para el contenido */
     border-radius: 15px; /* Bordes más redondeados */
-    width: 90%;
     max-width: 500px; /* Ancho máximo del modal */
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     animation: fadeIn 0.5s; /* Animación de entrada */
@@ -688,7 +1272,7 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
     position: absolute;
     top: 15px;
     right: 25px;
-    color: #aaa;
+    color: var(--color-tarjeta-clara);
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
@@ -701,11 +1285,23 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 }
 .modal-content h3 { /* Título del modal */
     font-size: 1.6rem;
+    color: var(--color-primario);
     margin-bottom: 20px;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.modal-content p {
+    color: var(--color-texto-claro);
+    font-style: italic;
+}
+
+.modal-content .button-primary {
+    display: block;
+    margin: 0 auto;
+    margin-top: 40px;
 }
 
 /* --- Ajustes para el layout de las formas de autenticación --- */
@@ -714,10 +1310,72 @@ button:disabled, .button-primary:disabled, .button-secondary:disabled {
 
 
 /* ==========================================================================
+   Estilos Seccion QR
+   ========================================================================== */
+#mi-qr-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.qr-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-secundario);
+    border: 1px solid var(--color-primario);
+    border-left: 5px solid var(--color-primario);
+    box-shadow: 0 0 8px #FFD700;
+    width: 50%;
+}
+
+.qr-card p {
+    margin: 15px;
+    color: var(--color-primario);
+}
+
+.fas {
+    margin: 0 10px;
+}
+
+
+/* ==========================================================================
    Footer
    ========================================================================== */
-footer { text-align: center; padding: 20px; background-color: var(--color-secundario); color: var(--color-texto-claro); margin-top: 30px; }
-footer p { font-family: var(--fuente-principal); }
+footer { 
+    text-align: center; 
+    padding: 20px; 
+    background-color: var(--color-secundario); 
+    color: var(--color-texto-claro); 
+    box-shadow: 0 0 8px #FFD700;
+}
+
+footer p { 
+    font-family: var(--fuente-principal); }
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 10px 0;
+}
+
+.footer-social a img {
+  width: 50px;
+  height: 50px;
+  padding: 8px;
+  background: #000;
+  box-shadow: 0 0 8px #FFD700;
+  transition: transform 0.3s ease;
+}
+
+.footer-social a img:hover {
+  transform: scale(1.25);
+}
+
+
 
 /* ==========================================================================
    Media Queries para Responsividad y Layout de Menú
@@ -726,38 +1384,38 @@ footer p { font-family: var(--fuente-principal); }
    /* --- Pantallas Medianas y Grandes (Monitores, Tablets) --- */
 @media (min-width: 768px) {
     main {
-        padding: 20px 40px; /* Más padding en general en pantallas grandes */
+        padding: 20px 40px;
     }
 
     header h1 {
-        font-size: 2.2rem; /* Título del header más grande */
+        font-size: 2.2rem; 
     }
 
     nav .nav-button {
-        font-size: 1rem; /* Botones de nav un poco más grandes */
+        font-size: 1rem; 
     }
 
     section h2 {
-        font-size: 1.8rem; /* Títulos de sección más grandes */
+        font-size: 1.8rem;
     }
 
     .auth-form-container {
-        padding: 40px; /* Más padding en formularios */
+        padding: 40px;
     }
     .auth-form-container h3 {
-        font-size: 1.5rem; /* Títulos de formulario más grandes */
+        font-size: 1.5rem; 
     }
 
     .modal-content {
-        padding: 50px; /* Más padding en el modal */
+        padding: 50px; 
     }
     .modal-content h3 {
-        font-size: 1.8rem; /* Título del modal más grande */
+        font-size: 1.8rem; 
     }
 
     /* Ajustes de Grid para el Menú en pantallas medianas/grandes */
     .categorias-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas responsivas para categorías */
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
         gap: 25px; 
     }
     /* Ítems de Menú (Cups, Hexagonales, Salsas) en 3 columnas si caben */
@@ -774,14 +1432,7 @@ footer p { font-family: var(--fuente-principal); }
 
 /* --- Estilos Específicos para Teléfonos (Pantallas Pequeñas) --- */
 @media (max-width: 767px) {
-    header {
-        flex-direction: column; /* Apilar elementos en el header en móvil */
-        padding: 0.8rem;
-    }
-    #logo-header {
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
+    
     header h1 {
         font-size: 1.6rem;
     }
@@ -840,6 +1491,7 @@ footer p { font-family: var(--fuente-principal); }
         padding: 6px 10px;
     }
 
+    
     .modal-content {
         margin-top: 10%; /* Ajuste de margen superior para modal */
         padding: 20px; /* Menos padding en modal */
@@ -889,8 +1541,16 @@ footer p { font-family: var(--fuente-principal); }
 
 /* --- Pantallas muy pequeñas / Teléfonos muy estrechos --- */
 @media (max-width: 480px) {
+    header {
+        flex-direction: column; /* Apilar elementos en el header en móvil */
+        padding: 0.8rem;
+    }
+    #logo-header {
+        margin-right: 0;
+    }
+
     header h1 {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
     }
     nav .nav-button {
         font-size: 0.8rem;
@@ -902,12 +1562,21 @@ footer p { font-family: var(--fuente-principal); }
     .auth-form-container {
         padding: 15px; /* Menos padding aún */
     }
-    .modal-content {
-        padding: 15px; /* Menos padding aún */
-        margin-top: 5%;
+
+    .forgot-password-link {
+        margin-top: 0; /* Acercarlo al input anterior si es necesario */
     }
+
+    .modal-content {
+        width: 80%;
+    
+    margin-top: 10%; /* Un poco de espacio desde el top */
+    margin-left: 10%;
+        
+    }
+
     .modal-content h3 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
 
     .categorias-grid { 
@@ -921,14 +1590,61 @@ footer p { font-family: var(--fuente-principal); }
         
     }
 
+    .puntos-card-container {
+        padding: 20px 15px;
+        margin: 15px auto;
+    }
+
+    #puntos-cliente h2 {
+        font-size: 1.5rem;
+    }
+    .puntos-valor {
+        font-size: 3.5em;
+    }
+
+    .puntos-label,
+    .premio-titulo {
+        font-size: 1.2rem !important;
+    }
+
+    
+    .premio-descripcion {
+        font-size: 1em;
+    }
+
+    .acumulacion-info {
+        width: 85%;
+    }
+   
     .menu-items-directos-grid {
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 10px !important;
     }
 
     .menu-items-directos-grid > .menu-item.card { /* Estilo específico para items directos */
-        width: 80%;
+        width: 90%;
+    }
+
+    
+    .imagen-circular-envuelta {
+        width: 150px;
+        height: 150px;
+        
+    }
+
+    .menu-items-directos-grid > .menu-item.card .menu-item-nombre {
+        margin-top: -20px;
+    }
+
+    .menu-items-directos-grid > .menu-item.card .menu-item-descripcion {
+        line-height: 1.3;
+    }
+
+    .menu-items-directos-grid > .menu-item.card .menu-item-precio {
+        font-size: 1.4rem;
+        margin-top: -10px;
     }
 
     /* Ítems dentro de secciones informativas (ej: Toppings) */
@@ -946,6 +1662,11 @@ footer p { font-family: var(--fuente-principal); }
         line-height: 1.4; 
     }
 
+    .titulo-pagina-categoria { 
+        margin-top: 30px;
+        font-size: 1.8rem;
+    }
+
     .info-item-nombre { 
         margin-top: -5px;
         margin-bottom: 0px; 
@@ -959,7 +1680,13 @@ footer p { font-family: var(--fuente-principal); }
         margin-bottom: 0px;
        
     }
-    
+
+    .qr-card {
+        width: 100%;
+    }
+   
+
+
 }
 
 

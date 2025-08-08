@@ -3,10 +3,13 @@
   "short_name": "Fritsky",
   "description": "Tu app de fidelidad para Fritsky Patateria. ¡Acumula puntos y gana premios!",
   "start_url": "/index.html",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#FFC107",
   "orientation": "portrait-primary",
+  "lang": "es",
+  "dir": "ltr",
   "icons": [
     {
       "src": "images/icon-72x72.png",
@@ -19,18 +22,8 @@
       "type": "image/png"
     },
     {
-      "src": "images/icon-128x128.png",
-      "sizes": "128x128",
-      "type": "image/png"
-    },
-    {
       "src": "images/icon-144x144.png",
       "sizes": "144x144",
-      "type": "image/png"
-    },
-    {
-      "src": "images/icon-152x152.png",
-      "sizes": "152x152",
       "type": "image/png"
     },
     {
@@ -40,14 +33,17 @@
       "purpose": "any maskable"
     },
     {
-      "src": "images/icon-384x384.png",
-      "sizes": "384x384",
-      "type": "image/png"
-    },
-    {
       "src": "images/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "images/screenshot1.png",
+      "sizes": "540x960",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["food", "lifestyle", "shopping"]
 }
