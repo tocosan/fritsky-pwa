@@ -596,21 +596,22 @@ async function isServiceWorkerReadyForPush() {
         return false;
     }
 
-    
-    const registration = await navigator.serviceWorker.getRegistration(window.BASE_PATH);
+    // Obtiene el SW que controla la página actual (sin usar window.BASE_PATH)
+    const registration = await navigator.serviceWorker.getRegistration();
 
     if (!registration || !registration.active) {
-        console.warn("[FCM_DEBUG] Service Worker no encontrado o no está activo en el scope:", window.BASE_PATH);
+        console.warn("[FCM_DEBUG] Service Worker no encontrado o no está activo en el scope actual.");
         return false;
     }
 
     // Verificamos si el SW tiene un controlador (indica que está gestionando la página)
     if (!navigator.serviceWorker.controller) {
-        
+        console.warn("[FCM_DEBUG] Service Worker no tiene controlador activo aún.");
+        return false;
     }
 
-   
-    return true; 
+    console.log("[FCM_DEBUG] Service Worker listo para Push con scope:", registration.scope);
+    return true;
 }
 
 // Solicita permiso al usuario para enviar notificaciones push.
