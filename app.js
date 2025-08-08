@@ -81,8 +81,14 @@ let goToLoginLinkRef = null;      // Botón para ir del Registro al Login
 
 // --- MANEJO DEL ESTADO DE AUTENTICACIÓN ---
 // Este listener se activa cada vez que cambia el estado de autenticación del usuario.
+let previousUser = null;
+
 onAuthStateChanged(auth, async (user) => {
-    if (user) {
+    console.log("AuthStateChanged:", user ? user.uid : "logout");
+
+    if (user && (!previousUser || previousUser.uid !== user.uid)) {
+        // Usuario nuevo o distinto
+        previousUser = user;
         currentUser = user;
 
         const puntos = await cargarPuntosFirebase(); 
@@ -100,16 +106,16 @@ onAuthStateChanged(auth, async (user) => {
         inicializarFCM();
         escucharMensajes();
 
-    } else {
+    } else if (!user && previousUser) {
+        // Usuario se desconectó
+        previousUser = null;
         currentUser = null;
 
-        // 🔹 Detener listener de mensajes si estaba activo
         if (unsubscribeMensajes) {
             unsubscribeMensajes();
             unsubscribeMensajes = null;
         }
 
-        // 🔹 Limpiar mensajes de la interfaz
         const mensajesContainer = document.getElementById("mensajes-container");
         if (mensajesContainer) {
             mensajesContainer.innerHTML = "";
@@ -131,6 +137,7 @@ onAuthStateChanged(auth, async (user) => {
             mostrarPagina('pagina-promociones');
         }
     }
+    // No hace nada si el user es igual que antes para evitar re-ejecuciones
 });
 
 
@@ -534,14 +541,15 @@ async function saveDeviceTokenToFirestore(token) {
 function waitForSWController() {
     return new Promise((resolve) => {
         if (navigator.serviceWorker.controller) {
-            return resolve(); // Si ya hay un controlador, resuelve inmediatamente.
+            return resolve();
         }
-        // Si no, espera al evento 'controllerchange' que se dispara cuando un SW toma el control.
         navigator.serviceWorker.addEventListener('controllerchange', () => {
+            console.log('[FCM_DEBUG] Service Worker controlador activo detectado');
             resolve();
         });
     });
 }
+
 
 // Obtiene el token de dispositivo de FCM.
 async function getDeviceToken() {
@@ -623,12 +631,8 @@ async function requestNotificationPermission() {
         console.log("[FCM_DEBUG] Permiso de notificación concedido:", permissionState);
         
         if (permissionState === 'granted') { 
-            console.log('[FCM_DEBUG] Permiso de notificación concedido.');
-            // Ahora, explícitamente esperamos a que el SW esté listo para las operaciones push.
-            const swReady = await isServiceWorkerReadyForPush(); // Usamos la nueva función para verificar
-            return swReady; // Retornamos si el SW estaba listo o no.
+            return true;
         } else {
-            console.warn('[FCM_DEBUG] Permiso de notificación denegado o no concedido.');
             return false;
         }
     } catch (error) {
@@ -637,8 +641,9 @@ async function requestNotificationPermission() {
     }
 }
 
+
 // Función para inicializar Firebase Messaging.
-function inicializarFCM() {
+async function inicializarFCM() {
     if (!currentUser) {
         console.log("[FCM_DEBUG] Usuario no conectado, omitiendo inicialización de FCM.");
         return;
@@ -651,23 +656,38 @@ function inicializarFCM() {
             console.log("[FCM_DEBUG] Servicio de mensajería inicializado.");
         }
 
-        // Siempre pedimos el permiso y el token al iniciar sesión,
-        // incluso si ya estaba inicializado para otro usuario
-        requestNotificationPermission().then(swReady => {
-            if (swReady) {
-                console.log("[FCM_DEBUG] SW confirmado como listo para push. Procediendo a obtener token.");
-                getDeviceToken(); 
-            } else {
-                console.error("[FCM_DEBUG] El Service Worker no estaba listo o el permiso fue denegado.");
-            }
+        const permiso = await Notification.requestPermission();
+        console.log("[FCM_DEBUG] Permiso de notificación:", permiso);
+        if (permiso !== 'granted') {
+            console.warn("[FCM_DEBUG] Permiso de notificación no concedido");
+            return;
+        }
+
+        const registration = await navigator.serviceWorker.ready;
+        console.log("[FCM_DEBUG] Service Worker listo para push con scope:", registration.scope);
+
+        const token = await getToken(messaging, {
+            vapidKey: 'BM3DpiRcq0nwXnO5gFPuZbBZ1_rMNIJX8ZuyR5wW1i0v2M0UVICK4BCLEk4aZ6O5qh9nh8TllLzjoYQikBZEGCk',
+            serviceWorkerRegistration: registration
         });
+
+        if (token) {
+            console.log("[FCM_DEBUG] Token de dispositivo FCM obtenido:", token);
+            await saveDeviceTokenToFirestore(token);
+            currentToken = token;
+        } else {
+            console.warn("[FCM_DEBUG] No se pudo obtener el token.");
+        }
 
         setupForegroundMessageListener();
 
     } catch (error) {
-        console.error("[FCM_DEBUG] Error al inicializar FCM:", error);
+        console.error("[FCM_DEBUG] Error en inicializarFCM:", error);
     }
 }
+
+
+
 
 
 // Configura el listener para recibir mensajes en primer plano.
